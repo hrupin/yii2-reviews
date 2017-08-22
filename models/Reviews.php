@@ -3,11 +3,13 @@
 namespace hrupin\reviews\models;
 
 use Yii;
+// надо use User
 
 /**
  * This is the model class for table "reviews".
  *
  * @property integer $reviews_id
+ * @property string $page
  * @property string $type
  * @property integer $reviews_child
  * @property integer $reviews_parent
@@ -16,8 +18,8 @@ use Yii;
  * @property integer $raiting
  * @property string $data
  * @property string $text
- * @property integer $data_create
- * @property integer $data_update
+ * @property integer $date_create
+ * @property integer $date_update
  */
 class Reviews extends \yii\db\ActiveRecord
 {
@@ -35,16 +37,14 @@ class Reviews extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['type', 'user_id', 'raiting', 'data', 'text', 'data_create', 'data_update'], 'required'],
-            [['reviews_child', 'user_id', 'raiting'], 'integer'],
+            [['page', 'type', 'reviews_parent', 'date_create', 'date_update'], 'required'],
+            [['reviews_child', 'reviews_parent', 'user_id', 'level', 'raiting', 'date_create', 'date_update'], 'integer'],
             [['data', 'text'], 'string'],
-            [['type'], 'string', 'max' => 50],
-            ['level', 'default', 'value' => 1],
+            [['page', 'type'], 'string', 'max' => 20], ['level', 'default', 'value' => 1],
             ['reviews_parent', 'default', 'value' => 0],
             ['reviews_child', 'default', 'value' => false],
-            ['data_create', 'default', 'value' => time()],
-            ['data_update', 'default', 'value' => time()],
-
+            ['date_create', 'default', 'value' => time()],
+            ['date_update', 'default', 'value' => time()],
         ];
     }
 
@@ -54,17 +54,18 @@ class Reviews extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'reviews_id' => 'Reviews ID',
-            'type' => 'Type',
-            'reviews_child' => 'Reviews Child',
-            'reviews_parent' => 'Reviews Parent',
-            'user_id' => 'User ID',
-            'level' => 'Level',
-            'raiting' => 'Raiting',
-            'data' => 'Data',
-            'text' => 'Text',
-            'data_create' => 'Data Create',
-            'data_update' => 'Data Update',
+            'reviews_id' => Yii::t('reviews', 'Reviews ID'),
+            'page' => Yii::t('reviews', 'Page'),
+            'type' => Yii::t('reviews', 'Type'),
+            'reviews_child' => Yii::t('reviews', 'Reviews Child'),
+            'reviews_parent' => Yii::t('reviews', 'Reviews Parent'),
+            'user_id' => Yii::t('reviews', 'User ID'),
+            'level' => Yii::t('reviews', 'Level'),
+            'raiting' => Yii::t('reviews', 'Raiting'),
+            'data' => Yii::t('reviews', 'Data'),
+            'text' => Yii::t('reviews', 'Text'),
+            'date_create' => Yii::t('reviews', 'Date Create'),
+            'date_update' => Yii::t('reviews', 'Date Update'),
         ];
     }
 
@@ -108,7 +109,8 @@ class Reviews extends \yii\db\ActiveRecord
         return $this->hasMany(self::className(), ['reviews_parent' => 'reviews_id']);
     }
 
-    public function getStructure(){
+    public function getStructure()
+    {
         return;
     }
 
