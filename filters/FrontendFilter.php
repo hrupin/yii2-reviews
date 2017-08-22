@@ -8,7 +8,7 @@ use yii\web\NotFoundHttpException;
 class FrontendFilter extends ActionFilter
 {
 
-    public $controllers = ['admin'];
+    public $controllers = [];
 
     public function beforeAction($action)
     {
