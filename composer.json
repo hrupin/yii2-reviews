@@ -18,5 +18,8 @@
         "psr-4": {
             "hrupin\\reviews\\": ""
         }
+    },
+    "extra": {
+        "bootstrap": "hrupin\\reviews\\Bootstrap"
     }
 }
