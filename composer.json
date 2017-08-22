@@ -1,0 +1,21 @@
+{
+    "name": "hrupin/yii2-reviews",
+    "description": "Reviews for YII2",
+    "type": "yii2-extension",
+    "keywords": ["yii2","extension"],
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "Hrupin Aleksandr",
+            "email": "hrupin.work@yandex.ru"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "hrupin\\reviews\\": ""
+        }
+    }
+}
