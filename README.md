@@ -27,12 +27,8 @@ Usage
 
 Once the extension is installed, simply use it in your code by  :
 
-```php
-<<<<<<< HEAD
+```
 <?= \hrupin\reviews\Reviews::widget(); ?>
-=======
-<?= \hrupin\reviews\AutoloadExample::widget(); ?>
->>>>>>> 2e499248577dbe473127a62997d8d0ebfddb880c
 ```
 
 ### configure
@@ -72,10 +68,8 @@ in **backend/config/main.php**
 ```
  php yii migrate/up --migrationPath=@vendor/hrupin/yii2-reviews/migrations
  ```
-<<<<<<< HEAD
-delete migration
+ 
+delete
 ```
 php yii migrate/down --migrationPath=@vendor/hrupin/yii2-reviews/migrations
 ```
-=======
->>>>>>> 2e499248577dbe473127a62997d8d0ebfddb880c
