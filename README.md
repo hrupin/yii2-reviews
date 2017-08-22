@@ -28,4 +28,5 @@ Usage
 Once the extension is installed, simply use it in your code by  :
 
 ```php
-<?= \hrupin\reviews\AutoloadExample::widget(); ?>```
+<?= \hrupin\reviews\AutoloadExample::widget(); ?>
+```
