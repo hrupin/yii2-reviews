@@ -43,8 +43,7 @@ Once the extension is installed, simply use it in your code by  :
         'textInput' => [
             'type' => 'textInput',
             'data' => ['placeholder' => '+7 (920) 707 77 20'],
-            'label'=> 'textInput',
-            'hint' => 'call me'
+            'label'=> 'textInput'
         ],
         'dropDownList'   => [
             'type'   => 'dropDownList',
