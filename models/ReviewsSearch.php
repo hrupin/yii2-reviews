@@ -18,7 +18,7 @@ class ReviewsSearch extends Reviews
     public function rules()
     {
         return [
-            [['reviews_id', 'reviews_child', 'reviews_parent', 'user_id', 'level', 'raiting', 'date_create', 'date_update'], 'integer'],
+            [['reviews_id', 'reviews_child', 'status', 'reviews_parent', 'user_id', 'level', 'rating', 'date_create', 'date_update'], 'integer'],
             [['page', 'type', 'data', 'text'], 'safe'],
         ];
     }
@@ -64,7 +64,8 @@ class ReviewsSearch extends Reviews
             'reviews_parent' => $this->reviews_parent,
             'user_id' => $this->user_id,
             'level' => $this->level,
-            'raiting' => $this->raiting,
+            'rating' => $this->raiting,
+            'status' => $this->status,
             'date_create' => $this->date_create,
             'date_update' => $this->date_update,
         ]);

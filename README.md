@@ -28,7 +28,82 @@ Usage
 Once the extension is installed, simply use it in your code by  :
 
 ```
-<?= \hrupin\reviews\Reviews::widget(); ?>
+<?= Reviews::widget([
+    'userModel' => Yii::$app->user,
+    'reviewsIdentifier' => 'categoryId',
+    'reviewsView' => '/ad/reviews',
+    'ratingStars' => [
+        1 => 'Ужасно',
+        2 => 'Плохо',
+        3 => 'Нормально',
+        4 => 'Хорошо',
+        5 => 'Отлично'
+    ],
+    'customOptions' => [
+        'textInput' => [
+            'type' => 'textInput',
+            'data' => ['placeholder' => '+7 (920) 707 77 20'],
+            'label'=> 'textInput',
+            'hint' => 'call me'
+        ],
+        'dropDownList'   => [
+            'type'   => 'dropDownList',
+            'data'   => ['0' => 'Активный','1' => 'Отключен','2'=>'Удален'],
+            'params' => ['prompt' => 'Выберите статус...']
+        ],
+        'listBox'   => [
+            'type'   => 'listBox',
+            'data'   => [1 => '1', 2 => '2', 3 => 3, 4 => 4, 5 => 5],
+            'params' => ['multiple' => true, 'prompt' => 'Выберите один или несколько вариантов','style' => 'background:gray;color:#fff;']
+        ],
+        'radioList' => [
+            'type'  => 'radioList',
+            'data'  => ['1' => 'Первый', '2' => 'Второй', '3' => 'Третий'],
+            'label' => 'radioList'
+        ],
+        'radio' => [
+            'type'  => 'radio',
+            'data'  => ['label' => 'Радио кнопка','labelOptions' => ['style' => 'padding-left:20px;']],
+            'label' => 'radio'
+        ],
+        'checkboxList' => [
+            'type'  => 'checkboxList',
+            'data'  => ['a' => 'Элемент А', 'б' => 'Элемент Б', 'в' => 'Элемент В'],
+            'label' => 'checkboxList'
+        ],
+        'checkbox' => [
+            'type'  => 'checkbox',
+            'data'  => ['label' => 'Неактивный чекбокс', 'labelOptions' => ['style' => 'padding-left:20px;'], 'disabled' => true],
+            'params'=> [],
+            'label' => 'checkbox'
+        ],
+        'fileInput' => [
+            'type'  => 'fileInput',
+            'data'  => ['multiple' => 'multiple'],
+            'params'=> [],
+            'label' => 'fileInput'
+        ],
+        'input' => [
+            'type'  => 'input',
+            'data'  => 'email',
+            'params'=> [],
+            'label' => 'input'
+        ],
+        'passwordInput' => [
+            'type'  => 'passwordInput',
+            'data'  => 'hint',
+            'params'=> 'Длинна пароля не меньше 10 символов.',
+            'label' => 'passwordInput'
+        ],
+        'textarea' => [
+            'type'  => 'textarea',
+            'data'  => ['rows' => 2, 'cols' => 5],
+            'params'=> [],
+            'label' => 'textarea'
+        ],
+        'empty'
+    ]
+]); ?>
 ```
 
 ### configure

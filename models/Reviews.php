@@ -11,11 +11,12 @@ use Yii;
  * @property integer $reviews_id
  * @property string $page
  * @property string $type
+ * @property integer $status
  * @property integer $reviews_child
  * @property integer $reviews_parent
  * @property integer $user_id
  * @property integer $level
- * @property integer $raiting
+ * @property integer $rating
  * @property string $data
  * @property string $text
  * @property integer $date_create
@@ -38,9 +39,10 @@ class Reviews extends \yii\db\ActiveRecord
     {
         return [
             [['page', 'type', 'reviews_parent', 'date_create', 'date_update'], 'required'],
-            [['reviews_child', 'reviews_parent', 'user_id', 'level', 'raiting', 'date_create', 'date_update'], 'integer'],
+            [['reviews_child', 'reviews_parent', 'user_id', 'level', 'rating', 'date_create', 'date_update'], 'integer'],
             [['data', 'text'], 'string'],
             [['page', 'type'], 'string', 'max' => 20], ['level', 'default', 'value' => 1],
+            ['status', 'default', 'value' => 0],
             ['reviews_parent', 'default', 'value' => 0],
             ['reviews_child', 'default', 'value' => false],
             ['date_create', 'default', 'value' => time()],
@@ -57,11 +59,12 @@ class Reviews extends \yii\db\ActiveRecord
             'reviews_id' => Yii::t('reviews', 'Reviews ID'),
             'page' => Yii::t('reviews', 'Page'),
             'type' => Yii::t('reviews', 'Type'),
+            'status' => Yii::t('reviews', 'Status'),
             'reviews_child' => Yii::t('reviews', 'Reviews Child'),
             'reviews_parent' => Yii::t('reviews', 'Reviews Parent'),
             'user_id' => Yii::t('reviews', 'User ID'),
             'level' => Yii::t('reviews', 'Level'),
-            'raiting' => Yii::t('reviews', 'Raiting'),
+            'rating' => Yii::t('reviews', 'Rating'),
             'data' => Yii::t('reviews', 'Data'),
             'text' => Yii::t('reviews', 'Text'),
             'date_create' => Yii::t('reviews', 'Date Create'),
