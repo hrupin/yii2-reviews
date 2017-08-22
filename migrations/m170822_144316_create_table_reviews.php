@@ -3,7 +3,7 @@
 use yii\db\Schema;
 use yii\db\Migration;
 
-class m170805_192213_create_table_request extends Migration
+class m170822_144316_create_table_reviews extends Migration
 {
     public function safeUp()
     {
@@ -11,7 +11,7 @@ class m170805_192213_create_table_request extends Migration
         if ($this->db->driverName === 'mysql') {
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB';
         }
-        $this->createTable('{{%request}}', [
+        $this->createTable('{{%reviews}}', [
             'reviews_id' => Schema::TYPE_PK,
             'page'       => Schema::TYPE_STRING . '(20) NOT NULL',
             'type'       => Schema::TYPE_STRING . '(20) NOT NULL',
@@ -29,6 +29,6 @@ class m170805_192213_create_table_request extends Migration
 
     public function safeDown()
     {
-        $this->dropTable('{{%request}}');
+        $this->dropTable('{{%reviews}}');
     }
 }

@@ -28,5 +28,47 @@ Usage
 Once the extension is installed, simply use it in your code by  :
 
 ```php
-<?= \hrupin\reviews\AutoloadExample::widget(); ?>
+<?= \hrupin\reviews\Reviews::widget(); ?>
+```
+
+### configure
+
+in **common/config/main.php**
+
+```
+'modules' => [
+        'reviews' => [
+            'class' => 'hrupin\reviews\Module',
+        ],
+    ],
+```
+
+in **frontend/config/main.php**
+
+```
+'modules' => [
+    'reviews' => [
+        'as frontend' => 'hrupin\reviews\filters\FrontendFilter',
+    ],
+]
+```
+
+in **backend/config/main.php**
+
+```
+'modules' => [
+    'reviews' => [
+        'as backend' => 'hrupin\reviews\filters\BackendFilter',
+    ],
+],
+```
+
+### migrate
+
+```
+ php yii migrate/up --migrationPath=@vendor/hrupin/yii2-reviews/migrations
+ ```
+delete migration
+```
+php yii migrate/down --migrationPath=@vendor/hrupin/yii2-reviews/migrations
 ```
