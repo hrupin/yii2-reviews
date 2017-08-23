@@ -24,6 +24,12 @@ use Yii;
  */
 class Reviews extends \yii\db\ActiveRecord
 {
+
+    const REVIEWS_ACTIVE = 2;
+    const REVIEWS_NOT_ACTIVE = 1;
+
+    public $hello;
+
     /**
      * @inheritdoc
      */
@@ -38,11 +44,11 @@ class Reviews extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['page', 'type', 'reviews_parent', 'date_create', 'date_update'], 'required'],
+            [['page', 'type'], 'required'],
             [['reviews_child', 'reviews_parent', 'user_id', 'level', 'rating', 'date_create', 'date_update'], 'integer'],
             [['data', 'text'], 'string'],
             [['page', 'type'], 'string', 'max' => 20], ['level', 'default', 'value' => 1],
-            ['status', 'default', 'value' => 0],
+            ['status', 'default', 'value' => 1],
             ['reviews_parent', 'default', 'value' => 0],
             ['reviews_child', 'default', 'value' => false],
             ['date_create', 'default', 'value' => time()],
@@ -84,7 +90,7 @@ class Reviews extends \yii\db\ActiveRecord
     public function afterSave($insert, $changedAttributes)
     {
         parent::afterSave($insert, $changedAttributes);
-        $this->data_update = time();
+        $this->date_update = time();
     }
 
     public function getUser()
@@ -97,9 +103,14 @@ class Reviews extends \yii\db\ActiveRecord
         return unserialize($this->data);
     }
 
-    public function setDataAr($value)
+    public function setDataAr()
     {
-        $this->data = serialize($value);
+        if($this->data !== null){
+            $this->data = serialize($this->data);
+        }
+        else{
+            $this->data = serialize([]);
+        }
     }
 
     public function getParent()
@@ -110,6 +121,20 @@ class Reviews extends \yii\db\ActiveRecord
     public function getChildren()
     {
         return $this->hasMany(self::className(), ['reviews_parent' => 'reviews_id']);
+    }
+
+    public function getAverageNumberStars($id){
+        $res = 0; $stars = 0;
+        foreach ($this->find()->getActiveReviewsForPage($id)->all() as $item) {
+            $stars += $item->rating;
+            $res++;
+        }
+        if($res){
+            return $stars / $res;
+        }
+        else{
+            return 1;
+        }
     }
 
     public function getStructure()

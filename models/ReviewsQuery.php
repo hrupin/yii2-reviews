@@ -12,7 +12,17 @@ class ReviewsQuery extends \yii\db\ActiveQuery
 
     public function getReviewsForPage($id)
     {
-        return $this->andWhere('[[reviews_id]]='.$id);
+        return $this->andWhere('[[page]]='.$id);
+    }
+
+    public function getActiveReviewsForPage($id)
+    {
+        return $this->andWhere("[[page]]='".$id."'")->andWhere('[[status]]='.Reviews::REVIEWS_ACTIVE);
+    }
+
+    public function getActive()
+    {
+        return $this->andWhere('[[status]]='.Reviews::REVIEWS_ACTIVE);
     }
 
     /**

@@ -4,8 +4,8 @@ namespace hrupin\reviews\widgets;
 
 use Yii;
 use yii\base\Widget;
-use yii\helpers\ArrayHelper;
 use hrupin\reviews\ReviewsAsset;
+use hrupin\reviews\models\Reviews as ModelReviews;
 use yii\base\InvalidConfigException;
 
 /**
@@ -51,21 +51,27 @@ class Reviews extends Widget
     public function init()
     {
         parent::init();
+
         if($this->userModel === null){
             throw new InvalidConfigException(Yii::t('reviews', 'The "user" property must be set.'));
         }
-        if($this->reviewsIdentifier === null){
-            throw new InvalidConfigException(Yii::t('reviews', 'The "reviewsIdentifier" property must be set.'));
+
+        if ($this->pageIdentifier === null) {
+            throw new InvalidConfigException(Yii::t('reviews', 'The "pageIdentifier" property must be set.'));
         }
-        if (empty($this->reviewsView)) {
+
+        if($this->reviewsIdentifier === null){
+            $this->reviewsIdentifier = 'reviews';
+        }
+
+        if ($this->reviewsView === null) {
             $this->reviewsView = 'reviews';
         }
-        if (empty($this->pageIdentifier)) {
-            $this->pageIdentifier = 'reviews';
-        }
-        if (empty($this->customOptions)) {
+
+        if ($this->customOptions === null) {
             $this->customOptions = [];
         }
+
         if ($this->ratingStars === null) {
             $this->ratingStars = [];
         }
@@ -79,16 +85,25 @@ class Reviews extends Widget
      */
     public function run()
     {
-        $model = Yii::createObject(\hrupin\reviews\models\Reviews::className());
-
+        $this->registerAssets();
+        $model = Yii::createObject(ModelReviews::className());
+        $model->rating = $model->getAverageNumberStars($this->pageIdentifier);
+        $attributes = [
+            'page' => $this->pageIdentifier,
+            'type' => $this->reviewsIdentifier
+        ];
+        $model->attributes = $attributes;
         if(Yii::$app->request->isPost){
             if($model->load(Yii::$app->request->post())){
-                echo 1;
+                $model->dataAr = $model->data;
+                if($model->save()){
+                    echo 1;
+                }
+                else{
+                    var_dump($model->getErrors());
+                }
             }
         }
-
-        $this->registerAssets();
-        $model->rating = 3;
         return $this->render($this->reviewsView,[
             'model' => $model,
             'options' => $this->customOptions,
