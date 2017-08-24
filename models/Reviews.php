@@ -25,10 +25,11 @@ use Yii;
 class Reviews extends \yii\db\ActiveRecord
 {
 
-    const REVIEWS_ACTIVE = 2;
-    const REVIEWS_NOT_ACTIVE = 1;
+    const REVIEWS_ACTIVE = 1;
+    const REVIEWS_NOT_ACTIVE = 0;
 
-    public $hello;
+    public static $pathIMG;
+    public static $html;
 
     /**
      * @inheritdoc
@@ -95,7 +96,8 @@ class Reviews extends \yii\db\ActiveRecord
 
     public function getUser()
     {
-        return $this->hasOne(User::className(), ['user_id' => 'users_id']);
+        $userObjectNamespace = Yii::$app->getModule('reviews')->userModel;
+        return $this->hasOne($userObjectNamespace::className(), ['users_id' => 'user_id']);
     }
 
     public function getDataAr()
@@ -111,6 +113,11 @@ class Reviews extends \yii\db\ActiveRecord
         else{
             $this->data = serialize([]);
         }
+    }
+
+    public function getDateReviews()
+    {
+        return date('d.m.Y', $this->date_update);
     }
 
     public function getParent()
@@ -137,9 +144,52 @@ class Reviews extends \yii\db\ActiveRecord
         }
     }
 
-    public function getStructure()
-    {
-        return;
+    public function getReviews($arReviews){
+        $result = [];
+        $step = 0;
+        foreach($arReviews as $key => $value) {
+            $result[$step] =  $value->dataReview;
+            if($value->reviews_child){
+                $result[$step]['children'] = $this->getReviews($value->children);
+            }
+            $step++;
+        }
+        return $result;
     }
 
+    /**
+     * @param $obj /hrupin/reviews/model/Reviews
+     * @return array
+     */
+    public function getDataReview(){
+        $userData = Yii::$app->getModule('reviews')->fieldsUserModel;
+        return [
+            'idReviews' => $this->reviews_id,
+            'text'      => $this->text,
+            'date'      => $this->dateReviews,
+            'name'      => $this->user->$userData['name'],
+            'img'       => $this::$pathIMG.'/img/noAvatar.jpg',
+            'level'     => $this->level
+        ];
+    }
+
+    public static function generateHTML($template, $data, $tagMain, $tag, $level){
+        self::$html .= '<'.$tagMain.' style="margin-left: '.(20*$level).'px;">';
+        foreach ($data as $value){
+            self::$html .= '<'.$tag.' class="clearfix">';
+            $tmp = str_replace("{img}", $value['img'], $template);
+            $tmp = str_replace("{date}", $value['date'], $tmp);
+            $tmp = str_replace("{name}", $value['name'], $tmp);
+            $tmp = str_replace("{says}", Yii::t('reviews', 'says'), $tmp);
+            $tmp = str_replace("{idReviews}", $value['idReviews'], $tmp);
+            $tmp = str_replace("{reply}", Yii::t('reviews', 'Reply'), $tmp);
+            $tmp = str_replace("{text}", $value['text'], $tmp);
+            self::$html .= $tmp;
+            if(isset($value['children'])){
+                self::generateHTML($template, $value['children'], $tagMain, $tag, $value['level']++);
+            }
+            self::$html .= '</'.$tag.'>';
+        }
+        self::$html .= '</'.$tagMain.'>';
+    }
 }

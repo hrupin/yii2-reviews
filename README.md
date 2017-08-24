@@ -31,7 +31,13 @@ Once the extension is installed, simply use it in your code by  :
 <?= Reviews::widget([
     'userModel' => Yii::$app->user,
     'reviewsIdentifier' => 'categoryId',
+    'pageIdentifier' => 'p_11',
     'reviewsView' => '/ad/reviews',
+    'enableReviews' => true,
+    'fieldsUserModel' => [
+        'avatar' => '',
+        'name' => 'users_name'
+    ],
     'ratingStars' => [
         1 => 'Ужасно',
         2 => 'Плохо',

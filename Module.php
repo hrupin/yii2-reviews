@@ -11,4 +11,6 @@ class Module extends BaseModule
     public $modelMap = [];
     public $urlPrefix = 'reviews';
     public $debug = false;
+    public $userModel = false;
+    public $fieldsUserModel = [];
 }

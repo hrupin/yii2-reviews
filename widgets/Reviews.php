@@ -46,19 +46,38 @@ class Reviews extends Widget
     public $ratingStars = [];
 
     /**
+     * @var bool
+     */
+    public $enableReviews = false;
+    /**
+     * @var bool
+     */
+    public $fieldsUserModel;
+
+    private $pathIMG;
+
+    /**
      * Initializes the widget params.
      */
     public function init()
     {
         parent::init();
 
-        if($this->userModel === null){
-            throw new InvalidConfigException(Yii::t('reviews', 'The "user" property must be set.'));
-        }
-
         if ($this->pageIdentifier === null) {
             throw new InvalidConfigException(Yii::t('reviews', 'The "pageIdentifier" property must be set.'));
         }
+
+        if ($this->fieldsUserModel === null) {
+            throw new InvalidConfigException(Yii::t('reviews', 'The "fieldsUserModel" property must be set.'));
+        }
+
+        if($this->userModel === null){
+            $userObjectNamespace = Yii::$app->getModule('reviews')->userModel;
+        }
+        else{
+            $userObjectNamespace = $this->userModel;
+        }
+        $this->userModel = Yii::createObject($userObjectNamespace::className());
 
         if($this->reviewsIdentifier === null){
             $this->reviewsIdentifier = 'reviews';
@@ -89,6 +108,7 @@ class Reviews extends Widget
         $model = Yii::createObject(ModelReviews::className());
         $model->rating = $model->getAverageNumberStars($this->pageIdentifier);
         $attributes = [
+            'user_id' => Yii::$app->user->id, // будет ошибка если user не авторизован
             'page' => $this->pageIdentifier,
             'type' => $this->reviewsIdentifier
         ];
@@ -97,17 +117,22 @@ class Reviews extends Widget
             if($model->load(Yii::$app->request->post())){
                 $model->dataAr = $model->data;
                 if($model->save()){
-                    echo 1;
+                    Yii::$app->session->setFlash('success', Yii::t('reviews', 'Feedback successfully sent to moderation'));
                 }
                 else{
-                    var_dump($model->getErrors());
+                    Yii::$app->session->setFlash('error', Yii::t('reviews', 'The opinion was not sent! Repeat again after some time.'));
                 }
             }
         }
+        $reviews = $model->getReviews(ModelReviews::find()->getActiveReviewsForPageAndMainLevel($this->pageIdentifier)->all());
+//        $ratingStatistic =
         return $this->render($this->reviewsView,[
+            'reviews' => $reviews,
             'model' => $model,
             'options' => $this->customOptions,
-            'stars' => $this->ratingStars
+            'stars' => $this->ratingStars,
+            'enableReviews' => $this->enableReviews,
+            'pathIMG' => $this->pathIMG
         ]);
     }
 
@@ -117,7 +142,8 @@ class Reviews extends Widget
     protected function registerAssets()
     {
         $view = $this->getView();
-        ReviewsAsset::register($view);
+        $bundle = ReviewsAsset::register($view);
+        ModelReviews::$pathIMG = $bundle->baseUrl;
     }
 
 }

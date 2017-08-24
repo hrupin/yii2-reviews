@@ -4,8 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 /* @var $this yii\web\View */
-/* @var $searchModel hrupin\reviews\models\ReviewsSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $searchModel hrupin\reviews\models\Reviews */
 
 $this->title = Yii::t('reviews', 'Reviews');
 $this->params['breadcrumbs'][] = $this->title;
