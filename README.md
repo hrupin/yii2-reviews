@@ -27,6 +27,18 @@ Usage
 
 Once the extension is installed, simply use it in your code by  :
 
+MINIMUM
+```
+<?= Reviews::widget([
+    'pageIdentifier' => 'p_11',
+    'fieldsUserModel' => [
+        'avatar' => '',
+        'name' => 'users_name'
+    ]
+]); ?>
+```
+
+FULL
 ```
 <?= Reviews::widget([
     'userModel' => Yii::$app->user,

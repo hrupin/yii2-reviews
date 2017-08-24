@@ -10,5 +10,7 @@ $template = '<img src="{img}" class="avatar img-rounded" alt="">
                  <p class="meta">{date} <a href="#">{name}</a> {says} : <i class="pull-right"><span class="reply" data-id="{idReviews}"><small>{reply}</small></span></i></p>
                  <p>{text}</p>
              </div>';
-Reviews::generateHTML($template, $reviews, 'ul', 'li', 1);
+
+Reviews::generateHTML($template, $reviews, 'ul', 'li', 1, $html);
+
 echo Reviews::$html;

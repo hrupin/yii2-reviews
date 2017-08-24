@@ -18,17 +18,17 @@ class Reviews extends Widget
     /**
      * @var object User
      */
-    public $userModel = false;
+    public $userModel;
 
     /**
      * @var string
      */
-    public $pageIdentifier = '';
+    public $pageIdentifier;
 
     /**
      * @var string
      */
-    public $reviewsIdentifier = '';
+    public $reviewsIdentifier;
 
     /**
      * @var string $reviewsView - template view
@@ -38,22 +38,25 @@ class Reviews extends Widget
     /**
      * @var array - custom options for data
      */
-    public $customOptions = [];
+    public $customOptions;
 
     /**
      * @var array - custom options for data
      */
-    public $ratingStars = [];
+    public $ratingStars;
 
     /**
      * @var bool
      */
-    public $enableReviews = false;
+    public $enableReviews;
     /**
      * @var bool
      */
     public $fieldsUserModel;
 
+    /**
+     * @var string
+     */
     private $pathIMG;
 
     /**
@@ -93,6 +96,10 @@ class Reviews extends Widget
 
         if ($this->ratingStars === null) {
             $this->ratingStars = [];
+        }
+
+        if ($this->enableReviews === null) {
+            $this->enableReviews = true;
         }
 
     }

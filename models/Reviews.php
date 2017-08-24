@@ -177,14 +177,15 @@ class Reviews extends \yii\db\ActiveRecord
         self::$html .= '<'.$tagMain.' style="margin-left: '.(20*$level).'px;">';
         foreach ($data as $value){
             self::$html .= '<'.$tag.' class="clearfix">';
-            $tmp = str_replace("{img}", $value['img'], $template);
-            $tmp = str_replace("{date}", $value['date'], $tmp);
-            $tmp = str_replace("{name}", $value['name'], $tmp);
-            $tmp = str_replace("{says}", Yii::t('reviews', 'says'), $tmp);
-            $tmp = str_replace("{idReviews}", $value['idReviews'], $tmp);
-            $tmp = str_replace("{reply}", Yii::t('reviews', 'Reply'), $tmp);
-            $tmp = str_replace("{text}", $value['text'], $tmp);
-            self::$html .= $tmp;
+            self::$html .= strtr($template, [
+                '{img}'       => $value['img'],
+                '{date}'      => $value['date'],
+                '{name}'      => $value['name'],
+                '{says}'      => Yii::t('reviews', 'says'),
+                '{idReviews}' => $value['idReviews'],
+                '{reply}'     => Yii::t('reviews', 'Reply'),
+                '{text}'      => $value['text']
+            ]);
             if(isset($value['children'])){
                 self::generateHTML($template, $value['children'], $tagMain, $tag, $value['level']++);
             }
