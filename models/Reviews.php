@@ -169,14 +169,15 @@ class Reviews extends \yii\db\ActiveRecord
             'date'      => $this->dateReviews,
             'name'      => $this->user->$userData['name'],
             'img'       => $this::$pathIMG.'/img/noAvatar.jpg',
-            'level'     => $this->level
+            'level'     => $this->level,
+            'parent'    => $this->reviews_parent
         ];
     }
 
     public static function generateHTML($template, $data, $tagMain, $tag, $level){
         self::$html .= '<'.$tagMain.' style="margin-left: '.(20*$level).'px;">';
         foreach ($data as $value){
-            self::$html .= '<'.$tag.' class="clearfix">';
+            self::$html .= '<'.$tag.' class="clearfix reviews_'.$value['idReviews'].'">';
             self::$html .= strtr($template, [
                 '{img}'       => $value['img'],
                 '{date}'      => $value['date'],

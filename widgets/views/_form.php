@@ -9,7 +9,7 @@ use yii\widgets\ActiveForm;
 ?>
 
 <div class="reviews-form">
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['options' => ['data-pjax' => true]]); ?>
     <div id="rating" class="rating">
         <?php
         $e = 1; $count = count($stars);
