@@ -131,6 +131,11 @@ in **common/config/main.php**
 'modules' => [
         'reviews' => [
             'class' => 'hrupin\reviews\Module',
+			'userModel' => 'common\models\User',
+            'fieldsUserModel' => [
+                'avatar' => '',
+                'name' => 'users_fio'
+            ]
         ],
     ],
 ```
