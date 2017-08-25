@@ -64,7 +64,7 @@ class ReviewsSearch extends Reviews
             'reviews_parent' => $this->reviews_parent,
             'user_id' => $this->user_id,
             'level' => $this->level,
-            'rating' => $this->raiting,
+            'rating' => $this->rating,
             'status' => $this->status,
             'date_create' => $this->date_create,
             'date_update' => $this->date_update,

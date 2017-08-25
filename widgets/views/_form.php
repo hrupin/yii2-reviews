@@ -9,21 +9,21 @@ use yii\widgets\ActiveForm;
 ?>
 
 <div class="reviews-form">
-    <?php $form = ActiveForm::begin(['options' => ['data-pjax' => true]]); ?>
+    <?php $form = ActiveForm::begin(['action' => ['reviews/reviews/create-review'], 'options' => ['data-pjax' => true]]); ?>
     <div id="rating" class="rating">
         <?php
-        $e = 1; $count = count($stars);
-        for($e; $e <= $model->rating; $e++){
-            echo '<span class="glyphicon glyphicon-star" data-text="'.$stars[$e].'" data-rating="'.$e.'" aria-hidden="true"></span>';
-        }
-        for($e; $e <= $count; $e++){
-            echo '<span class="glyphicon glyphicon-star-empty" data-text="'.$stars[$e].'" data-rating="'.$e.'" aria-hidden="true"></span>';
-        }
+            $e = 1; $count = count($stars);
+            for($e; $e <= $model->rating; $e++){
+                echo '<span class="glyphicon glyphicon-star" data-text="'.$stars[$e].'" data-rating="'.$e.'" aria-hidden="true"></span>';
+            }
+            for($e; $e <= $count; $e++){
+                echo '<span class="glyphicon glyphicon-star-empty" data-text="'.$stars[$e].'" data-rating="'.$e.'" aria-hidden="true"></span>';
+            }
         ?>
     </div>
     <div id="textRating"></div>
 
-    <?= $form->field($model, 'rating')->hiddenInput()->label(false); ?>
+    <?= $form->field($model, 'rating')->hiddenInput(['value' => 0])->label(false); ?>
 
     <?php
     foreach ($options as $key => $option) {
@@ -74,6 +74,8 @@ use yii\widgets\ActiveForm;
     }
     ?>
     <?= $form->field($model, 'text')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'type')->hiddenInput()->label(false); ?>
+    <?= $form->field($model, 'page')->hiddenInput()->label(false); ?>
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('reviews', 'Create') : Yii::t('reviews', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>

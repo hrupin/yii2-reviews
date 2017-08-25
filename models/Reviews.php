@@ -96,8 +96,7 @@ class Reviews extends \yii\db\ActiveRecord
 
     public function getUser()
     {
-        $userObjectNamespace = Yii::$app->getModule('reviews')->userModel;
-        return $this->hasOne($userObjectNamespace::className(), ['users_id' => 'user_id']);
+        return $this->hasOne(Yii::$app->getModule('reviews')->userIdentityClass, ['id' => 'user_id']);
     }
 
     public function getDataAr()
@@ -162,12 +161,12 @@ class Reviews extends \yii\db\ActiveRecord
      * @return array
      */
     public function getDataReview(){
-        $userData = Yii::$app->getModule('reviews')->fieldsUserModel;
         return [
             'idReviews' => $this->reviews_id,
             'text'      => $this->text,
             'date'      => $this->dateReviews,
-            'name'      => $this->user->$userData['name'],
+            'name'      => $this->user->nameUser,
+            'rating'    => $this->rating,
             'img'       => $this::$pathIMG.'/img/noAvatar.jpg',
             'level'     => $this->level,
             'parent'    => $this->reviews_parent
@@ -177,15 +176,24 @@ class Reviews extends \yii\db\ActiveRecord
     public static function generateHTML($template, $data, $tagMain, $tag, $level){
         self::$html .= '<'.$tagMain.' style="margin-left: '.(20*$level).'px;">';
         foreach ($data as $value){
-            self::$html .= '<'.$tag.' class="clearfix reviews_'.$value['idReviews'].'">';
+
+
+
+            if($level == 1){
+                self::$html .= '<'.$tag.' class="clearfix all r_'.$value['rating'].'">';
+            }
+            else{
+                self::$html .= '<'.$tag.' class="clearfix">';
+            }
             self::$html .= strtr($template, [
-                '{img}'       => $value['img'],
-                '{date}'      => $value['date'],
-                '{name}'      => $value['name'],
-                '{says}'      => Yii::t('reviews', 'says'),
-                '{idReviews}' => $value['idReviews'],
-                '{reply}'     => Yii::t('reviews', 'Reply'),
-                '{text}'      => $value['text']
+                '{img}'         => $value['img'],
+                '{identifier}'  => 'reviews_'.$value['idReviews'],
+                '{date}'        => $value['date'],
+                '{name}'        => $value['name'],
+                '{says}'        => Yii::t('reviews', 'says'),
+                '{idReviews}'   => $value['idReviews'],
+                '{reply}'       => Yii::t('reviews', 'Reply'),
+                '{text}'        => $value['text']
             ]);
             if(isset($value['children'])){
                 self::generateHTML($template, $value['children'], $tagMain, $tag, $value['level']++);

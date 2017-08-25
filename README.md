@@ -30,26 +30,17 @@ Once the extension is installed, simply use it in your code by  :
 MINIMUM
 ```
 <?= Reviews::widget([
-    'pageIdentifier' => 'p_11',
-    'fieldsUserModel' => [
-        'avatar' => '',
-        'name' => 'users_name'
-    ]
+    'pageIdentifier' => 'p_11'
 ]); ?>
 ```
 
 FULL
 ```
 <?= Reviews::widget([
-    'userModel' => Yii::$app->user,
     'reviewsIdentifier' => 'categoryId',
     'pageIdentifier' => 'p_11',
     'reviewsView' => '/ad/reviews',
     'enableReviews' => true,
-    'fieldsUserModel' => [
-        'avatar' => '',
-        'name' => 'users_name'
-    ],
     'ratingStars' => [
         1 => 'Ужасно',
         2 => 'Плохо',
@@ -130,12 +121,7 @@ in **common/config/main.php**
 ```
 'modules' => [
         'reviews' => [
-            'class' => 'hrupin\reviews\Module',
-			'userModel' => 'common\models\User',
-            'fieldsUserModel' => [
-                'avatar' => '',
-                'name' => 'users_fio'
-            ]
+            'class' => 'hrupin\reviews\Module'
         ],
     ],
 ```
@@ -158,6 +144,19 @@ in **backend/config/main.php**
         'as backend' => 'hrupin\reviews\filters\BackendFilter',
     ],
 ],
+```
+
+add **to model User**
+```
+    public function getAvatarUser()
+    {
+        // your code
+    }
+
+    public function getNameUser()
+    {
+        // your code
+    }
 ```
 
 ### migrate

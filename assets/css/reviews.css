@@ -5,7 +5,7 @@
     display: inline-block;
     height: 48px;
     float: left;
- }
+}
 #rating > span{
     cursor: pointer;
 }
@@ -24,15 +24,12 @@
     display: table;
     clear: both;
 }
-
 .blog-reviews{
 }
-
 .blog-reviews ul{
     list-style-type: none;
     padding: 0;
 }
-
 .blog-reviews img{
     opacity: 1;
     filter: Alpha(opacity=100);
@@ -41,7 +38,6 @@
     -o-border-radius: 4px;
     border-radius: 4px;
 }
-
 .blog-reviews img.avatar {
     position: relative;
     float: left;
@@ -51,7 +47,6 @@
     width: 65px;
     height: 65px;
 }
-
 .blog-reviews .review{
     position: relative;
     border: none;
@@ -64,7 +59,6 @@
     border-radius: 4px;
     color: #6b6e80;
 }
-
 .blog-reviews .meta {
     font-size: 13px;
     color: #aaaaaa;
@@ -72,18 +66,9 @@
     margin-bottom: 10px !important;
     border-bottom: 1px solid #eee;
 }
-
-/*.blog-reviews ul.comments ul{*/
-    /*list-style-type: none;*/
-    /*padding: 0;*/
-    /*margin-left: 85px;*/
-/*}*/
-
 .blog-reviews ul li{
     margin-top: 35px;
 }
-
-
 .blog-reviews h3{
     margin-bottom: 40px;
     font-size: 26px;
@@ -91,5 +76,20 @@
     font-weight: 800;
 }
 .blog-reviews .reply{
+    cursor: pointer;
+}
+.responseForms{
+    width: 100%;
+    padding-left: 85px;
+}
+.responseForms textarea{
+    width: 100%;
+}
+.responseForms .buttonSend{
+    float: right;
+}
+
+div#flavor-nav span {
+    margin-left: 20px;
     cursor: pointer;
 }

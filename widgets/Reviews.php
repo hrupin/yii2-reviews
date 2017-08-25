@@ -15,10 +15,6 @@ use yii\base\InvalidConfigException;
 */
 class Reviews extends Widget
 {
-    /**
-     * @var object User
-     */
-    public $userModel;
 
     /**
      * @var string
@@ -41,22 +37,13 @@ class Reviews extends Widget
     public $customOptions;
 
     /**
-     * @var array - custom options for data
-     */
-    public $ratingStars;
-
-    /**
      * @var bool
      */
     public $enableReviews;
-    /**
-     * @var bool
-     */
-    public $fieldsUserModel;
 
     /**
-     * @var string
-     */
+    * @var string
+    */
     private $pathIMG;
 
     /**
@@ -70,18 +57,6 @@ class Reviews extends Widget
             throw new InvalidConfigException(Yii::t('reviews', 'The "pageIdentifier" property must be set.'));
         }
 
-        if ($this->fieldsUserModel === null) {
-            throw new InvalidConfigException(Yii::t('reviews', 'The "fieldsUserModel" property must be set.'));
-        }
-
-        if($this->userModel === null){
-            $userObjectNamespace = Yii::$app->getModule('reviews')->userModel;
-        }
-        else{
-            $userObjectNamespace = $this->userModel;
-        }
-        $this->userModel = Yii::createObject($userObjectNamespace::className());
-
         if($this->reviewsIdentifier === null){
             $this->reviewsIdentifier = 'reviews';
         }
@@ -92,10 +67,6 @@ class Reviews extends Widget
 
         if ($this->customOptions === null) {
             $this->customOptions = [];
-        }
-
-        if ($this->ratingStars === null) {
-            $this->ratingStars = [];
         }
 
         if ($this->enableReviews === null) {
@@ -112,32 +83,19 @@ class Reviews extends Widget
     public function run()
     {
         $this->registerAssets();
+
+        $ratingStars = Yii::$app->getModule('reviews')->ratingStars;
         $model = Yii::createObject(ModelReviews::className());
+
         $model->rating = $model->getAverageNumberStars($this->pageIdentifier);
-        $attributes = [
-            'user_id' => Yii::$app->user->id, // будет ошибка если user не авторизован
-            'page' => $this->pageIdentifier,
-            'type' => $this->reviewsIdentifier
-        ];
-        $model->attributes = $attributes;
-        if(Yii::$app->request->isPost){
-            if($model->load(Yii::$app->request->post())){
-                $model->dataAr = $model->data;
-                if($model->save()){
-                    Yii::$app->session->setFlash('success', Yii::t('reviews', 'Feedback successfully sent to moderation'));
-                }
-                else{
-                    Yii::$app->session->setFlash('error', Yii::t('reviews', 'The opinion was not sent! Repeat again after some time.'));
-                }
-            }
-        }
+        $model->type = $this->reviewsIdentifier;
+        $model->page = $this->pageIdentifier;
         $reviews = $model->getReviews(ModelReviews::find()->getActiveReviewsForPageAndMainLevel($this->pageIdentifier)->all());
-//        $ratingStatistic =
         return $this->render($this->reviewsView,[
             'reviews' => $reviews,
             'model' => $model,
             'options' => $this->customOptions,
-            'stars' => $this->ratingStars,
+            'stars' => $ratingStars,
             'enableReviews' => $this->enableReviews,
             'pathIMG' => $this->pathIMG
         ]);
