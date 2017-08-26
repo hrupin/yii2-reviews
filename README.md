@@ -41,13 +41,6 @@ FULL
     'pageIdentifier' => 'p_11',
     'reviewsView' => '/ad/reviews',
     'enableReviews' => true,
-    'ratingStars' => [
-        1 => 'Ужасно',
-        2 => 'Плохо',
-        3 => 'Нормально',
-        4 => 'Хорошо',
-        5 => 'Отлично'
-    ],
     'customOptions' => [
         'textInput' => [
             'type' => 'textInput',
@@ -120,10 +113,18 @@ in **common/config/main.php**
 
 ```
 'modules' => [
-        'reviews' => [
-            'class' => 'hrupin\reviews\Module'
-        ],
+    'reviews' => [
+        'class' => 'hrupin\reviews\Module',            
+        'moderateReviews' => false,
+        'ratingStars' => [
+           1 => 'Ужасно',
+           2 => 'Плохо',
+           3 => 'Нормально',
+           4 => 'Хорошо',
+           5 => 'Отлично'
+        ]
     ],
+],
 ```
 
 in **frontend/config/main.php**

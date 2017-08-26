@@ -8,16 +8,9 @@ use yii\widgets\Pjax;
 /* @var boolean $enableReviews */
 /* @var array $stars */
 
-//$js = 'function refresh() {
-//     $.pjax.reload({container:"#reviews"});
-//     setTimeout(refresh, 5000); // restart the function every 5 seconds
-// }
-// refresh();';
-//$this->registerJs($js, $this::POS_READY);
-
 ?>
     <?php
-        if($enableReviews && Yii::$app->user->isGuest){
+        if($enableReviews && !Yii::$app->user->isGuest){
             Pjax::begin(['enablePushState' => false, 'id'=>'form-reviews']);
                 echo $this->render('_form', ['model' => $model, 'options' => $options, 'stars' => $stars]);
             Pjax::end();
@@ -25,7 +18,7 @@ use yii\widgets\Pjax;
     ?>
 <?php Pjax::begin(['id'=>'reviews']); ?>
     <div id="flavor-nav">
-        <span rel="all" class="current">All</span>
+        <span rel="all" class="current"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span></span>
         <?php
             $e = 1; $count = count($stars);
             for($e; $e <= $count; $e++){

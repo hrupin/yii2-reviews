@@ -13,6 +13,7 @@ class Module extends BaseModule
     public $urlPrefix = 'reviews';
     public $debug = false;
     public $ratingStars;
+    public $moderateReviews = true;
 
     public function init()
     {

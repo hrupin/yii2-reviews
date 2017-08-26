@@ -45,15 +45,16 @@ class Reviews extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['page', 'type'], 'required'],
+            [['page', 'type', 'text', 'rating'], 'required'],
             [['reviews_child', 'reviews_parent', 'user_id', 'level', 'rating', 'date_create', 'date_update'], 'integer'],
-            [['data', 'text'], 'string'],
+            [['data', 'text'], 'required', 'message' => Yii::t('reviews', 'Element cannot be blank.')],
             [['page', 'type'], 'string', 'max' => 20], ['level', 'default', 'value' => 1],
-            ['status', 'default', 'value' => 1],
+//            ['status', 'default', 'value' => 1],
             ['reviews_parent', 'default', 'value' => 0],
             ['reviews_child', 'default', 'value' => false],
             ['date_create', 'default', 'value' => time()],
             ['date_update', 'default', 'value' => time()],
+            ['rating', 'integer', 'min' => 1]
         ];
     }
 
@@ -199,4 +200,5 @@ class Reviews extends \yii\db\ActiveRecord
         }
         self::$html .= '</'.$tagMain.'>';
     }
+
 }

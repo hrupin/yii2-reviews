@@ -17,12 +17,17 @@ class ReviewsQuery extends \yii\db\ActiveQuery
 
     public function getActiveReviewsForPage($id)
     {
-        return $this->andWhere("[[page]]='".$id."'")->andWhere('[[status]]='.Reviews::REVIEWS_ACTIVE);
+        return $this->andWhere("[[page]]='".$id."'")
+            ->andWhere('[[status]]='.Reviews::REVIEWS_ACTIVE)
+            ->andWhere('[[level]]=1');
     }
 
     public function getActiveReviewsForPageAndMainLevel($id)
     {
-        return $this->andWhere("[[level]]=1")->andWhere("[[page]]='".$id."'")->andWhere('[[status]]='.Reviews::REVIEWS_ACTIVE);
+        return $this->andWhere("[[level]]=1")
+            ->andWhere("[[page]]='".$id."'")
+            ->andWhere('[[status]]='.Reviews::REVIEWS_ACTIVE)
+            ->orderBy(['reviews_id' => SORT_DESC]);
     }
 
     public function getParentReviews($id){

@@ -83,10 +83,8 @@ class Reviews extends Widget
     public function run()
     {
         $this->registerAssets();
-
         $ratingStars = Yii::$app->getModule('reviews')->ratingStars;
         $model = Yii::createObject(ModelReviews::className());
-
         $model->rating = $model->getAverageNumberStars($this->pageIdentifier);
         $model->type = $this->reviewsIdentifier;
         $model->page = $this->pageIdentifier;

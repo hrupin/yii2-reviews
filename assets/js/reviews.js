@@ -53,30 +53,3 @@ function insertAfter( node, referenceNode ) {
         parent.appendChild( node );
     }
 }
-
-$('.reply').on('click', function () {
-    $( ".responseForms" ).remove();
-    var id = $(this).attr('data-id');
-    var form = document.createElement('form');
-    form.innerHTML = "<div>" +
-        "<textarea class='responseText' name='' placeholder='...'></textarea>" +
-        "<span class='buttonSend btn btn-default' data-id='"+id+"'>" +
-        "<span class='glyphicon glyphicon-send' aria-hidden='true'></span></span>" +
-        "</div>";
-    form.action= urlReviews;
-    form.className = 'responseForms';
-    insertAfter(form, document.getElementById('reviews_'+id));
-    $('.buttonSend').on('click', function () {
-        var text = $('.responseText').val(),
-            id = $(this).attr('data-id');
-        $.ajax({
-            type: 'POST',
-            url: urlReviews,
-            data: 'reviews_id='+id+'&text='+text,
-            success: function(data){
-                $('.responseForms').html(data);
-            }
-        });
-    });
-});
-
