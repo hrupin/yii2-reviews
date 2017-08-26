@@ -19,6 +19,5 @@ Reviews::generateHTML($template, $reviews, 'ul', 'li', 1);
 echo Reviews::$html;
 ?>
 <script>
-    var urlReviews         = '<?= Url::toRoute(['reviews/reviews/create-response']); ?>',
-        csrfReviews        = '<?= Yii::$app->getRequest()->csrfParam; ?>=<?= Yii::$app->getRequest()->getCsrfToken(); ?>';
+    var urlReviews = '<?= Url::toRoute(['reviews/reviews/create-response']); ?>';
 </script>

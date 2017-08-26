@@ -25,6 +25,10 @@ class ReviewsQuery extends \yii\db\ActiveQuery
         return $this->andWhere("[[level]]=1")->andWhere("[[page]]='".$id."'")->andWhere('[[status]]='.Reviews::REVIEWS_ACTIVE);
     }
 
+    public function getParentReviews($id){
+        return $this->andWhere('[[reviews_id]]='.$id)->limit(1);
+    }
+
     public function getActive()
     {
         return $this->andWhere('[[status]]='.Reviews::REVIEWS_ACTIVE);

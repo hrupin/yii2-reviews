@@ -174,12 +174,9 @@ class Reviews extends \yii\db\ActiveRecord
     }
 
     public static function generateHTML($template, $data, $tagMain, $tag, $level){
-        self::$html .= '<'.$tagMain.' style="margin-left: '.(20*$level).'px;">';
+        self::$html .= '<'.$tagMain.' style="margin-left: '.($level + 1).'%;">';
         foreach ($data as $value){
-
-
-
-            if($level == 1){
+            if($value['level'] == 1){
                 self::$html .= '<'.$tag.' class="clearfix all r_'.$value['rating'].'">';
             }
             else{
