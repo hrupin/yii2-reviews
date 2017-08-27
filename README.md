@@ -107,6 +107,42 @@ FULL
 ]); ?>
 ```
 
+AND
+```
+
+<?= \hrupin\reviews\widgets\ReviewsModal::widget([
+    'pageIdentifier' => 'index'
+]); ?>
+
+<?php
+\hrupin\reviews\widgets\ReviewsStatistics::widget([
+    'pageIdentifier' => 'index',
+    'reviewsIdentifier' => 'index',
+    'statisticsReviews' => [
+            ['name' => 'Отрицательные', 'check' => 2], // 1 and 2 stars
+            ['name' => 'Нейтральные',   'check' => 3], // 3 stars
+            ['name' => 'Положительные', 'check' => 5] // 4 and 5 stars
+    ],
+    'timePeriod' => [
+        'type' => 'month', // day, month, year
+        'period' => [1, 3, 6],
+        'name' => ['месяц', 'месяца', 'месяцев']
+    ]
+]);
+?>
+
+<?= \hrupin\reviews\widgets\CustomerRating::widget([
+    'pageIdentifier' => 'index',
+    'reviewsIdentifier' => 'reviews',
+]); ?>
+
+
+<?= \hrupin\reviews\widgets\ReviewsList::widget([
+    'pageIdentifier' => 'index',
+]); ?>
+
+```
+
 ### configure
 
 in **common/config/main.php**

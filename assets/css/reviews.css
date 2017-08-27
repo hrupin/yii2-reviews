@@ -89,7 +89,13 @@
     float: right;
 }
 
-div#flavor-nav span {
-    margin-left: 20px;
+div#flavor-nav .current {
+    margin-right: 20px;
     cursor: pointer;
+}
+.review span.glyphicon-star{
+    color: orange;
+}
+.reviewsStatistics, .reviewsStatistics th td{
+    text-align: center;
 }

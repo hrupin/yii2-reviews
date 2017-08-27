@@ -130,9 +130,9 @@ class Reviews extends \yii\db\ActiveRecord
         return $this->hasMany(self::className(), ['reviews_parent' => 'reviews_id']);
     }
 
-    public function getAverageNumberStars($id){
+    public function getAverageNumberStars($id, $type){
         $res = 0; $stars = 0;
-        foreach ($this->find()->getActiveReviewsForPage($id)->all() as $item) {
+        foreach ($this->find()->getActiveReviewsForPage($id, $type)->all() as $item) {
             $stars += $item->rating;
             $res++;
         }
@@ -177,7 +177,11 @@ class Reviews extends \yii\db\ActiveRecord
     public static function generateHTML($template, $data, $tagMain, $tag, $level){
         self::$html .= '<'.$tagMain.' style="margin-left: '.($level + 1).'%;">';
         foreach ($data as $value){
+            $stars = '';
             if($value['level'] == 1){
+                for($e = 0; $e < $value['rating']; $e++){
+                    $stars .= '<span class="glyphicon glyphicon-star" aria-hidden="true"></span>';
+                }
                 self::$html .= '<'.$tag.' class="clearfix all r_'.$value['rating'].'">';
             }
             else{
@@ -188,6 +192,7 @@ class Reviews extends \yii\db\ActiveRecord
                 '{identifier}'  => 'reviews_'.$value['idReviews'],
                 '{date}'        => $value['date'],
                 '{name}'        => $value['name'],
+                '{stars}'       => $stars,
                 '{says}'        => Yii::t('reviews', 'says'),
                 '{idReviews}'   => $value['idReviews'],
                 '{reply}'       => Yii::t('reviews', 'Reply'),
@@ -199,6 +204,46 @@ class Reviews extends \yii\db\ActiveRecord
             self::$html .= '</'.$tag.'>';
         }
         self::$html .= '</'.$tagMain.'>';
+    }
+
+    public function getStatistics($model, $ar){
+        $statistics = [];
+        foreach ($model as $value){
+            foreach ($ar as $k => $v){
+                if($v['check'] >= $value->rating){
+                    $statistics[] = $v['name'];
+                    break;
+                }
+            }
+        }
+        $res = array_count_values($statistics);
+        foreach ($ar as $k => $v){
+            if(!array_key_exists($v['name'], $res)){
+                $res[$v['name']] = 0;
+            }
+        }
+        return $res;
+    }
+
+    public function getCustomerRating($model){
+        $res = [];
+        $step = 0;
+        foreach ($model as $item) {
+            $step++;
+            foreach ($item->dataAr as $k => $i) {
+                if(!array_key_exists($k, $res)){
+                    $res[$k] = [];
+                }
+                $res[$k][] = $i;
+            }
+        }
+        $result = [];
+        foreach ($res as $key => $value){
+            $max = max($value);
+            $tmp = array_count_values($value);
+            $result[$key] = round(($tmp[$max] / $step) * 100);
+        }
+        return ['res' => $result, 'count' => $step];
     }
 
 }

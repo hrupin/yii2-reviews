@@ -9,11 +9,11 @@ use hrupin\reviews\models\Reviews as ModelReviews;
 use yii\base\InvalidConfigException;
 
 /**
-* Class Reviews
-*
-* @package hrupin\reviews\widgets
-*/
-class Reviews extends Widget
+ * Class Reviews
+ *
+ * @package hrupin\reviews\widgets
+ */
+class ReviewsModal extends Widget
 {
 
     /**
@@ -28,7 +28,7 @@ class Reviews extends Widget
 
     /**
      * @var string $reviewsView - template view
-    */
+     */
     public $reviewsView;
 
     /**
@@ -42,8 +42,8 @@ class Reviews extends Widget
     public $enableReviews;
 
     /**
-    * @var string
-    */
+     * @var string
+     */
     private $pathIMG;
 
     /**
@@ -62,7 +62,7 @@ class Reviews extends Widget
         }
 
         if ($this->reviewsView === null) {
-            $this->reviewsView = 'reviews';
+            $this->reviewsView = 'reviews-modal';
         }
 
         if ($this->customOptions === null) {
@@ -88,14 +88,11 @@ class Reviews extends Widget
         $model->rating = $model->getAverageNumberStars($this->pageIdentifier, $this->reviewsIdentifier);
         $model->type = $this->reviewsIdentifier;
         $model->page = $this->pageIdentifier;
-        $reviews = $model->getReviews(ModelReviews::find()->getActiveReviewsForPageAndMainLevel($this->pageIdentifier, $this->reviewsIdentifier));
         return $this->render($this->reviewsView,[
-            'reviews' => $reviews,
             'model' => $model,
             'options' => $this->customOptions,
             'stars' => $ratingStars,
             'enableReviews' => $this->enableReviews,
-            'pathIMG' => $this->pathIMG
         ]);
     }
 
