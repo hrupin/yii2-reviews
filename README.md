@@ -22,6 +22,70 @@ or add
 to the require section of your `composer.json` file.
 
 
+### configure
+
+in **common/config/main.php**
+
+```
+'modules' => [
+    'reviews' => [
+        'class' => 'hrupin\reviews\Module',            
+        'moderateReviews' => false,
+        'ratingStars' => [
+           1 => 'Ужасно',
+           2 => 'Плохо',
+           3 => 'Нормально',
+           4 => 'Хорошо',
+           5 => 'Отлично'
+        ]
+    ],
+],
+```
+
+in **frontend/config/main.php**
+
+```
+'modules' => [
+    'reviews' => [
+        'as frontend' => 'hrupin\reviews\filters\FrontendFilter',
+    ],
+]
+```
+
+in **backend/config/main.php**
+
+```
+'modules' => [
+    'reviews' => [
+        'as backend' => 'hrupin\reviews\filters\BackendFilter',
+    ],
+],
+```
+
+add **to model User**
+```
+    public function getAvatarUser()
+    {
+        // your code
+    }
+
+    public function getNameUser()
+    {
+        // your code
+    }
+```
+
+### migrate
+
+```
+ php yii migrate/up --migrationPath=@vendor/hrupin/yii2-reviews/migrations
+ ```
+ 
+delete
+```
+php yii migrate/down --migrationPath=@vendor/hrupin/yii2-reviews/migrations
+```
+
 Usage
 -----
 
@@ -141,68 +205,4 @@ AND
     'pageIdentifier' => 'index',
 ]); ?>
 
-```
-
-### configure
-
-in **common/config/main.php**
-
-```
-'modules' => [
-    'reviews' => [
-        'class' => 'hrupin\reviews\Module',            
-        'moderateReviews' => false,
-        'ratingStars' => [
-           1 => 'Ужасно',
-           2 => 'Плохо',
-           3 => 'Нормально',
-           4 => 'Хорошо',
-           5 => 'Отлично'
-        ]
-    ],
-],
-```
-
-in **frontend/config/main.php**
-
-```
-'modules' => [
-    'reviews' => [
-        'as frontend' => 'hrupin\reviews\filters\FrontendFilter',
-    ],
-]
-```
-
-in **backend/config/main.php**
-
-```
-'modules' => [
-    'reviews' => [
-        'as backend' => 'hrupin\reviews\filters\BackendFilter',
-    ],
-],
-```
-
-add **to model User**
-```
-    public function getAvatarUser()
-    {
-        // your code
-    }
-
-    public function getNameUser()
-    {
-        // your code
-    }
-```
-
-### migrate
-
-```
- php yii migrate/up --migrationPath=@vendor/hrupin/yii2-reviews/migrations
- ```
- 
-delete
-```
-php yii migrate/down --migrationPath=@vendor/hrupin/yii2-reviews/migrations
 ```
