@@ -93,14 +93,14 @@ Once the extension is installed, simply use it in your code by  :
 
 MINIMUM
 ```
-<?= Reviews::widget([
+<?= hrupin\reviews\widgets\Reviews::widget([
     'pageIdentifier' => 'p_11'
 ]); ?>
 ```
 
 FULL
 ```
-<?= Reviews::widget([
+<?= hrupin\reviews\widgets\Reviews::widget([
     'reviewsIdentifier' => 'categoryId',
     'pageIdentifier' => 'p_11',
     'reviewsView' => '/ad/reviews',
@@ -178,8 +178,7 @@ AND
     'pageIdentifier' => 'index'
 ]); ?>
 
-<?php
-\hrupin\reviews\widgets\ReviewsStatistics::widget([
+<?= hrupin\reviews\widgets\ReviewsStatistics::widget([
     'pageIdentifier' => 'index',
     'reviewsIdentifier' => 'index',
     'statisticsReviews' => [
