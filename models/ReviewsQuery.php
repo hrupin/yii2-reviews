@@ -34,6 +34,16 @@ class ReviewsQuery extends \yii\db\ActiveQuery
             ->all();
     }
 
+    public function getActiveReviewsForPageAndMainLevelCount($id, $type)
+    {
+        return $this->andWhere("[[level]]=1")
+            ->andWhere("[[page]]='".$id."'")
+            ->andWhere("[[type]]='".$type."'")
+            ->andWhere('[[status]]='.Reviews::REVIEWS_ACTIVE)
+            ->orderBy(['reviews_id' => SORT_DESC])
+            ->count();
+    }
+
     public function getActiveReviewsForPageAndMainLevelForPeriod($id, $type, $period)
     {
         return $this->andWhere("[[level]]=1")
