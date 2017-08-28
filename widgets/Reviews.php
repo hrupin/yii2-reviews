@@ -65,10 +65,6 @@ class Reviews extends Widget
             $this->reviewsView = 'reviews';
         }
 
-        if ($this->customOptions === null) {
-            $this->customOptions = [];
-        }
-
         if ($this->enableReviews === null) {
             $this->enableReviews = true;
         }
@@ -92,7 +88,7 @@ class Reviews extends Widget
         return $this->render($this->reviewsView,[
             'reviews' => $reviews,
             'model' => $model,
-            'options' => $this->customOptions,
+            'options' => Yii::$app->getModule('reviews')->customOptions[$this->reviewsIdentifier],
             'stars' => $ratingStars,
             'enableReviews' => $this->enableReviews,
             'pathIMG' => $this->pathIMG

@@ -14,6 +14,7 @@ class Module extends BaseModule
     public $debug = false;
     public $ratingStars;
     public $moderateReviews = true;
+    public $customOptions = ['reviews' => []];
 
     public function init()
     {

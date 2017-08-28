@@ -89,10 +89,15 @@ class Reviews extends \yii\db\ActiveRecord
         return new ReviewsQuery(get_called_class());
     }
 
-    public function afterSave($insert, $changedAttributes)
+    public function beforeSave($insert)
     {
-        parent::afterSave($insert, $changedAttributes);
-        $this->date_update = time();
+        if (parent::beforeSave($insert)) {
+
+            $this->date_update = time();
+
+            return true;
+        }
+        return false;
     }
 
     public function getUser()
@@ -165,6 +170,7 @@ class Reviews extends \yii\db\ActiveRecord
         return [
             'idReviews' => $this->reviews_id,
             'text'      => $this->text,
+            'user_id'   => $this->user_id,
             'date'      => $this->dateReviews,
             'name'      => $this->user->nameUser,
             'rating'    => $this->rating,
@@ -178,6 +184,12 @@ class Reviews extends \yii\db\ActiveRecord
         self::$html .= '<'.$tagMain.' style="margin-left: '.($level + 1).'%;">';
         foreach ($data as $value){
             $stars = '';
+            $delete = '';
+            $edit = '';
+            if(Yii::$app->user->id == $value['user_id']){
+                $delete = '<span class="delete" data-id="'.$value['idReviews'].'"><small>'.Yii::t('reviews', 'Delete review').'</small></span>';
+                $edit = '<span class="edit" data-id="'.$value['idReviews'].'"><small>'.Yii::t('reviews', 'Edit review').'</small></span>';
+            }
             if($value['level'] == 1){
                 for($e = 0; $e < $value['rating']; $e++){
                     $stars .= '<span class="glyphicon glyphicon-star" aria-hidden="true"></span>';
@@ -195,6 +207,8 @@ class Reviews extends \yii\db\ActiveRecord
                 '{stars}'       => $stars,
                 '{says}'        => Yii::t('reviews', 'says'),
                 '{idReviews}'   => $value['idReviews'],
+                '{delete}'      => $delete,
+                '{edit}'        => $edit,
                 '{reply}'       => Yii::t('reviews', 'Reply'),
                 '{text}'        => $value['text']
             ]);

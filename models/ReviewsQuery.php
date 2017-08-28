@@ -66,8 +66,8 @@ class ReviewsQuery extends \yii\db\ActiveQuery
             ->count();
     }
 
-    public function getParentReviews($id){
-        return $this->andWhere('[[reviews_id]]='.$id)->limit(1);
+    public function getReviews($id){
+        return $this->andWhere('[[reviews_id]]='.$id)->limit(1)->one();
     }
 
     public function getActive()

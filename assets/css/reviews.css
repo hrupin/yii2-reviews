@@ -89,7 +89,7 @@
     float: right;
 }
 
-div#flavor-nav .current {
+div#flavor-nav .spanStatistics {
     margin-right: 20px;
     cursor: pointer;
 }
@@ -98,4 +98,7 @@ div#flavor-nav .current {
 }
 .reviewsStatistics, .reviewsStatistics th td{
     text-align: center;
+}
+.delete, .edit, .reply{
+    margin-left: 20px;
 }

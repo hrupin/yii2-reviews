@@ -65,10 +65,6 @@ class ReviewsList extends Widget
             $this->reviewsView = 'reviews-list';
         }
 
-        if ($this->customOptions === null) {
-            $this->customOptions = [];
-        }
-
     }
 
     /**
@@ -89,7 +85,8 @@ class ReviewsList extends Widget
             'reviews' => $reviews,
             'model' => $model,
             'pathIMG' => $this->pathIMG,
-            'stars' => $ratingStars
+            'stars' => $ratingStars,
+            'options' => Yii::$app->getModule('reviews')->customOptions[$this->reviewsIdentifier],
         ]);
     }
 

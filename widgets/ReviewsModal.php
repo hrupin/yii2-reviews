@@ -65,10 +65,6 @@ class ReviewsModal extends Widget
             $this->reviewsView = 'reviews-modal';
         }
 
-        if ($this->customOptions === null) {
-            $this->customOptions = [];
-        }
-
         if ($this->enableReviews === null) {
             $this->enableReviews = true;
         }
@@ -90,7 +86,7 @@ class ReviewsModal extends Widget
         $model->page = $this->pageIdentifier;
         return $this->render($this->reviewsView,[
             'model' => $model,
-            'options' => $this->customOptions,
+            'options' => Yii::$app->getModule('reviews')->customOptions[$this->reviewsIdentifier],
             'stars' => $ratingStars,
             'enableReviews' => $this->enableReviews,
         ]);
