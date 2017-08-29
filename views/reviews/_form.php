@@ -35,7 +35,7 @@ $this->registerJs(
     </div>
     <div id="textRating"></div>
 
-    <?= $form->field($model, 'rating')->hiddenInput(['value' => 0])->label(false); ?>
+    <?= $form->field($model, 'rating')->hiddenInput()->label(false); ?>
 
     <?php
     foreach ($options as $key => $option) {

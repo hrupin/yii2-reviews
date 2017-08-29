@@ -9,13 +9,13 @@ use yii\widgets\Pjax;
 /* @var array $stars */
 
 ?>
-    <?php
-        if($enableReviews && !Yii::$app->user->isGuest){
-            Pjax::begin(['enablePushState' => false, 'id'=>'form-reviews']);
-                echo $this->render('_form', ['model' => $model, 'options' => $options, 'stars' => $stars]);
-            Pjax::end();
-        }
-    ?>
+<?php
+    if($enableReviews && !Yii::$app->user->isGuest){
+        Pjax::begin(['enablePushState' => false, 'id'=>'form-reviews']);
+            echo $this->render('_form', ['model' => $model, 'options' => $options, 'stars' => $stars]);
+        Pjax::end();
+    }
+?>
 <?php Pjax::begin(['id'=>'reviews']); ?>
     <div class="container bootstrap snippet">
         <div class="row">

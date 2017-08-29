@@ -27,6 +27,7 @@ class Reviews extends \yii\db\ActiveRecord
 
     const REVIEWS_ACTIVE = 1;
     const REVIEWS_NOT_ACTIVE = 0;
+    const REVIEWS_DELETE = 99;
 
     public static $pathIMG;
     public static $html;
@@ -49,7 +50,6 @@ class Reviews extends \yii\db\ActiveRecord
             [['reviews_child', 'reviews_parent', 'user_id', 'level', 'rating', 'date_create', 'date_update'], 'integer'],
             [['data', 'text'], 'required', 'message' => Yii::t('reviews', 'Element cannot be blank.')],
             [['page', 'type'], 'string', 'max' => 20], ['level', 'default', 'value' => 1],
-//            ['status', 'default', 'value' => 1],
             ['reviews_parent', 'default', 'value' => 0],
             ['reviews_child', 'default', 'value' => false],
             ['date_create', 'default', 'value' => time()],
@@ -132,7 +132,10 @@ class Reviews extends \yii\db\ActiveRecord
 
     public function getChildren()
     {
-        return $this->hasMany(self::className(), ['reviews_parent' => 'reviews_id']);
+        if(Yii::$app->user->id == 1){
+            return $this->hasMany(self::className(), ['reviews_parent' => 'reviews_id'])->andOnCondition('status <>' . Reviews::REVIEWS_DELETE);
+        }
+        return $this->hasMany(self::className(), ['reviews_parent' => 'reviews_id'])->andOnCondition(['status' => Reviews::REVIEWS_ACTIVE]);
     }
 
     public function getAverageNumberStars($id, $type){
@@ -176,7 +179,8 @@ class Reviews extends \yii\db\ActiveRecord
             'rating'    => $this->rating,
             'img'       => $this::$pathIMG.'/img/noAvatar.jpg',
             'level'     => $this->level,
-            'parent'    => $this->reviews_parent
+            'parent'    => $this->reviews_parent,
+            'status'    => $this->status
         ];
     }
 
@@ -186,7 +190,11 @@ class Reviews extends \yii\db\ActiveRecord
             $stars = '';
             $delete = '';
             $edit = '';
-            if(Yii::$app->user->id == $value['user_id']){
+            $notActive = '';
+            if(Yii::$app->user->id == 1 && $value['status'] == Reviews::REVIEWS_NOT_ACTIVE){
+                $notActive = 'newReview';
+            }
+            if(Yii::$app->user->id == $value['user_id'] || Yii::$app->user->id == 1){
                 $delete = '<span class="delete" data-id="'.$value['idReviews'].'"><small>'.Yii::t('reviews', 'Delete review').'</small></span>';
                 $edit = '<span class="edit" data-id="'.$value['idReviews'].'"><small>'.Yii::t('reviews', 'Edit review').'</small></span>';
             }
@@ -194,10 +202,10 @@ class Reviews extends \yii\db\ActiveRecord
                 for($e = 0; $e < $value['rating']; $e++){
                     $stars .= '<span class="glyphicon glyphicon-star" aria-hidden="true"></span>';
                 }
-                self::$html .= '<'.$tag.' class="clearfix all r_'.$value['rating'].'">';
+                self::$html .= '<'.$tag.' class="clearfix all r_'.$value['rating'].' '.$notActive.'">';
             }
             else{
-                self::$html .= '<'.$tag.' class="clearfix">';
+                self::$html .= '<'.$tag.' class="clearfix '.$notActive.'">';
             }
             self::$html .= strtr($template, [
                 '{img}'         => $value['img'],

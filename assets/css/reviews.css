@@ -101,4 +101,19 @@ div#flavor-nav .spanStatistics {
 }
 .delete, .edit, .reply{
     margin-left: 20px;
+    cursor: pointer;
+}
+.countReviewsInBlock{
+    display: inline-block;
+    color: #FFFFFF;
+    background-color: red;
+    height: 20px;
+    border-radius: 10px;
+    padding: 0 6px;
+    font-weight: 900;
+}
+.newReview{
+    background-color: rgba(215, 44, 44, 0.2);
+    background: rgba(215, 44, 44, 0.2);
+    color: rgba(215, 44, 44, 0.2);
 }

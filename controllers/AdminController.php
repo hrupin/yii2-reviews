@@ -34,11 +34,21 @@ class AdminController extends Controller
     public function actionIndex()
     {
         $searchModel = new ReviewsSearch();
+        $tmpQuery = Reviews::find()->select(['page', 'type'], 'DISTINCT');
+        if(Yii::$app->request->get('type')){
+            $tmpQuery->andWhere(['type' => Yii::$app->request->get('type')]);
+        }
+        $pageAndType = $tmpQuery->all();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        $types = [];
+        foreach (Reviews::find()->select(['type'], 'DISTINCT')->all() as $item) {
+            $types[$item->type] = Reviews::find()->getNoActiveReviewsForPage($item->type)->count();
+        }
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'types'        => $types,
+            'pageAndType' => $pageAndType
         ]);
     }
 
@@ -55,6 +65,29 @@ class AdminController extends Controller
     }
 
     /**
+     * Displays a single Reviews model.
+     * @param string $page
+     * @param string $type
+     * @return mixed
+     */
+    public function actionViewReview($page, $type)
+    {
+        $ratingStars = Yii::$app->getModule('reviews')->ratingStars;
+        $model = Yii::createObject(Reviews::className());
+        $model->rating = $model->getAverageNumberStars($page, $type);
+        $model->type = $type;
+        $model->page = $page;
+        $reviews = $model->getReviews(Reviews::find()->getAllReviewsForPageAndMainLevel($page, $type));
+        return $this->render('view-reviews',[
+            'reviews' => $reviews,
+            'model' => $model,
+            'pathIMG' => '',
+            'stars' => $ratingStars,
+            'options' => Yii::$app->getModule('reviews')->customOptions[$type],
+        ]);
+    }
+
+    /**
      * Creates a new Reviews model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
@@ -62,7 +95,6 @@ class AdminController extends Controller
     public function actionCreate()
     {
         $model = new Reviews();
-
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->reviews_id]);
         } else {
@@ -81,13 +113,18 @@ class AdminController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->reviews_id]);
         } else {
-            return $this->render('update', [
+            $ratingStars = Yii::$app->getModule('reviews')->ratingStars;
+            $model->data = $model->dataAr;
+            return $this->render('update',[
                 'model' => $model,
+                'pathIMG' => '',
+                'stars' => $ratingStars,
+                'options' => Yii::$app->getModule('reviews')->customOptions[$model->type]
             ]);
+
         }
     }
 
@@ -97,11 +134,33 @@ class AdminController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
+    public function actionDelete()
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        if(Yii::$app->request->isAjax){
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            $model = Yii::createObject(Reviews::className());
+            if(Yii::$app->request->isPost) {
+                if (Yii::$app->request->post('reviews_id')) {
+                    if($data = $model->find()->getReviews(Yii::$app->request->post('reviews_id'))){
+                        $data->status = 99;
+                        if($data->save()){
+                            $res = [
+                                'status' => 'success',
+                                'reload' => (Yii::$app->getModule('reviews')->moderateReviews)? 0: 1,
+                                'message' => "<div class='alert alert-success'>".Yii::t('reviews', '<strong>Success!</strong> Opinion deleted successfully.')."</div>"
+                            ];
+                            return json_encode($res);
+                        }
+                    }
+                }
+            }
+            $res = [
+                'status' => 'error',
+                'message' => "<div class='alert alert-danger'>".Yii::t('reviews', '<strong>Error!</strong> The opinion was not sent! Repeat again after some time.')."</div>"
+            ];
+            return json_encode($res);
+        }
+        echo "This url only AJAX!!!";
     }
 
     /**

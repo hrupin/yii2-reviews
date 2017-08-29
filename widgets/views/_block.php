@@ -1,5 +1,6 @@
 <?php
 
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use hrupin\reviews\models\Reviews;
 
@@ -76,27 +77,22 @@ $this->registerJs(
                             \'<span class="buttonSendUpdate btn btn-default" data-id="\' + data.response.reviews_id + \'">\' +
                             \'<span class="glyphicon glyphicon-send" aria-hidden="true"></span></span>\' +
                             \'</div>\';
-                        form.action = urlReviews;
+                        form.action = urlReviewsCreate;
                         form.className = "responseForms";
                         insertAfter(form, document.getElementById("reviews_" + data.response.reviews_id));
-                        var wrap = document.createElement(\'div\');
-                        wrap.className = \'updateReview\';
-                        wrap.innerHTML = data;
-                        insertAfter(wrap, document.getElementById("reviews_" + id));
                         $(".buttonSendUpdate").on("click", function () {
                             var text = $(".responseText").val(),
                                 id = $(this).attr("data-id");
                             $.ajax({
                                 type: "POST",
-                                url: urlReviews,
+                                url: urlReviewsCreate,
                                 data: "reviews_id=" + id + "&text=" + text,
                                 success: function (data) {
-                                    var tmp = JSON.parse(data);
-                                    if (tmp.status == "success" && tmp.reload) {
+                                    if (data.status == "success" && data.reload) {
                                         $.pjax.reload({container: "#reviews"});
                                     }
                                     else {
-                                        $(".responseForms").html(tmp.message);
+                                        $(".responseForms").html(data.message);
                                     }
                                 }
                             });
@@ -123,9 +119,9 @@ $this->registerJs(
                 }
             });
         });
-        var urlReviewsCreate = "http://f.project.deb/?r=reviews/reviews/update-review";
-        var urlReviewsUpdateResponse = "http://f.project.deb/?r=reviews/reviews/update-review";
-        var urlReviewsDelete = "http://f.project.deb/?r=reviews/reviews/delete-review";
+        var urlReviewsCreate = "'.Url::toRoute(["/reviews/reviews/create-response"]).'";
+        var urlReviewsUpdateResponse = "'.Url::toRoute(["/reviews/reviews/update-review"]).'";
+        var urlReviewsDelete = "'.Url::toRoute(["/reviews/reviews/delete-review"]).'";
     });'
 );
 ?>

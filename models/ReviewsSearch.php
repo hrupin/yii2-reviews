@@ -43,6 +43,8 @@ class ReviewsSearch extends Reviews
     {
         $query = Reviews::find();
 
+//        $query->andWhere($data);
+
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([

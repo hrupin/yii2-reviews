@@ -24,12 +24,34 @@ class ReviewsQuery extends \yii\db\ActiveQuery
             ->andWhere('[[level]]=1');
     }
 
+    public function getNoActiveReviewsForPage($type)
+    {
+        return $this->andWhere("[[type]]='".$type."'")
+            ->andWhere('[[status]]='.Reviews::REVIEWS_NOT_ACTIVE);
+    }
+
+    public function getNoActiveReviewsForPageAndType($page, $type)
+    {
+        return $this->andWhere("[[type]]='".$type."'")
+            ->andWhere('[[status]]='.Reviews::REVIEWS_NOT_ACTIVE);
+    }
+
     public function getActiveReviewsForPageAndMainLevel($id, $type)
     {
         return $this->andWhere("[[level]]=1")
             ->andWhere("[[page]]='".$id."'")
             ->andWhere("[[type]]='".$type."'")
             ->andWhere('[[status]]='.Reviews::REVIEWS_ACTIVE)
+            ->orderBy(['reviews_id' => SORT_DESC])
+            ->all();
+    }
+
+    public function getAllReviewsForPageAndMainLevel($id, $type)
+    {
+        return $this->andWhere("[[level]]=1")
+            ->andWhere("[[page]]='".$id."'")
+            ->andWhere("[[type]]='".$type."'")
+            ->andWhere('status <> '.Reviews::REVIEWS_DELETE)
             ->orderBy(['reviews_id' => SORT_DESC])
             ->all();
     }
