@@ -13,8 +13,8 @@ class m170822_144316_create_table_reviews extends Migration
         }
         $this->createTable('{{%reviews}}', [
             'reviews_id' => Schema::TYPE_PK,
-            'page'       => Schema::TYPE_STRING . '(20) NOT NULL',
-            'type'       => Schema::TYPE_STRING . '(20) NOT NULL',
+            'page'       => Schema::TYPE_STRING . '(60) NOT NULL',
+            'type'       => Schema::TYPE_STRING . '(60) NOT NULL',
             'status'       => Schema::TYPE_INTEGER . '(5) NOT NULL',
             'reviews_child' => Schema::TYPE_BOOLEAN,
             'reviews_parent' => Schema::TYPE_INTEGER . ' NOT NULL',
