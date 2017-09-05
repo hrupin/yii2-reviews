@@ -35,11 +35,12 @@ $this->registerJs(
             insertAfter(form, document.getElementById("reviews_"+id));
             $(".buttonSend").on("click", function () {
                 var text = $(".responseText").val(),
-                    id = $(this).attr("data-id");
+                    id = $(this).attr("data-id"),
+                    csrf = "&"+$("meta[name=csrf-param]").prop("content")+"="+$("meta[name=csrf-token]").prop("content");
                 $.ajax({
                     type: "POST",
                     url: urlReviewsCreate,
-                    data: "reviews_id="+id+"&text="+text,
+                    data: "reviews_id="+id+"&text="+text+csrf,
                     success: function(data){
                         var tmp = JSON.parse(data);
                         if(tmp.status == "success" && tmp.reload){
@@ -54,11 +55,12 @@ $this->registerJs(
         });
         $(".edit").on("click", function () {
             $( ".responseForms" ).remove();
-            var id = $(this).attr("data-id");
+            var id = $(this).attr("data-id"),
+                csrf = "&"+$("meta[name=csrf-param]").prop("content")+"="+$("meta[name=csrf-token]").prop("content");
             $.ajax({
                 type: "POST",
                 url: urlReviewsUpdateResponse,
-                data: "reviews_id="+id,
+                data: "reviews_id="+id+csrf,
                 success: function(data){
                     if(data.text === undefined && data.edit === undefined){
                         var wrap = document.createElement("div");
@@ -82,11 +84,12 @@ $this->registerJs(
                         insertAfter(form, document.getElementById("reviews_" + data.response.reviews_id));
                         $(".buttonSendUpdate").on("click", function () {
                             var text = $(".responseText").val(),
-                                id = $(this).attr("data-id");
+                                id = $(this).attr("data-id"),
+                                csrf = "&"+$("meta[name=csrf-param]").prop("content")+"="+$("meta[name=csrf-token]").prop("content");
                             $.ajax({
                                 type: "POST",
                                 url: urlReviewsCreate,
-                                data: "reviews_id=" + id + "&text=" + text,
+                                data: "reviews_id=" + id + "&text=" + text+csrf,
                                 success: function (data) {
                                     if (data.status == "success" && data.reload) {
                                         $.pjax.reload({container: "#reviews"});
@@ -103,11 +106,12 @@ $this->registerJs(
         });
         $(".delete").on("click", function () {
             $( ".responseForms" ).remove();
-            var id = $(this).attr("data-id");
+            var id = $(this).attr("data-id"),
+            csrf = "&"+$("meta[name=csrf-param]").prop("content")+"="+$("meta[name=csrf-token]").prop("content");
             $.ajax({
                 type: "POST",
                 url: urlReviewsDelete,
-                data: "reviews_id="+id,
+                data: "reviews_id="+id+csrf,
                 success: function(data){
                     var tmp = JSON.parse(data);
                     if(tmp.status == "success" && tmp.reload){
