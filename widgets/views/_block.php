@@ -14,8 +14,10 @@ $template = '<img src="{img}" class="avatar img-rounded" alt="">
                  <p class="meta">{date} <a href="#"> {stars} {name}</a> {says} : <i class="pull-right">{delete} {edit} <span class="reply" data-id="{idReviews}"><small>{reply}</small></span></i></p>
                  <p>{text}</p>
              </div>';
-Reviews::generateHTML($template, $reviews, 'ul', 'li', 1);
-echo Reviews::$html;
+$class = Yii::$app->getModule('reviews')->modelMap['Reviews'];
+$modelClass = Yii::createObject($class::className());
+$modelClass::generateHTML($template, $reviews, 'ul', 'li', 1);
+echo $modelClass::$html;
 $this->registerJs(
     '$("document").ready(function(){
         $("#form-reviews").on("pjax:end", function() {
