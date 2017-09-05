@@ -2,7 +2,6 @@
 
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
-use hrupin\reviews\models\Reviews;
 
 /* @var $this yii\web\View */
 /* @var $reviews hrupin\reviews\models\Reviews */
