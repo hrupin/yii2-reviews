@@ -132,12 +132,12 @@ in **backend/config/main.php**
 
 add **to model User**
 ```
-    public function getAvatar()
+    public function getPublicAvatar()
     {
         // your code
     }
 
-    public function getName()
+    public function getPublicName()
     {
         // your code
     }
