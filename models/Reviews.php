@@ -102,7 +102,8 @@ class Reviews extends \yii\db\ActiveRecord
 
     public function getUser()
     {
-        return $this->hasOne(Yii::$app->getModule('reviews')->userIdentityClass, ['id' => 'user_id']);
+        $class = Yii::$app->getModule('reviews')->userModel;
+        return $this->hasOne($class::className(), ['id' => 'user_id']);
     }
 
     public function getDataAr()

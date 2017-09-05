@@ -76,7 +76,8 @@ class ReviewsList extends Widget
     {
         $this->registerAssets();
         $ratingStars = Yii::$app->getModule('reviews')->ratingStars;
-        $model = Yii::createObject(ModelReviews::className());
+        $class = Yii::$app->getModule('reviews')->modelMap['Reviews'];
+        $model = Yii::createObject($class::className());
         $model->rating = $model->getAverageNumberStars($this->pageIdentifier, $this->reviewsIdentifier);
         $model->type = $this->reviewsIdentifier;
         $model->page = $this->pageIdentifier;

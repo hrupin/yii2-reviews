@@ -4,10 +4,8 @@ namespace hrupin\reviews\controllers;
 use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 use hrupin\reviews\models\Reviews;
-use hrupin\reviews\models\ReviewsSearch;
 
 class AdminController extends Controller
 {
@@ -33,7 +31,8 @@ class AdminController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new ReviewsSearch();
+        $class = Yii::$app->getModule('reviews')->modelMap['ReviewsSearch'];
+        $searchModel = Yii::createObject($class::className());
         $tmpQuery = Reviews::find()->select(['page', 'type'], 'DISTINCT');
         if(Yii::$app->request->get('type')){
             $tmpQuery->andWhere(['type' => Yii::$app->request->get('type')]);
@@ -73,7 +72,8 @@ class AdminController extends Controller
     public function actionViewReview($page, $type)
     {
         $ratingStars = Yii::$app->getModule('reviews')->ratingStars;
-        $model = Yii::createObject(Reviews::className());
+        $class = Yii::$app->getModule('reviews')->modelMap['Reviews'];
+        $model = Yii::createObject($class::className());
         $model->rating = $model->getAverageNumberStars($page, $type);
         $model->type = $type;
         $model->page = $page;
@@ -94,7 +94,8 @@ class AdminController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Reviews();
+        $class = Yii::$app->getModule('reviews')->modelMap['Reviews'];
+        $model = Yii::createObject($class::className());
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->reviews_id]);
         } else {
@@ -138,7 +139,8 @@ class AdminController extends Controller
     {
         if(Yii::$app->request->isAjax){
             Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-            $model = Yii::createObject(Reviews::className());
+            $class = \Yii::$app->getModule('reviews')->modelMap['Reviews'];
+            $model = Yii::createObject($class::className());
             if(Yii::$app->request->isPost) {
                 if (Yii::$app->request->post('reviews_id')) {
                     if($data = $model->find()->getReviews(Yii::$app->request->post('reviews_id'))){

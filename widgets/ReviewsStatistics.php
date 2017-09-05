@@ -76,7 +76,8 @@ class ReviewsStatistics extends Widget
      */
     public function run()
     {
-        $model = Yii::createObject(ModelReviews::className());
+        $class = Yii::$app->getModule('reviews')->modelMap['Reviews'];
+        $model = Yii::createObject($class::className());
         if($this->timePeriod){
             $step = 0;
             switch(true){

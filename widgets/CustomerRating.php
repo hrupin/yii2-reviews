@@ -58,7 +58,8 @@ class CustomerRating extends Widget
      */
     public function run()
     {
-        $model = Yii::createObject(ModelReviews::className());
+        $class = Yii::$app->getModule('reviews')->modelMap['Reviews'];
+        $model = Yii::createObject($class::className());
         $result = $model->getCustomerRating(ModelReviews::find()->getActiveReviewsForPageAndMainLevel(
                 $this->pageIdentifier,
                 $this->reviewsIdentifier

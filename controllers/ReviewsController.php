@@ -10,7 +10,8 @@ class ReviewsController extends \yii\web\Controller
 
     public function actionCreateReview(){
         if(Yii::$app->request->isAjax){
-            $model = Yii::createObject(ModelReviews::className());
+            $class = Yii::$app->getModule('reviews')->modelMap['Reviews'];
+            $model = Yii::createObject($class::className());
             if(Yii::$app->request->isPost){
                 if($model->load(Yii::$app->request->post())){
                     $model->user_id = Yii::$app->user->id;
@@ -34,7 +35,8 @@ class ReviewsController extends \yii\web\Controller
 
     public function actionCreateResponse(){
         if(Yii::$app->request->isAjax){
-            $model = Yii::createObject(ModelReviews::className());
+            $class = Yii::$app->getModule('reviews')->modelMap['Reviews'];
+            $model = Yii::createObject($class::className());
             if(Yii::$app->request->isPost){
                 if(
                     Yii::$app->request->post('reviews_id') &&
@@ -76,7 +78,8 @@ class ReviewsController extends \yii\web\Controller
     public function actionUpdateReview(){
         if(Yii::$app->request->isAjax){
             Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-            $model = Yii::createObject(ModelReviews::className());
+            $class = Yii::$app->getModule('reviews')->modelMap['Reviews'];
+            $model = Yii::createObject($class::className());
             if(Yii::$app->request->isPost){
                 if(Yii::$app->request->post('reviews_id')) {
                     $data = $model->find()->getReviews(Yii::$app->request->post('reviews_id'));
@@ -113,7 +116,8 @@ class ReviewsController extends \yii\web\Controller
                 'url' => Yii::$app->request->post('hiddenURL')
             ]);
         }
-        $model = Yii::createObject(ModelReviews::className());
+        $class = Yii::$app->getModule('reviews')->modelMap['Reviews'];
+        $model = Yii::createObject($class::className());
         if($model->load(Yii::$app->request->post())){
             $data = ModelReviews::find()->getReviews((int)$_POST['Reviews']['reviews_id']);
             $data->load(Yii::$app->request->post());
@@ -137,7 +141,8 @@ class ReviewsController extends \yii\web\Controller
     public function actionDeleteReview(){
         if(Yii::$app->request->isAjax){
             Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-            $model = Yii::createObject(ModelReviews::className());
+            $class = Yii::$app->getModule('reviews')->modelMap['Reviews'];
+            $model = Yii::createObject($class::className());
             if(Yii::$app->request->isPost) {
                 if (Yii::$app->request->post('reviews_id')) {
                     if($data = $model->find()->getReviews(Yii::$app->request->post('reviews_id'))){
