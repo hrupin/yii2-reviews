@@ -33,7 +33,7 @@ class AdminController extends Controller
     {
         $class = Yii::$app->getModule('reviews')->modelMap['ReviewsSearch'];
         $searchModel = Yii::createObject($class::className());
-        $tmpQuery = Reviews::find()->select(['page', 'type'], 'DISTINCT');
+        $tmpQuery = $searchModel->find()->select(['page', 'type'], 'DISTINCT');
         if(Yii::$app->request->get('type')){
             $tmpQuery->andWhere(['type' => Yii::$app->request->get('type')]);
         }
