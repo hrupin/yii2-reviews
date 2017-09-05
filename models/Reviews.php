@@ -176,9 +176,9 @@ class Reviews extends \yii\db\ActiveRecord
             'text'      => $this->text,
             'user_id'   => $this->user_id,
             'date'      => $this->dateReviews,
-            'name'      => $this->user->nameUser,
+            'name'      => $this->user->name,
             'rating'    => $this->rating,
-            'img'       => $this::$pathIMG.'/img/noAvatar.jpg',
+            'img'       => ($this->user->avatar)? $this->user->avatar: $this::$pathIMG.'/img/noAvatar.jpg',
             'level'     => $this->level,
             'parent'    => $this->reviews_parent,
             'status'    => $this->status
