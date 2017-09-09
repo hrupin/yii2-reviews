@@ -81,7 +81,7 @@ class ReviewsList extends Widget
         $model->rating = $model->getAverageNumberStars($this->pageIdentifier, $this->reviewsIdentifier);
         $model->type = $this->reviewsIdentifier;
         $model->page = $this->pageIdentifier;
-        $reviews = $model->getReviews(ModelReviews::find()->getActiveReviewsForPageAndMainLevel($this->pageIdentifier, $this->reviewsIdentifier));
+        $reviews = $model->getReviews($model->find()->getActiveReviewsForPageAndMainLevel($this->pageIdentifier, $this->reviewsIdentifier));
         return $this->render($this->reviewsView,[
             'reviews' => $reviews,
             'model' => $model,

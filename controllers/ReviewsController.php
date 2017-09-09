@@ -54,7 +54,7 @@ class ReviewsController extends \yii\web\Controller
                 ){
                     $id = Yii::$app->request->post('reviews_id');
                     $model->text = Yii::$app->request->post('text');
-                    if($parentReviews = ModelReviews::find()->getReviews($id)){
+                    if($parentReviews = $model->find()->getReviews($id)){
                         $model->page = $parentReviews->page;
                         $model->type = $parentReviews->type;
                         $model->rating = (int)$parentReviews->rating;
@@ -138,7 +138,7 @@ class ReviewsController extends \yii\web\Controller
         $class = Yii::$app->getModule('reviews')->modelMap['Reviews'];
         $model = Yii::createObject($class::className());
         if($model->load(Yii::$app->request->post())){
-            $data = ModelReviews::find()->getReviews((int)$_POST['Reviews']['reviews_id']);
+            $data = $model->find()->getReviews((int)$_POST['Reviews']['reviews_id']);
             $data->load(Yii::$app->request->post());
             $data->status = (Yii::$app->getModule('reviews')->moderateReviews)? 0: 1;
             $data->dataAr = $data->data;

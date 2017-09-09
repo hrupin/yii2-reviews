@@ -94,7 +94,7 @@ class ReviewsStatistics extends Widget
             $statistics = [];
             foreach ($this->timePeriod['period'] as $k=>$value){
                 $statistics[$value . ' ' . $this->timePeriod['name'][$k]] = $model->getStatistics(
-                    ModelReviews::find()->getActiveReviewsForPageAndMainLevelForPeriod(
+                    $model->find()->getActiveReviewsForPageAndMainLevelForPeriod(
                         $this->pageIdentifier,
                         $this->reviewsIdentifier,
                         (time() - ($step*$value))
@@ -105,7 +105,7 @@ class ReviewsStatistics extends Widget
         }
         else{
             $statistics = $model->getStatistics(
-                ModelReviews::find()->getActiveReviewsForPageAndMainLevel(
+                $model->find()->getActiveReviewsForPageAndMainLevel(
                     $this->pageIdentifier,
                     $this->reviewsIdentifier
                 ),
