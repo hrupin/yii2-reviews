@@ -12,12 +12,17 @@ use yii\widgets\Pjax;
 <?php
     if($enableReviews && !Yii::$app->user->isGuest){
         Pjax::begin(['enablePushState' => false, 'id'=>'form-reviews']);
-            echo $this->render('_form', ['model' => $model, 'options' => $options, 'stars' => $stars]);
+            echo $this->render('_form', [
+                'model' => $model,
+                'options' => $options,
+                'stars' => $stars,
+                'emailAuthor' => $emailAuthor
+            ]);
         Pjax::end();
     }
 ?>
 <?php Pjax::begin(['id'=>'reviews']); ?>
-    <div class="container bootstrap snippet">
+    <div class="bootstrap snippet">
         <div class="row">
             <div class="col-md-12">
                 <div id="flavor-nav">

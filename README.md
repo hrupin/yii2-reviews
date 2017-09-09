@@ -172,7 +172,8 @@ FULL
     'reviewsIdentifier' => 'categoryId',
     'pageIdentifier' => 'p_11',
     'reviewsView' => '/ad/reviews',
-    'enableReviews' => true
+    'enableReviews' => true,
+    'emailAuthor' => 'info@yandex.ru'
 ]); ?>
 ```
 

@@ -15,7 +15,7 @@ return [
     'help' => null,
     'sourcePath' => '@vendor/hrupin/yii2-reviews',
     'messagePath' => '@vendor/hrupin/yii2-reviews/messages',
-    'languages' => ['en', 'ru'],
+    'languages' => ['ru-Ru'],
     'translator' => 'Yii::t',
     'sort' => false,
     'overwrite' => true,

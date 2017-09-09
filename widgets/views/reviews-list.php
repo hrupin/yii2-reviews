@@ -10,7 +10,7 @@ use yii\widgets\Pjax;
 ?>
 
 <?php Pjax::begin(['id'=>'reviews']); ?>
-<div class="container bootstrap snippet">
+<div class="bootstrap snippet">
     <div class="row">
         <div class="col-md-12">
             <div id="flavor-nav">

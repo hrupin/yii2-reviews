@@ -30,10 +30,13 @@ class Bootstrap implements BootstrapInterface
                 $modelName = is_array($definition) ? $definition['class'] : $definition;
                 $module->modelMap[$name] = $modelName;
             }
-            if (!isset($app->get('i18n')->translations['reviews*'])) {
+            if (!isset($app->get('i18n')->translations['reviews'])) {
                 $app->get('i18n')->translations['reviews*'] = [
                     'class' => PhpMessageSource::className(),
                     'basePath' => __DIR__ . '/messages',
+                    'fileMap' => [
+                        'reviews'       => 'reviews.php',
+                    ],
                     'sourceLanguage' => 'en-US'
                 ];
             }

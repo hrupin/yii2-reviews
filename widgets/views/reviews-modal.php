@@ -23,7 +23,12 @@ if($enableReviews && !Yii::$app->user->isGuest){
         <h4 class="modal-title" id="myModalLabel"><?= Yii::t('reviews', 'Add a review'); ?></h4>
       </div>
       <div class="modal-body">
-        <?= $this->render('_form', ['model' => $model, 'options' => $options, 'stars' => $stars]); ?>
+        <?= $this->render('_form', [
+            'model' => $model,
+            'options' => $options,
+            'stars' => $stars,
+            'emailAuthor' => $emailAuthor
+        ]); ?>
       </div>
     </div>
   </div>

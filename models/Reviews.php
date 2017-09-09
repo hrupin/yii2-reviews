@@ -31,6 +31,7 @@ class Reviews extends \yii\db\ActiveRecord
 
     public static $pathIMG;
     public static $html;
+    public static $email = false;
 
     /**
      * @inheritdoc

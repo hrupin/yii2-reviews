@@ -32,6 +32,11 @@ class ReviewsModal extends Widget
     public $reviewsView;
 
     /**
+     * @var string $emailAuthor - e-mail page's author
+     */
+    public $emailAuthor;
+
+    /**
      * @var array - custom options for data
      */
     public $customOptions;
@@ -69,6 +74,10 @@ class ReviewsModal extends Widget
             $this->enableReviews = true;
         }
 
+        if ($this->emailAuthor === null) {
+            $this->emailAuthor = false;
+        }
+
     }
 
     /**
@@ -90,6 +99,7 @@ class ReviewsModal extends Widget
             'options' => Yii::$app->getModule('reviews')->customOptions[$this->reviewsIdentifier],
             'stars' => $ratingStars,
             'enableReviews' => $this->enableReviews,
+            'emailAuthor' => $this->emailAuthor
         ]);
     }
 

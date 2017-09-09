@@ -76,6 +76,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'text')->textarea(['rows' => 6]) ?>
     <?= $form->field($model, 'type')->hiddenInput()->label(false); ?>
     <?= $form->field($model, 'page')->hiddenInput()->label(false); ?>
+    <input type="hidden" name="emailAuthor" value="<?= $emailAuthor; ?>">
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('reviews', 'Create') : Yii::t('reviews', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
