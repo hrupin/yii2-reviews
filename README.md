@@ -141,6 +141,12 @@ add **to model User**
     {
         // your code
     }
+    
+    public function getSendEmail()
+    {
+        // your code
+        // return true or false
+    }
 ```
 
 ### migrate

@@ -3,7 +3,7 @@
 namespace hrupin\reviews\models;
 
 use Yii;
-// надо use User
+use yii\helpers\HtmlPurifier;
 
 /**
  * This is the model class for table "reviews".
@@ -93,12 +93,18 @@ class Reviews extends \yii\db\ActiveRecord
     public function beforeSave($insert)
     {
         if (parent::beforeSave($insert)) {
-
+            $this->text = self::purifier($this->text);
             $this->date_update = time();
 
             return true;
         }
         return false;
+    }
+
+    public static function purifier($text)
+    {
+        $pr = new HtmlPurifier;
+        return $pr->process($text);
     }
 
     public function getUser()

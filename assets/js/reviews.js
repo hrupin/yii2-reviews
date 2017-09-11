@@ -53,3 +53,14 @@ function insertAfter( node, referenceNode ) {
         parent.appendChild( node );
     }
 }
+$(function(){$('#reviews-text').keyup(function(){
+    var text = $(this).val().toLowerCase(),
+        spout='http,url,.ru,.com,.net,.tk,.ucoz,www,.ua,.tv,.info,.org,.su,.ру,.су,.ком,.инфо,//'.split(',');
+    for(n = 0; n < spout.length; n++){
+        if(text.search(spout[n])!= -1) {
+            $(this).val(text.replace(spout[n],'[Запрещено]'));
+        return true;
+        }
+    }}
+    );
+});

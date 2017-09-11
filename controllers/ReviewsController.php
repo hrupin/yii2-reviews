@@ -19,7 +19,7 @@ class ReviewsController extends \yii\web\Controller
                     $model->dataAr = $model->data;
                     $model->status = (Yii::$app->getModule('reviews')->moderateReviews)? 0: 1;
                     if($model->save()){
-                        if(Yii::$app->request->post('emailAuthor')){
+                        if(Yii::$app->request->post('emailAuthor') && $model->user->sendEmail){
                             Yii::$app->mailer->compose('@vendor/hrupin/yii2-reviews/mail/reviews', [
                                 'url' => Url::base(true).'/'.$model->page
                             ]) // здесь устанавливается результат рендеринга вида в тело сообщения
@@ -64,7 +64,7 @@ class ReviewsController extends \yii\web\Controller
                         $model->status = (Yii::$app->getModule('reviews')->moderateReviews)? 0: 1;
                         $model->dataAr = [];
                         if($model->save()){
-                            if($parentReviews->user->email){
+                            if($parentReviews->user->email && $parentReviews->user->sendEmail){
                                 Yii::$app->mailer->compose('@vendor/hrupin/yii2-reviews/mail/response', [
                                     'url' => Url::base(true).'/'.$model->page
                                 ]) // здесь устанавливается результат рендеринга вида в тело сообщения
