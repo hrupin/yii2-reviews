@@ -34,8 +34,5 @@ if($enableReviews && !Yii::$app->user->isGuest){
   </div>
 </div>
 <?php
-$this->registerJs(
-    '$("#formReviewsPjax").submit(function(){$("#reviewsModal").modal("hide")});'
-);
 Pjax::end();
 ?>
