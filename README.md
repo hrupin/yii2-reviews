@@ -191,7 +191,7 @@ AND
 ]); ?>
 
 <?= hrupin\reviews\widgets\ReviewsStatistics::widget([
-    'pageIdentifier' => 'index',
+    'pageIdentifier' => ['index', 'index-2'],
     'reviewsIdentifier' => 'index',
     'statisticsReviews' => [
             ['name' => 'Отрицательные', 'check' => 2], // 1 and 2 stars
