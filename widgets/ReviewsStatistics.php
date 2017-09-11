@@ -16,7 +16,7 @@ class ReviewsStatistics extends Widget
 {
 
     /**
-     * @var string
+     * @var array
      */
     public $pageIdentifier;
 
@@ -81,36 +81,44 @@ class ReviewsStatistics extends Widget
         if($this->timePeriod){
             $step = 0;
             switch(true){
-                case 'year':
+                case $this->timePeriod['type'] == 'year':
                     $step = 31536000;
                     break;
-                case 'month':
+                case $this->timePeriod['type'] == 'month':
                     $step = 2592000;
                     break;
-                case 'day':
+                case $this->timePeriod['type'] == 'day':
                     $step = 86400;
                     break;
             }
             $statistics = [];
-            foreach ($this->timePeriod['period'] as $k=>$value){
-                $statistics[$value . ' ' . $this->timePeriod['name'][$k]] = $model->getStatistics(
-                    $model->find()->getActiveReviewsForPageAndMainLevelForPeriod(
-                        $this->pageIdentifier,
-                        $this->reviewsIdentifier,
-                        (time() - ($step*$value))
+            $tmp = 0;
+            foreach ($this->timePeriod['period'] as $k => $value){
+                foreach ($this->pageIdentifier as $item) {
+                    $tmp = $model->getStatistics(
+                        $model->find()->getActiveReviewsForPageAndMainLevelForPeriod(
+                            $item,
+                            $this->reviewsIdentifier,
+                            (time() - ($step*$value))
+                        ),
+                        $this->statisticsReviews
+                    );
+                }
+                $statistics[$value . ' ' . $this->timePeriod['name'][$k]] = $tmp;
+            }
+        }
+        else{
+            $tmp = 0;
+            foreach ($this->pageIdentifier as $item) {
+                $tmp = $model->getStatistics(
+                    $model->find()->getActiveReviewsForPageAndMainLevel(
+                        $item,
+                        $this->reviewsIdentifier
                     ),
                     $this->statisticsReviews
                 );
             }
-        }
-        else{
-            $statistics = $model->getStatistics(
-                $model->find()->getActiveReviewsForPageAndMainLevel(
-                    $this->pageIdentifier,
-                    $this->reviewsIdentifier
-                ),
-                $this->statisticsReviews
-            );
+            $statistics = $tmp;
         }
         return $this->render($this->reviewsView,[
             'model' => $statistics,
