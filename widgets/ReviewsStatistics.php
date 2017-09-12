@@ -103,7 +103,7 @@ class ReviewsStatistics extends Widget
                         ),
                         $this->statisticsReviews
                     );
-                    $tmp = self::array_custom_merge($tmp, $tmpAr);
+                    $tmp = ModelReviews::array_custom_merge($tmp, $tmpAr);
                 }
                 $statistics[$value . ' ' . $this->timePeriod['name'][$k]] = $tmp;
             }
