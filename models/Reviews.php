@@ -287,4 +287,17 @@ class Reviews extends \yii\db\ActiveRecord
             'count' => $count
         ];
     }
+
+    public static function array_custom_merge($arr1, $arr2){
+        $newArr = $arr1;
+        foreach($arr2 as $k => $v){
+            if(isset($newArr[$k])){
+                $newArr[$k] += $v;
+            }
+            else{
+                $newArr[$k] = $v;
+            }
+        }
+        return $newArr;
+    }
 }

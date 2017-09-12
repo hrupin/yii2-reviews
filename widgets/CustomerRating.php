@@ -60,11 +60,16 @@ class CustomerRating extends Widget
     {
         $class = Yii::$app->getModule('reviews')->modelMap['Reviews'];
         $model = Yii::createObject($class::className());
-        $result = $model->getCustomerRating($model->find()->getActiveReviewsForPageAndMainLevel(
-                $this->pageIdentifier,
-                $this->reviewsIdentifier
-            )
-        );
+        $tmp = [];
+        foreach ($this->pageIdentifier as $item){
+            $tmpAr = $model->getCustomerRating($model->find()->getActiveReviewsForPageAndMainLevel(
+                    $item,
+                    $this->reviewsIdentifier
+                )
+            );
+            $tmp = ModelReviews::array_custom_merge($tmp, $tmpAr);
+        }
+        $result = $tmp;
         return $this->render($this->reviewsView,[
             'model' => $result
         ]);

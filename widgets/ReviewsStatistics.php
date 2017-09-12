@@ -92,10 +92,10 @@ class ReviewsStatistics extends Widget
                     break;
             }
             $statistics = [];
-            $tmp = 0;
+            $tmp = [];
             foreach ($this->timePeriod['period'] as $k => $value){
                 foreach ($this->pageIdentifier as $item) {
-                    $tmp = $model->getStatistics(
+                    $tmpAr = $model->getStatistics(
                         $model->find()->getActiveReviewsForPageAndMainLevelForPeriod(
                             $item,
                             $this->reviewsIdentifier,
@@ -103,20 +103,22 @@ class ReviewsStatistics extends Widget
                         ),
                         $this->statisticsReviews
                     );
+                    $tmp = self::array_custom_merge($tmp, $tmpAr);
                 }
                 $statistics[$value . ' ' . $this->timePeriod['name'][$k]] = $tmp;
             }
         }
         else{
-            $tmp = 0;
+            $tmp = [];
             foreach ($this->pageIdentifier as $item) {
-                $tmp = $model->getStatistics(
+                $tmpAr = $model->getStatistics(
                     $model->find()->getActiveReviewsForPageAndMainLevel(
                         $item,
                         $this->reviewsIdentifier
                     ),
                     $this->statisticsReviews
                 );
+                $tmp = ModelReviews::array_custom_merge($tmp, $tmpAr);
             }
             $statistics = $tmp;
         }

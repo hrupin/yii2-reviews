@@ -7,7 +7,7 @@
 
 $diff = count($model, COUNT_RECURSIVE) - count($model);
 
-if($diff){
+if ($diff) {
     ?>
     <div class="table-responsive">
         <table class="table reviewsStatistics">
@@ -15,19 +15,19 @@ if($diff){
                 <tr>
                     <th></th>
                     <?php
-                    foreach ($model as $key => $value){
-                        echo '<th>'. $key .'</th>';
+                    foreach ($model as $key => $value) {
+                        echo '<th>' . $key . '</th>';
                     }
                     ?>
                 </tr>
             </thead>
             <tbody>
                 <?php
-                    foreach ($statistics as $key => $value){
+                    foreach ($statistics as $key => $value) {
                         echo '<tr>';
-                        echo '<th class="row">'. $value['name'] .'</th>';
-                        foreach ($model as $k => $v){
-                            echo '<td>'.$v[$value['name']].'</td>';
+                        echo '<th class="row">' . $value['name'] . '</th>';
+                        foreach ($model as $k => $v) {
+                            echo '<td>' . $v[$value['name']] . '</td>';
                         }
                         echo '<tr>';
                     }
@@ -35,10 +35,15 @@ if($diff){
             </tbody>
         </table>
     </div>
-<?php
+    <?php
+} else {
+    ?>
+    <ul>
+        <?php
+            foreach ($model as $key => $value) {
+                echo '<li>' . $key . ": " . $value . '</li>';
+            }
+        ?>
+    </ul>
+    <?php
 }
-else{
-
-}
-
-?>
