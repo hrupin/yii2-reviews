@@ -207,7 +207,7 @@ AND
 ?>
 
 <?= \hrupin\reviews\widgets\CustomerRating::widget([
-    'pageIdentifier' => 'index',
+    'pageIdentifier' => ['index'],
     'reviewsIdentifier' => 'reviews',
 ]); ?>
 
@@ -217,7 +217,7 @@ AND
 ]); ?>
 
 <?php
-$m = \hrupin\reviews\models\Reviews::getSecondaryPositiveNumber('index','reviews');
+$m = \hrupin\reviews\models\Reviews::getSecondaryPositiveNumber(['index'],'reviews');
 var_dump($m);
 
 array(2) {
