@@ -92,8 +92,8 @@ class ReviewsStatistics extends Widget
                     break;
             }
             $statistics = [];
-            $tmp = [];
             foreach ($this->timePeriod['period'] as $k => $value){
+                $tmp = [];
                 foreach ($this->pageIdentifier as $item) {
                     $tmpAr = $model->getStatistics(
                         $model->find()->getActiveReviewsForPageAndMainLevelForPeriod(
