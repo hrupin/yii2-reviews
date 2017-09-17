@@ -97,6 +97,11 @@ class ReviewsQuery extends \yii\db\ActiveQuery
         return $this->andWhere('[[status]]='.Reviews::REVIEWS_ACTIVE);
     }
 
+    public function getNotActive()
+    {
+        return $this->andWhere('[[status]]='.Reviews::REVIEWS_NOT_ACTIVE);
+    }
+
     /**
      * @inheritdoc
      * @return Reviews[]|array
