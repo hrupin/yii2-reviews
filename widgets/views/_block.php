@@ -11,7 +11,10 @@ use yii\widgets\ActiveForm;
 $template = '<img src="{img}" class="avatar img-rounded" alt="">
              <div class="review" id="{identifier}">
                  <p class="meta">{date} <a href="#"> {stars} {name}</a> {says} : <i class="pull-right">{delete} {edit} <span class="reply" data-id="{idReviews}"><small>{reply}</small></span></i></p>
-                 <p>{text}</p>
+                 <p>
+                 {text}
+                 {data}
+                 </p>
              </div>';
 $class = Yii::$app->getModule('reviews')->modelMap['Reviews'];
 $modelClass = Yii::createObject($class::className());

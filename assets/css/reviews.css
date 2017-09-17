@@ -99,7 +99,7 @@ div#flavor-nav .spanStatistics {
 .reviewsStatistics, .reviewsStatistics th td{
     text-align: center;
 }
-.delete, .edit, .reply{
+.delete, .edit, .reply, .success{
     margin-left: 20px;
     cursor: pointer;
 }
@@ -116,4 +116,17 @@ div#flavor-nav .spanStatistics {
     background-color: rgba(215, 44, 44, 0.2);
     background: rgba(215, 44, 44, 0.2);
     color: rgba(215, 44, 44, 0.2);
+}
+ul.dataList {
+    margin: 20px;
+}
+.dataList li{
+    margin-top: 0px !important;
+}
+li.keyData {
+    font-weight: 800;
+}
+li.valueData {
+    font-weight: 800;
+    color: #999;
 }

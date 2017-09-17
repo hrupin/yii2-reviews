@@ -29,7 +29,7 @@ $this->params['breadcrumbs'] = [
 
 $template = '<img src="{img}" class="avatar img-rounded" alt="">
              <div class="review" id="{identifier}">
-                 <p class="meta">{date} <a href="#"> {stars} {name}</a> {says} : <i class="pull-right">{delete} {edit} <span class="reply" data-id="{idReviews}"><small>{reply}</small></span></i></p>
+                 <p class="meta">{date} <a href="#"> {stars} {name}</a> {says} : <i class="pull-right">{delete} {edit} {success}<span class="reply" data-id="{idReviews}"><small>{reply}</small></span></i></p>
                  <p>{text}</p>
              </div>';
 
@@ -50,6 +50,12 @@ $this->registerJs(
     '$("document").ready(function(){
         $(".edit").on("click", function(){
             document.getElementById("hiddenId").value = $(this).attr("data-id");
+            document.getElementById("hiddenDo").value = "edit";
+            document.getElementById("hiddenFormReviews").submit();
+        });
+        $(".success").on("click", function(){
+            document.getElementById("hiddenId").value = $(this).attr("data-id");
+            document.getElementById("hiddenDo").value = "success";
             document.getElementById("hiddenFormReviews").submit();
         });
         $(".delete").on("click", function () {
@@ -76,4 +82,5 @@ $this->registerJs(
 
 <?php $form = ActiveForm::begin(['method' => 'GET', 'options' => ['id' => 'hiddenFormReviews'], 'action' => ['/reviews/admin/update']]); ?>
 <input id="hiddenId" name="id" type="hidden">
+<input id="hiddenDo" name="do" type="hidden">
 <?php ActiveForm::end(); ?>

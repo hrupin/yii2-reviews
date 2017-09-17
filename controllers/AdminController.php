@@ -111,12 +111,18 @@ class AdminController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
+    public function actionUpdate($id, $do)
     {
         $model = $this->findModel($id);
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->reviews_id]);
         } else {
+            if($do == 'success'){
+                $model = Reviews::find()->where(['reviews_id' => $id])->limit(1)->one();
+                $model->status = 1;
+                $model->update();
+                return $this->redirect(['/reviews/admin/view-review', 'page' => $model->page , 'type' => $model->type]);
+            }
             $ratingStars = Yii::$app->getModule('reviews')->ratingStars;
             $model->data = $model->dataAr;
             return $this->render('update',[

@@ -188,7 +188,8 @@ class Reviews extends \yii\db\ActiveRecord
             'img'       => ($this->user->publicAvatar)? $this->user->publicAvatar: $this::$pathIMG.'/img/noAvatar.jpg',
             'level'     => $this->level,
             'parent'    => $this->reviews_parent,
-            'status'    => $this->status
+            'status'    => $this->status,
+            'data'      => $this->dataAr
         ];
     }
 
@@ -198,9 +199,11 @@ class Reviews extends \yii\db\ActiveRecord
             $stars = '';
             $delete = '';
             $edit = '';
+            $success = '';
             $notActive = '';
             if(Yii::$app->user->id == 1 && $value['status'] == Reviews::REVIEWS_NOT_ACTIVE){
                 $notActive = 'newReview';
+                $success = '<span class="success" data-id="'.$value['idReviews'].'"><small>'.Yii::t('reviews', 'Success review').'</small></span>';
             }
             if(Yii::$app->user->id == $value['user_id'] || Yii::$app->user->id == 1){
                 $delete = '<span class="delete" data-id="'.$value['idReviews'].'"><small>'.Yii::t('reviews', 'Delete review').'</small></span>';
@@ -215,6 +218,13 @@ class Reviews extends \yii\db\ActiveRecord
             else{
                 self::$html .= '<'.$tag.' class="clearfix '.$notActive.'">';
             }
+
+            $data = '<ul class="dataList">';
+            foreach ($value['data'] as $key => $datum) {
+                $data .= "<li class='keyData'>".$key."</li>";
+                $data .= "<li class='valueData'>".$datum."</li>";
+            }
+            $data .= '</ul>';
             self::$html .= strtr($template, [
                 '{img}'         => $value['img'],
                 '{identifier}'  => 'reviews_'.$value['idReviews'],
@@ -225,8 +235,10 @@ class Reviews extends \yii\db\ActiveRecord
                 '{idReviews}'   => $value['idReviews'],
                 '{delete}'      => $delete,
                 '{edit}'        => $edit,
+                '{success}'     => $success,
                 '{reply}'       => Yii::t('reviews', 'Reply'),
-                '{text}'        => $value['text']
+                '{text}'        => $value['text'],
+                '{data}'        => $data
             ]);
             if(isset($value['children'])){
                 self::generateHTML($template, $value['children'], $tagMain, $tag, $value['level']++);
