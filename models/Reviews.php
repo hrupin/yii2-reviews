@@ -310,6 +310,10 @@ class Reviews extends \yii\db\ActiveRecord
             'count' => $count
         ];
     }
+    
+    public static function getNewReviews(){
+        self::find()->getNotActive()->count();
+    }
 
     public static function array_custom_merge($arr1, $arr2){
         $newArr = $arr1;
