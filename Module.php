@@ -9,6 +9,7 @@ class Module extends BaseModule
     const VERSION = '0.0.1';
     public $mailer = [];
     public $modelMap = [];
+    public $admin = [];
     public $userModel;
     public $urlPrefix = 'reviews';
     public $debug = false;

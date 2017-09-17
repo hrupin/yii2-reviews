@@ -140,7 +140,7 @@ class Reviews extends \yii\db\ActiveRecord
 
     public function getChildren()
     {
-        if(Yii::$app->user->id == 1){
+        if(array_search(Yii::$app->user->id, Yii::$app->getModule('reviews')->admin) !== false){
             return $this->hasMany(self::className(), ['reviews_parent' => 'reviews_id'])->andOnCondition('status <>' . Reviews::REVIEWS_DELETE);
         }
         return $this->hasMany(self::className(), ['reviews_parent' => 'reviews_id'])->andOnCondition(['status' => Reviews::REVIEWS_ACTIVE]);
@@ -201,11 +201,11 @@ class Reviews extends \yii\db\ActiveRecord
             $edit = '';
             $success = '';
             $notActive = '';
-            if(Yii::$app->user->id == 1 && $value['status'] == Reviews::REVIEWS_NOT_ACTIVE){
+            if(array_search(Yii::$app->user->id, Yii::$app->getModule('reviews')->admin) !== false && $value['status'] == Reviews::REVIEWS_NOT_ACTIVE){
                 $notActive = 'newReview';
                 $success = '<span class="success" data-id="'.$value['idReviews'].'"><small>'.Yii::t('reviews', 'Success review').'</small></span>';
             }
-            if(Yii::$app->user->id == $value['user_id'] || Yii::$app->user->id == 1){
+            if(Yii::$app->user->id == $value['user_id'] || array_search(Yii::$app->user->id, Yii::$app->getModule('reviews')->admin) !== false){
                 $delete = '<span class="delete" data-id="'.$value['idReviews'].'"><small>'.Yii::t('reviews', 'Delete review').'</small></span>';
                 $edit = '<span class="edit" data-id="'.$value['idReviews'].'"><small>'.Yii::t('reviews', 'Edit review').'</small></span>';
             }

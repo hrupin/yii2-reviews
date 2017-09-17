@@ -77,7 +77,13 @@ class AdminController extends Controller
         $model->rating = $model->getAverageNumberStars($page, $type);
         $model->type = $type;
         $model->page = $page;
-        $reviews = $model->getReviews(Reviews::find()->getAllReviewsForPageAndMainLevel($page, $type));
+        if(array_search(Yii::$app->user->id, Yii::$app->getModule('reviews')->admin) !== false){
+            $reviews = $model->getReviews(Reviews::find()->getAllReviewsForPageAndMainLevel($page, $type));
+        }
+        else{
+            $reviews = $model->getReviews(Reviews::find()->getActiveReviewsForPageAndMainLevel($page, $type));
+        }
+
         return $this->render('view-reviews',[
             'reviews' => $reviews,
             'model' => $model,
@@ -87,22 +93,55 @@ class AdminController extends Controller
         ]);
     }
 
-    /**
-     * Creates a new Reviews model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate()
-    {
-        $class = Yii::$app->getModule('reviews')->modelMap['Reviews'];
-        $model = Yii::createObject($class::className());
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->reviews_id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+    public function actionCreateResponse(){
+        if(Yii::$app->request->isAjax){
+            $class = Yii::$app->getModule('reviews')->modelMap['Reviews'];
+            $model = Yii::createObject($class::className());
+            if(Yii::$app->request->isPost){
+                if(
+                    Yii::$app->request->post('reviews_id') &&
+                    Yii::$app->request->post('text')
+                ){
+                    $id = Yii::$app->request->post('reviews_id');
+                    $model->text = Yii::$app->request->post('text');
+                    if($parentReviews = $model->find()->getReviews($id)){
+                        $model->page = $parentReviews->page;
+                        $model->type = $parentReviews->type;
+                        $model->rating = (int)$parentReviews->rating;
+                        $model->reviews_parent = $id;
+                        $model->level = ((int)$parentReviews->level) + 1;
+                        $model->user_id = Yii::$app->user->id;
+                        $model->status = 1;
+                        $model->dataAr = [];
+                        if($model->save()){
+                            if($parentReviews->user->email && $parentReviews->user->sendEmail){
+                                Yii::$app->mailer->compose('@vendor/hrupin/yii2-reviews/mail/response', [
+                                    'url' => Url::base(true).'/'.$model->page
+                                ]) // здесь устанавливается результат рендеринга вида в тело сообщения
+                                ->setFrom(Yii::$app->params['adminEmail'])
+                                    ->setTo($parentReviews->user->email)
+                                    ->setSubject(Yii::t('reviews', 'Send new response'))
+                                    ->send();
+                            }
+                            $parentReviews->reviews_child = 1;
+                            $parentReviews->update();
+                            $res = [
+                                'status' => 'success',
+                                'reload' => 1,
+                                'message' => "<div class='alert alert-success'>".Yii::t('reviews', '<strong>Success!</strong> Feedback successfully sent to moderation.')."</div>"
+                            ];
+                            return json_encode($res);
+                        }
+                    }
+                }
+            }
+            $res = [
+                'status' => 'error',
+                'message' => "<div class='alert alert-danger'>".Yii::t('reviews', '<strong>Error!</strong> The opinion was not sent! Repeat again after some time.')."</div>"
+            ];
+            return json_encode($res);
         }
+        echo "This url only AJAX!!!";
     }
 
     /**

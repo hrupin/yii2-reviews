@@ -76,6 +76,38 @@ $this->registerJs(
                 }
             });
         });
+        $(".reply").on("click", function () {
+            $( ".responseForms" ).remove();
+            var id = $(this).attr("data-id");
+            var form = document.createElement("form");
+            form.innerHTML = \'<div>\' +
+                    \'<textarea class="responseText" placeholder="..."></textarea>\' +
+                    \'<span class="buttonSend btn btn-default" data-id="\' + id + \'">\' +
+                    \'<span class="glyphicon glyphicon-send" aria-hidden="true"></span></span>\' +
+                    \'</div>\';
+            form.action= "'.Url::toRoute(["/reviews/admin/create-response"]).'";
+            form.className = "responseForms";
+            insertAfter(form, document.getElementById("reviews_"+id));
+            $(".buttonSend").on("click", function () {
+                var text = $(".responseText").val(),
+                    id = $(this).attr("data-id"),
+                    csrf = "&"+$("meta[name=csrf-param]").prop("content")+"="+$("meta[name=csrf-token]").prop("content");
+                $.ajax({
+                    type: "POST",
+                    url: "'.Url::toRoute(["/reviews/admin/create-response"]).'",
+                    data: "reviews_id="+id+"&text="+text+csrf,
+                    success: function(data){
+                        var tmp = JSON.parse(data);
+                        if(tmp.status == "success" && tmp.reload){
+                            $.pjax.reload({container:"#reviews"});
+                        }
+                        else{
+                            $(".responseForms").html(tmp.message);
+                        }
+                    }
+                });
+            });
+        });
      });'
 );
 ?>

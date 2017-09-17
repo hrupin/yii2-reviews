@@ -32,6 +32,7 @@ in **common/config/main.php**
         'class' => 'hrupin\reviews\Module',
         'userModel' => 'common\models\User',         
         'moderateReviews' => false,
+        'admin' => [1,2],
         'ratingStars' => [
            1 => 'Ужасно',
            2 => 'Плохо',
@@ -147,6 +148,7 @@ add **to model User**
         // your code
         // return true or false
     }
+
 ```
 
 ### migrate
