@@ -93,13 +93,17 @@ class ReviewsModal extends Widget
         $model = Yii::createObject($class::className());
         $model->rating = $model->getAverageNumberStars($this->pageIdentifier, $this->reviewsIdentifier);
         $model->type = $this->reviewsIdentifier;
-        $model->page = $this->pageIdentifier;
+        $model->page = $this->pageIdentifier;$userCountReviews = 0;
+        if(!Yii::$app->user->isGuest){
+            $userCountReviews = \hrupin\reviews\models\Reviews::find()->where(['user_id' => Yii::$app->user->id])->andWhere('date_create > '.mktime(0,0,0))->count();
+        }
         return $this->render($this->reviewsView,[
             'model' => $model,
             'options' => Yii::$app->getModule('reviews')->customOptions[$this->reviewsIdentifier],
             'stars' => $ratingStars,
             'enableReviews' => $this->enableReviews,
-            'emailAuthor' => $this->emailAuthor
+            'emailAuthor' => $this->emailAuthor,
+            'userCountReviews' => $userCountReviews
         ]);
     }
 

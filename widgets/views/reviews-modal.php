@@ -10,7 +10,7 @@ use yii\widgets\Pjax;
 
 Pjax::begin(['enablePushState' => false, 'id'=>'form-reviews']);
 
-if($enableReviews && !Yii::$app->user->isGuest){
+if($enableReviews && !Yii::$app->user->isGuest && $userCountReviews < 10){
     echo '<button type="button" class="btn btn-default buttonModalReviews" data-toggle="modal" data-target="#reviewsModal">' .Yii::t('reviews', 'Leave a review'). '</button>';
 }
 

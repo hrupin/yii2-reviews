@@ -10,7 +10,7 @@ use yii\widgets\Pjax;
 
 ?>
 <?php
-    if($enableReviews && !Yii::$app->user->isGuest){
+    if($enableReviews && !Yii::$app->user->isGuest && $userCountReviews < 10){
         Pjax::begin(['enablePushState' => false, 'id'=>'form-reviews']);
             echo $this->render('_form', [
                 'model' => $model,

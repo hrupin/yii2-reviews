@@ -70,8 +70,17 @@ class CustomerRating extends Widget
             $tmp = ModelReviews::array_custom_merge($tmp, $tmpAr);
         }
         $result = $tmp;
+        $criterion = [];
+        foreach (Yii::$app->getModule('reviews')->customOptions as $key => $item) {
+            if($key === $this->reviewsIdentifier){
+                foreach ($item as $keyItem => $valueItem) {
+                    $criterion[$keyItem] =$valueItem['label'];
+                }
+            }
+        }
         return $this->render($this->reviewsView,[
-            'model' => $result
+            'model' => $result,
+            'criterion' => $criterion
         ]);
     }
 }

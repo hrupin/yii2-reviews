@@ -20,7 +20,7 @@
             <?php
             foreach ($model['res'] as $key => $value){
                 echo '<tr>';
-                echo '<th class="row">'. $key .'</th>';
+                echo '<th class="row">'. $criterion[$key] .'</th>';
                 echo '<td>'.$value.'</td>';
                 echo '<td>'.$model['count'].'</td>';
                 echo '<tr>';

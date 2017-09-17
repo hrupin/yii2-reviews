@@ -154,7 +154,7 @@ class AdminController extends Controller
                         if($data->save()){
                             $res = [
                                 'status' => 'success',
-                                'reload' => (Yii::$app->getModule('reviews')->moderateReviews)? 0: 1,
+                                'reload' => 1,
                                 'message' => "<div class='alert alert-success'>".Yii::t('reviews', '<strong>Success!</strong> Opinion deleted successfully.')."</div>"
                             ];
                             return json_encode($res);

@@ -95,6 +95,10 @@ class Reviews extends Widget
         $model->type = $this->reviewsIdentifier;
         $model->page = $this->pageIdentifier;
         $reviews = $model->getReviews($model->find()->getActiveReviewsForPageAndMainLevel($this->pageIdentifier, $this->reviewsIdentifier));
+        $userCountReviews = 0;
+        if(!Yii::$app->user->isGuest){
+            $userCountReviews = \hrupin\reviews\models\Reviews::find()->where(['user_id' => Yii::$app->user->id])->andWhere('date_create > '.mktime(0,0,0))->count();
+        }
         return $this->render($this->reviewsView,[
             'reviews' => $reviews,
             'model' => $model,
@@ -102,7 +106,8 @@ class Reviews extends Widget
             'stars' => $ratingStars,
             'enableReviews' => $this->enableReviews,
             'pathIMG' => $this->pathIMG,
-            'emailAuthor' => $this->emailAuthor
+            'emailAuthor' => $this->emailAuthor,
+            'userCountReviews' => $userCountReviews
         ]);
     }
 
