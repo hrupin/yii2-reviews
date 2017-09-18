@@ -226,5 +226,11 @@ array(2) {
     ["rating"] = float(25)
     ["count"] = string(1) "8"
 }
+
+$n = \hrupin\reviews\models\Reviews::getNewReviews();
+echo 'new reviews: ' . $n;
+
+new reviews: 2
+
 ?>
 ```
