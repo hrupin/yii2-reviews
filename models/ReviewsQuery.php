@@ -33,6 +33,7 @@ class ReviewsQuery extends \yii\db\ActiveQuery
     public function getNoActiveReviewsForPageAndType($page, $type)
     {
         return $this->andWhere("[[type]]='".$type."'")
+            ->andWhere("[[page]]='".$page."'")
             ->andWhere('[[status]]='.Reviews::REVIEWS_NOT_ACTIVE);
     }
 
