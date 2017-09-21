@@ -124,9 +124,9 @@ ul.dataList {
     margin-top: 0px !important;
 }
 li.keyData {
-    font-weight: 800;
+    font-weight: 600;
 }
 li.valueData {
-    font-weight: 800;
+    font-weight: 600;
     color: #999;
 }
