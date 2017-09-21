@@ -327,4 +327,16 @@ class Reviews extends \yii\db\ActiveRecord
         }
         return $newArr;
     }
+   
+    function arraySum($arr1, $arr2) {
+        $result = [];
+        foreach($arr1 as $val) {
+            $result[] = $val;
+        }
+        foreach($arr2 as $val) { // считываем 2-ой  массив
+            $result[] = $val;
+        }
+        return $result;
+    }
+    
 }
