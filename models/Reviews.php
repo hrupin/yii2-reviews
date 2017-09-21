@@ -328,7 +328,7 @@ class Reviews extends \yii\db\ActiveRecord
         return $newArr;
     }
    
-    function arraySum($arr1, $arr2) {
+    public static function arraySum($arr1, $arr2) {
         $result = [];
         foreach($arr1 as $val) {
             $result[] = $val;
