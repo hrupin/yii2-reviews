@@ -45,6 +45,11 @@ class Reviews extends Widget
      * @var bool
      */
     public $enableReviews;
+    
+    /**
+    * @var boolean
+    */
+    public $allowResponse
 
     /**
     * @var string
@@ -68,6 +73,10 @@ class Reviews extends Widget
 
         if ($this->reviewsView === null) {
             $this->reviewsView = 'reviews';
+        }
+        
+        if ($this->allowResponse === null) {
+            $this->allowResponse = true;
         }
 
         if ($this->enableReviews === null) {
