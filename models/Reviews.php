@@ -232,8 +232,8 @@ class Reviews extends \yii\db\ActiveRecord
 
             $data = '<ul class="dataList">';
             foreach ($value['data'] as $key => $datum) {
-                $data .= "<li class='keyData'>".$key."</li>";
-                $data .= "<li class='valueData'>".$datum."</li>";
+                $data .= "<li class='keyData'>".Yii::$app->getModule('reviews')->customOptions[$value['type']][$key]['label']."</li>";
+                $data .= "<li class='valueData'>".Yii::$app->getModule('reviews')->customOptions[$value['type']][$key]['data'][$datum]."</li>";
             }
             $data .= '</ul>';
             self::$html .= strtr($template, [
