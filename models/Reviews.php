@@ -148,9 +148,20 @@ class Reviews extends \yii\db\ActiveRecord
 
     public function getAverageNumberStars($id, $type){
         $res = 0; $stars = 0;
-        foreach ($this->find()->getActiveReviewsForPage($id, $type)->all() as $item) {
-            $stars += $item->rating;
-            $res++;
+
+        if(is_array($id)){
+            foreach ($id as $i) {
+                foreach ($this->find()->getActiveReviewsForPage($i, $type)->all() as $ii) {
+                    $stars += $ii->rating;
+                    $res++;
+                }
+            }
+        }
+        else{
+            foreach ($this->find()->getActiveReviewsForPage($id, $type)->all() as $item) {
+                $stars += $item->rating;
+                $res++;
+            }
         }
         if($res){
             return $stars / $res;

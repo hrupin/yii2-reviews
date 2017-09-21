@@ -1,6 +1,7 @@
 <?php
 
 use yii\widgets\Pjax;
+use hrupin\reviews\models\Reviews;
 
 /* @var $this yii\web\View */
 /* @var $model hrupin\reviews\models\Reviews */
@@ -18,7 +19,11 @@ use yii\widgets\Pjax;
                 <?php
                 $e = 1; $count = count($stars);
                 for($e; $e <= $count; $e++){
-                    echo '<span rel="r_'.$e.'" class="current spanStatistics">'.$stars[$e].' '.\hrupin\reviews\models\Reviews::find()->countActiveReviewsForPageAndMainLevelForRating($model->page, $model->type, $e).'</span>';
+                    $c = 0;
+                    foreach ($model->page as $item) {
+                        $c += Reviews::find()->countActiveReviewsForPageAndMainLevelForRating($item, $model->type, $e);
+                    }
+                    echo '<span rel="r_'.$e.'" class="current spanStatistics">'.$stars[$e].' '.$c.'</span>';
                 }
                 ?>
             </div>
