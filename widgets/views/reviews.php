@@ -42,10 +42,14 @@ use yii\widgets\Pjax;
                         'options' => $options,
                         'stars' => $stars,
                         'enableReviews' => $enableReviews,
-                        'allowResponse' => $allowResponse
                     ]); ?>
                 </div>
             </div>
         </div>
     </div>
+<?php
+if(isset($allowResponse) && !$allowResponse){
+    $this->registerCSS('.replay{display: none !important;}');
+}
+?>
 <?php Pjax::end(); ?>
