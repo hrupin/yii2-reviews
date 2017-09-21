@@ -215,7 +215,7 @@ AND
 
 
 <?= \hrupin\reviews\widgets\ReviewsList::widget([
-    'pageIdentifier' => 'index',
+    'pageIdentifier' => ['index'],
 ]); ?>
 
 <?php
