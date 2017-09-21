@@ -49,7 +49,7 @@ class Reviews extends Widget
     /**
     * @var boolean
     */
-    public $allowResponse
+    public $allowResponse;
 
     /**
     * @var string
