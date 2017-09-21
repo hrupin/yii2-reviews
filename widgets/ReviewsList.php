@@ -56,6 +56,10 @@ class ReviewsList extends Widget
         if ($this->pageIdentifier === null) {
             throw new InvalidConfigException(Yii::t('reviews', 'The "pageIdentifier" property must be set.'));
         }
+        
+        if (!is_array($this->pageIdentifier)) {
+            throw new InvalidConfigException(Yii::t('reviews', 'The "pageIdentifier" property must be array.'));
+        }
 
         if($this->reviewsIdentifier === null){
             $this->reviewsIdentifier = 'reviews';
@@ -81,7 +85,12 @@ class ReviewsList extends Widget
         $model->rating = $model->getAverageNumberStars($this->pageIdentifier, $this->reviewsIdentifier);
         $model->type = $this->reviewsIdentifier;
         $model->page = $this->pageIdentifier;
-        $reviews = $model->getReviews($model->find()->getActiveReviewsForPageAndMainLevel($this->pageIdentifier, $this->reviewsIdentifier));
+        
+        $tmp = [];
+        foreach($this->pageIdentifier as $item){
+            $tmp = ModelReviews::arraySum($tmp, $model->find()->getActiveReviewsForPageAndMainLevel($item, $this->reviewsIdentifier));
+        }
+        $reviews = $model->getReviews($tmp);
         return $this->render($this->reviewsView,[
             'reviews' => $reviews,
             'model' => $model,
