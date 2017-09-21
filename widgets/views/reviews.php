@@ -49,7 +49,7 @@ use yii\widgets\Pjax;
     </div>
 <?php
 if(isset($allowResponse) && !$allowResponse){
-    $this->registerCSS('.replay{display: none !important;}');
+    $this->registerCSS('.reply{display: none !important;}');
 }
 ?>
 <?php Pjax::end(); ?>
