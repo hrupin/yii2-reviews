@@ -116,7 +116,8 @@ class Reviews extends Widget
             'enableReviews' => $this->enableReviews,
             'pathIMG' => $this->pathIMG,
             'emailAuthor' => $this->emailAuthor,
-            'userCountReviews' => $userCountReviews
+            'userCountReviews' => $userCountReviews,
+            'allowResponse' => $this->allowResponse
         ]);
     }
 
