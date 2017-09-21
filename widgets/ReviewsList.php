@@ -84,8 +84,7 @@ class ReviewsList extends Widget
         $model = Yii::createObject($class::className());
         $model->rating = $model->getAverageNumberStars($this->pageIdentifier, $this->reviewsIdentifier);
         $model->type = $this->reviewsIdentifier;
-        $model->page = $this->pageIdentifier;
-        
+        $model->page = $this->pageIdentifier;        
         $tmp = [];
         foreach($this->pageIdentifier as $item){
             $tmp = ModelReviews::arraySum($tmp, $model->find()->getActiveReviewsForPageAndMainLevel($item, $this->reviewsIdentifier));
