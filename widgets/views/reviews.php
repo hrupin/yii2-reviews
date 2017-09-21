@@ -41,7 +41,8 @@ use yii\widgets\Pjax;
                         'model' => $model,
                         'options' => $options,
                         'stars' => $stars,
-                        'enableReviews' => $enableReviews
+                        'enableReviews' => $enableReviews,
+                        'allowResponse' => $allowResponse
                     ]); ?>
                 </div>
             </div>
