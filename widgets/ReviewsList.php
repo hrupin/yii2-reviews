@@ -45,6 +45,12 @@ class ReviewsList extends Widget
      * @var string
      */
     private $pathIMG;
+    
+    
+    /**
+     * @var string
+     */
+    private $allowResponse;
 
     /**
      * Initializes the widget params.
@@ -67,6 +73,10 @@ class ReviewsList extends Widget
 
         if ($this->reviewsView === null) {
             $this->reviewsView = 'reviews-list';
+        }
+        
+        if ($this->allowResponse === null) {
+            $this->allowResponse = true;
         }
 
     }
@@ -96,6 +106,7 @@ class ReviewsList extends Widget
             'pathIMG' => $this->pathIMG,
             'stars' => $ratingStars,
             'options' => Yii::$app->getModule('reviews')->customOptions[$this->reviewsIdentifier],
+            'allowResponse' => $this->allowResponse
         ]);
     }
 
