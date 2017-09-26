@@ -18,7 +18,7 @@ $template = '<img src="{img}" class="avatar img-rounded" alt="">
              </div>';
 $class = Yii::$app->getModule('reviews')->modelMap['Reviews'];
 $modelClass = Yii::createObject($class::className());
-$modelClass::generateHTML($template, $reviews, 'ul', 'li', 1, $allowResponse);
+$modelClass::generateHTML($template, $reviews, 'ul', 'li', 1);
 echo $modelClass::$html;
 $this->registerJs(
     '$("document").ready(function(){
