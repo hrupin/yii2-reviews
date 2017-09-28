@@ -140,7 +140,7 @@ class Reviews extends \yii\db\ActiveRecord
 
     public function getChildren()
     {
-        if(array_search(Yii::$app->user->id, Yii::$app->getModule('reviews')->admin) !== false){
+        if(Yii::$app->user->can('reviews')){
             return $this->hasMany(self::className(), ['reviews_parent' => 'reviews_id'])->andOnCondition('status <>' . Reviews::REVIEWS_DELETE);
         }
         return $this->hasMany(self::className(), ['reviews_parent' => 'reviews_id'])->andOnCondition(['status' => Reviews::REVIEWS_ACTIVE]);
@@ -212,7 +212,7 @@ class Reviews extends \yii\db\ActiveRecord
             $edit = '';
             $success = '';
             $notActive = '';
-            if(array_search(Yii::$app->user->id, Yii::$app->getModule('reviews')->admin) !== false && $value['status'] == Reviews::REVIEWS_NOT_ACTIVE){
+            if(Yii::$app->user->can('reviews') && $value['status'] == Reviews::REVIEWS_NOT_ACTIVE){
                 $notActive = 'newReview';
                 $success = '<span class="success" data-id="'.$value['idReviews'].'"><small>'.Yii::t('reviews', 'Success review').'</small></span>';
             }
