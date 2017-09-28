@@ -48,7 +48,7 @@ use yii\widgets\Pjax;
         </div>
     </div>
 <?php
-if(isset($allowResponse) && !$allowResponse && array_search(Yii::$app->user->id, Yii::$app->getModule('reviews')->admin) === false){
+if(isset($allowResponse) && !$allowResponse && !Yii::$app->user->can('reviews')){
     $this->registerCSS('.reply{display: none !important;}');
 }
 ?>
