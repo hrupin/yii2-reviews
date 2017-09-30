@@ -6,7 +6,7 @@ use yii\base\Module as BaseModule;
 
 class Module extends BaseModule
 {
-    const VERSION = '0.0.1';
+    const VERSION = '0.4.0';
     public $mailer = [];
     public $modelMap = [];
     public $admin = [];
