@@ -1,6 +1,6 @@
 Reviews for YII2
 ================
-Reviews for YII2
+Module Reviews for YII2
 
 Installation
 ------------
