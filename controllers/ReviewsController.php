@@ -4,7 +4,8 @@ namespace hrupin\reviews\controllers;
 
 use Yii;
 use yii\helpers\Url;
-use hrupin\reviews\models\Reviews as ModelReviews;
+use yii\web\Response;
+use yii\bootstrap\ActiveForm;
 
 class ReviewsController extends \yii\web\Controller
 {
@@ -13,6 +14,10 @@ class ReviewsController extends \yii\web\Controller
         if(Yii::$app->request->isAjax){
             $class = Yii::$app->getModule('reviews')->modelMap['Reviews'];
             $model = Yii::createObject($class::className());
+            if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                return ActiveForm::validate($model);
+            }
             if(Yii::$app->request->isPost){
                 if($model->load(Yii::$app->request->post())){
                     $model->user_id = Yii::$app->user->id;
