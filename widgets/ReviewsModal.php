@@ -95,7 +95,7 @@ class ReviewsModal extends Widget
         $model->type = $this->reviewsIdentifier;
         $model->page = $this->pageIdentifier;$userCountReviews = 0;
         if(!Yii::$app->user->isGuest){
-            $userCountReviews = \hrupin\reviews\models\Reviews::find()->where(['user_id' => Yii::$app->user->id])->andWhere('date_create > '.mktime(0,0,0))->count();
+            $userCountReviews = $model->find()->where(['user_id' => Yii::$app->user->id])->andWhere('date_create > '.mktime(0,0,0))->count();
         }
         return $this->render($this->reviewsView,[
             'model' => $model,
