@@ -8,8 +8,6 @@ use yii\widgets\Pjax;
 /* @var boolean $enableReviews */
 /* @var array $stars */
 
-Pjax::begin(['enablePushState' => false, 'id'=>'form-reviews']);
-
 if($enableReviews && !Yii::$app->user->isGuest && $userCountReviews < 10){
     echo '<button type="button" class="btn btn-default buttonModalReviews" data-toggle="modal" data-target="#reviewsModal">' .Yii::t('reviews', 'Leave a review'). '</button>';
 }
@@ -23,16 +21,15 @@ if($enableReviews && !Yii::$app->user->isGuest && $userCountReviews < 10){
         <h4 class="modal-title" id="myModalLabel"><?= Yii::t('reviews', 'Add a review'); ?></h4>
       </div>
       <div class="modal-body">
+        <?php Pjax::begin(['enablePushState' => false, 'id'=>'form-reviews']); ?>
         <?= $this->render('_form', [
             'model' => $model,
             'options' => $options,
             'stars' => $stars,
             'emailAuthor' => $emailAuthor
         ]); ?>
+        <?php Pjax::end(); ?>
       </div>
     </div>
   </div>
 </div>
-<?php
-Pjax::end();
-?>
