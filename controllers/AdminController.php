@@ -33,6 +33,8 @@ class AdminController extends Controller
     {
         $class = Yii::$app->getModule('reviews')->modelMap['ReviewsSearch'];
         $searchModel = Yii::createObject($class::className());
+        $class = Yii::$app->getModule('reviews')->modelMap['Reviews'];
+        $model = Yii::createObject($class::className());
         $tmpQuery = $searchModel->find()->select(['page', 'type'], 'DISTINCT');
         if(Yii::$app->request->get('type')){
             $tmpQuery->andWhere(['type' => Yii::$app->request->get('type')]);
@@ -40,8 +42,8 @@ class AdminController extends Controller
         $pageAndType = $tmpQuery->all();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $types = [];
-        foreach (Reviews::find()->select(['type'], 'DISTINCT')->all() as $item) {
-            $types[$item->type] = Reviews::find()->getNoActiveReviewsForPage($item->type)->count();
+        foreach ($model->find()->select(['type'], 'DISTINCT')->all() as $item) {
+            $types[$item->type] = $model->find()->getNoActiveReviewsForPage($item->type)->count();
         }
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -78,10 +80,10 @@ class AdminController extends Controller
         $model->type = $type;
         $model->page = $page;
         if(Yii::$app->user->can('reviews')){
-            $reviews = $model->getReviews(Reviews::find()->getAllReviewsForPageAndMainLevel($page, $type));
+            $reviews = $model->getReviews($model->find()->getAllReviewsForPageAndMainLevel($page, $type));
         }
         else{
-            $reviews = $model->getReviews(Reviews::find()->getActiveReviewsForPageAndMainLevel($page, $type));
+            $reviews = $model->getReviews($model->find()->getActiveReviewsForPageAndMainLevel($page, $type));
         }
 
         return $this->render('view-reviews',[
@@ -118,7 +120,7 @@ class AdminController extends Controller
                                 Yii::$app->mailer->compose('@vendor/hrupin/yii2-reviews/mail/response', [
                                     'url' => Url::base(true).'/'.$model->page
                                 ]) // здесь устанавливается результат рендеринга вида в тело сообщения
-                                ->setFrom(Yii::$app->params['adminEmail'])
+                                    ->setFrom(Yii::$app->params['adminEmail'])
                                     ->setTo($parentReviews->user->email)
                                     ->setSubject(Yii::t('reviews', 'Send new response'))
                                     ->send();
@@ -153,11 +155,13 @@ class AdminController extends Controller
     public function actionUpdate($id, $do)
     {
         $model = $this->findModel($id);
+        $class = Yii::$app->getModule('reviews')->modelMap['Reviews'];
+        $modelReviews = Yii::createObject($class::className());        
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->reviews_id]);
         } else {
             if($do == 'success'){
-                $model = Reviews::find()->where(['reviews_id' => $id])->limit(1)->one();
+                $model = $modelReviews->find()->where(['reviews_id' => $id])->limit(1)->one();
                 $model->status = 1;
                 $model->update();
                 return $this->redirect(['/reviews/admin/view-review', 'page' => $model->page , 'type' => $model->type]);
