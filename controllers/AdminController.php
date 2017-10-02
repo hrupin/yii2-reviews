@@ -77,7 +77,7 @@ class AdminController extends Controller
         $model->rating = $model->getAverageNumberStars($page, $type);
         $model->type = $type;
         $model->page = $page;
-        if(getModule('reviews')->admin){
+        if(Yii::$app->user->can('reviews')){
             $reviews = $model->getReviews(Reviews::find()->getAllReviewsForPageAndMainLevel($page, $type));
         }
         else{
