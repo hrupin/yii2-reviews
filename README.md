@@ -7,6 +7,8 @@ Installation
 
 The preferred way to install this extension is through [composer](http://getcomposer.org/download/).
 
+Need RBAC
+
 Either run
 
 ```
@@ -32,7 +34,6 @@ in **common/config/main.php**
         'class' => 'hrupin\reviews\Module',
         'userModel' => 'common\models\User',         
         'moderateReviews' => false,
-        'admin' => [1,2],
         'ratingStars' => [
            1 => 'Ужасно',
            2 => 'Плохо',
