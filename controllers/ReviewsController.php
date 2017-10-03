@@ -14,10 +14,6 @@ class ReviewsController extends \yii\web\Controller
         if(Yii::$app->request->isAjax){
             $class = Yii::$app->getModule('reviews')->modelMap['Reviews'];
             $model = Yii::createObject($class::className());
-            if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
-                Yii::$app->response->format = Response::FORMAT_JSON;
-                return ActiveForm::validate($model);
-            }
             if(Yii::$app->request->isPost){
                 if($model->load(Yii::$app->request->post())){
                     $model->user_id = Yii::$app->user->id;
@@ -36,6 +32,10 @@ class ReviewsController extends \yii\web\Controller
                         return $this->renderAjax('response', [
                             'result' => 'success'
                         ]);
+                    }                    
+                    if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+                        Yii::$app->response->format = Response::FORMAT_JSON;
+                        return ActiveForm::validate($model);
                     }
                 }
             }
@@ -90,6 +90,7 @@ class ReviewsController extends \yii\web\Controller
                     }
                 }
             }
+            
             $res = [
                 'status' => 'error',
                 'message' => "<div class='alert alert-danger'>".Yii::t('reviews', '<strong>Error!</strong> The opinion was not sent! Repeat again after some time.')."</div>"
