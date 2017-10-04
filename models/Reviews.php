@@ -191,7 +191,7 @@ class Reviews extends \yii\db\ActiveRecord
     public function getDataReview(){
         return [
             'idReviews' => $this->reviews_id,
-            'text'      => $this->text,
+            'text'      => nl2br($this->text),
             'user_id'   => $this->user_id,
             'date'      => $this->dateReviews,
             'name'      => $this->user->publicName,
