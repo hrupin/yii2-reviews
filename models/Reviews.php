@@ -323,7 +323,7 @@ class Reviews extends \yii\db\ActiveRecord
     }
     
     public static function getNewReviews(){
-        self::find()->getNotActive()->count();
+        return self::find()->getNotActive()->count();
     }
 
     public static function array_custom_merge($arr1, $arr2){
