@@ -8,6 +8,9 @@ use hrupin\reviews\models\Reviews;
 /* @var $reviews hrupin\reviews\models\Reviews */
 /* @var array $stars */
 
+$class = Yii::$app->getModule('reviews')->modelMap['Reviews'];
+$modelReviews = Yii::createObject($class::className());
+
 ?>
 
 <?php Pjax::begin(['id'=>'reviews']); ?>
@@ -21,7 +24,7 @@ use hrupin\reviews\models\Reviews;
                 for($e; $e <= $count; $e++){
                     $c = 0;
                     foreach ($model->page as $item) {
-                        $c += Reviews::find()->countActiveReviewsForPageAndMainLevelForRating($item, $model->type, $e);
+                        $c += $modelReviews->find()->countActiveReviewsForPageAndMainLevelForRating($item, $model->type, $e);
                     }
                     echo '<span rel="r_'.$e.'" class="current spanStatistics">'.$stars[$e].' '.$c.'</span>';
                 }
