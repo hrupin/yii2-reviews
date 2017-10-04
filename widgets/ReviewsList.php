@@ -100,7 +100,7 @@ class ReviewsList extends Widget
             $tmp = ModelReviews::arraySum($tmp, $model->find()->getActiveReviewsForPageAndMainLevel($item, $this->reviewsIdentifier));
         }
         $reviews = $model->getReviews($tmp);        
-        if(!$model->find()->getActiveReviewsForPageAndMainLevelCount($this->pageIdentifier, $this->reviewsIdentifier)){
+        if(!count($reviews)){
             return false;
         }
         return $this->render($this->reviewsView,[
