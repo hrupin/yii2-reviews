@@ -133,7 +133,9 @@ class ReviewsController extends \yii\web\Controller
         if(Yii::$app->request->post('hiddenData')){
             $data = unserialize(Yii::$app->request->post('hiddenData'));
             $ratingStars = Yii::$app->getModule('reviews')->ratingStars;
-            $data->data = $data->dataAr;
+            if(is_array($data->data)){
+                $data->dataAr = $data->data;
+            }
             return $this->render('_form',[
                 'model' => $data,
                 'options' => Yii::$app->getModule('reviews')->customOptions[$data->type],
