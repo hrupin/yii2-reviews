@@ -32,15 +32,12 @@ class ReviewsController extends \yii\web\Controller
                         return $this->renderAjax('response', [
                             'result' => 'success'
                         ]);
-                    }                    
-                    if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
-                        Yii::$app->response->format = Response::FORMAT_JSON;
-                        return ActiveForm::validate($model);
                     }
                 }
             }
             return $this->renderAjax('response', [
-                'result' => 'error'
+                'result' => 'error',
+                'error'  => $model->getErrors()
             ]);
         }
         else{
