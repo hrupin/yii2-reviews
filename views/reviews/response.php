@@ -15,6 +15,8 @@ switch($result){
         }
         break;
     case 'error':
-        echo "<div class='alert alert-danger'>".Yii::t('reviews', '<strong>Error!</strong> The opinion was not sent! Repeat again after some time.')."</div>";
+        foreach ($error as $item) {
+            echo "<div class='alert alert-danger'>".Yii::t('reviews', '<strong>Error!</strong> '.$item[0].'.')."</div>";
+        }
         break;
 }
