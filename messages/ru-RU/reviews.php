@@ -18,10 +18,10 @@
  */
 return [
     '% of answers "Yes"' => '% ответов "да"',
-    '<strong>Error!</strong> The opinion was not sent! Repeat again after some time.' => '<strong>Error!</strong> Этот отзыв не был добавлен! Повторите через некоторое время.',
-    '<strong>Success!</strong> Feedback successfully sent to moderation.' => '<strong>Success!</strong> Отзыв успешно отправлен на модерацию!',
-    '<strong>Success!</strong> Opinion deleted successfully.' => '<strong>Success!</strong> Отзыв успешно удален',
-    '<strong>Success!</strong> Your review add.' => '<strong>Success!</strong> Ваш ответ успешно добавлен',
+    '<strong>Error!</strong> The opinion was not sent! Repeat again after some time.' => '<strong>Ошибка!</strong> Этот отзыв не был добавлен! Повторите через некоторое время.',
+    '<strong>Success!</strong> Feedback successfully sent to moderation.' => '<strong>Успешно!</strong> Отзыв успешно отправлен на модерацию!',
+    '<strong>Success!</strong> Opinion deleted successfully.' => '<strong>Успешно!</strong> Отзыв успешно удален',
+    '<strong>Success!</strong> Your review add.' => '<strong>Успешно!</strong> Ваш ответ успешно добавлен',
     'Add a review' => 'Добавить комментарий',
     'Are you sure you want to delete this item?' => 'Вы уверены, что хотите удалить этот элемент?',
     'Create' => 'Создать',
