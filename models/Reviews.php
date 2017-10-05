@@ -216,7 +216,7 @@ class Reviews extends \yii\db\ActiveRecord
                 $notActive = 'newReview';
                 $success = '<span class="success" data-id="'.$value['idReviews'].'"><small>'.Yii::t('reviews', 'Success review').'</small></span>';
             }
-            if(Yii::$app->user->id == $value['user_id'] || array_search(Yii::$app->user->id, Yii::$app->getModule('reviews')->admin) !== false){
+            if(Yii::$app->user->id == $value['user_id'] || Yii::$app->user->can('reviews')){
                 $delete = '<span class="delete" data-id="'.$value['idReviews'].'"><small>'.Yii::t('reviews', 'Delete review').'</small></span>';
                 $edit = '<span class="edit" data-id="'.$value['idReviews'].'"><small>'.Yii::t('reviews', 'Edit review').'</small></span>';
             }
