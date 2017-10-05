@@ -60,5 +60,6 @@ return [
     'Send new review' => 'Новый отзыв',
     'Send new review for page {url}' => 'Новый отзыв на странице {url}',
     'Send new response' => 'Новый ответ',
-    'Was written the answer to your review on the page {url}' => 'Вам ответили на странице {url}'
+    'Was written the answer to your review on the page {url}' => 'Вам ответили на странице {url}',
+    'Success review' => 'Одобрить'
 ];
