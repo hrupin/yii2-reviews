@@ -12,7 +12,7 @@ $class = Yii::$app->getModule('reviews')->modelMap['Reviews'];
 $modelReviews = Yii::createObject($class::className());
 
 ?>
-
+<h2><?= Yii::t('reviews', 'Reviews'); ?></h2>
 <?php Pjax::begin(['id'=>'reviews']); ?>
 <div class="bootstrap snippet">
     <div class="row">
