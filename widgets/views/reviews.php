@@ -21,6 +21,7 @@ use yii\widgets\Pjax;
         Pjax::end();
     }
 ?>
+<h2><?= Yii::t('reviews', 'Reviews'); ?></h2>
 <?php Pjax::begin(['id'=>'reviews']); ?>
     <div class="bootstrap snippet">
         <div class="row">
