@@ -21,13 +21,11 @@ class ReviewsController extends \yii\web\Controller
                     $model->status = (Yii::$app->getModule('reviews')->moderateReviews)? 0: 1;
                     if($model->save()){
                         if(Yii::$app->request->post('emailAuthor') && $model->user->sendEmail){
-                            Yii::$app->mailer->compose('@vendor/hrupin/yii2-reviews/mail/reviews', [
-                                'url' => Url::base(true).'/'.$model->page
-                            ]) // здесь устанавливается результат рендеринга вида в тело сообщения
-                            ->setFrom(Yii::$app->params['adminEmail'])
-                                ->setTo(Yii::$app->request->post('emailAuthor'))
-                                ->setSubject(Yii::t('reviews', 'Send new review'))
-                                ->send();
+                            $parentReviews->user->writeLetter(
+                                    '@vendor/hrupin/yii2-reviews/mail/reviews',
+                                    ['url' => Url::base(true).'/'.$model->page],
+                                    Yii::$app->request->post('emailAuthor'),
+                                    Yii::t('reviews', 'Send new review'));
                         }
                         return $this->renderAjax('response', [
                             'result' => 'success'
@@ -67,13 +65,11 @@ class ReviewsController extends \yii\web\Controller
                         $model->dataAr = [];
                         if($model->save()){
                             if($parentReviews->user->email && $parentReviews->user->sendEmail){
-                                Yii::$app->mailer->compose('@vendor/hrupin/yii2-reviews/mail/response', [
-                                    'url' => Url::base(true).'/'.$model->page
-                                ]) // здесь устанавливается результат рендеринга вида в тело сообщения
-                                ->setFrom(Yii::$app->params['adminEmail'])
-                                    ->setTo($parentReviews->user->email)
-                                    ->setSubject(Yii::t('reviews', 'Send new response'))
-                                    ->send();
+                                $parentReviews->user->writeLetter(
+                                    '@vendor/hrupin/yii2-reviews/mail/response',
+                                    ['url' => Url::base(true).'/'.$model->page],
+                                    $parentReviews->user->email,
+                                    Yii::t('reviews', 'Send new response'));
                             }
                             $parentReviews->reviews_child = 1;
                             $parentReviews->update();
