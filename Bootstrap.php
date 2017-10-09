@@ -40,7 +40,6 @@ class Bootstrap implements BootstrapInterface
                     'sourceLanguage' => 'en-US'
                 ];
             }
-            Yii::$container->set('hrupin\reviews\Mailer', $module->mailer);
             $module->debug = $this->ensureCorrectDebugSetting();
         }
     }
