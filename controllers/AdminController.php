@@ -2,6 +2,7 @@
 namespace hrupin\reviews\controllers;
 
 use Yii;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
