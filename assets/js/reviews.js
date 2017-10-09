@@ -55,7 +55,7 @@ function insertAfter( node, referenceNode ) {
 }
 $(function(){$('#reviews-text').keyup(function(){
     var text = $(this).val().toLowerCase(),
-        spout='http,url,.ru,.com,.net,.tk,.ucoz,www,.ua,.tv,.info,.org,.su,.ру,.су,.ком,.инфо,//,.fr,точкаru'.split(',');
+        spout='http,url,.ru,.com,.net,.tk,.ucoz,www,.ua,.tv,.info,.org,.su,.ру,.су,.ком,.инфо,//,.fr'.split(',');
     for(n = 0; n < spout.length; n++){
         if(text.search(spout[n])!= -1) {
             $(this).val(text.replace(spout[n],'[Запрещено]'));
