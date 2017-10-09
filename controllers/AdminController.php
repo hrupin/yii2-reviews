@@ -118,13 +118,11 @@ class AdminController extends Controller
                         $model->dataAr = [];
                         if($model->save()){
                             if($parentReviews->user->email && $parentReviews->user->sendEmail){
-                                Yii::$app->mailer->compose('@vendor/hrupin/yii2-reviews/mail/response', [
-                                    'url' => Url::base(true).'/'.$model->page
-                                ]) // здесь устанавливается результат рендеринга вида в тело сообщения
-                                    ->setFrom(Yii::$app->params['adminEmail'])
-                                    ->setTo($parentReviews->user->email)
-                                    ->setSubject(Yii::t('reviews', 'Send new response'))
-                                    ->send();
+                                $parentReviews->user->writeLetter(
+                                    '@vendor/hrupin/yii2-reviews/mail/response',
+                                    ['url' => Url::base(true).'/'.$model->page],
+                                    $parentReviews->user->email,
+                                    Yii::t('reviews', 'Send new response'));
                             }
                             $parentReviews->reviews_child = 1;
                             $parentReviews->update();
