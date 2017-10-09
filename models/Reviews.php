@@ -56,6 +56,7 @@ class Reviews extends \yii\db\ActiveRecord
             ['date_create', 'default', 'value' => time()],
             ['date_update', 'default', 'value' => time()],
             ['rating', 'integer', 'min' => 1]
+            [['text'], 'filter', 'filter' => 'strip_tags']
         ];
     }
 
