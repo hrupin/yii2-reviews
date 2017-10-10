@@ -300,25 +300,29 @@ class Reviews extends \yii\db\ActiveRecord
         return ['res' => $result, 'count' => $step];
     }
 
-    public static function getSecondaryPositiveNumber($id, $type)
+        public static function getSecondaryPositiveNumber($id, $type)
     {
         $rating = Yii::$app->getModule('reviews')->ratingStars;
+        $badKey = key($rating);
         end($rating);
-        $key = key($rating);
+        $coolKey = key($rating);
         $count = 0;
+        $badCount = 0;
+        $coolCount = 0;
         $tmpR = 0;
         foreach ($id as $item) {
             $count += Reviews::find()->getActiveReviewsForPageAndMainLevelCount($item, $type);
-            $tmpR += Reviews::find()->countActiveReviewsForPageAndMainLevelForRating($item, $type, $key);
+            $badCount  += Reviews::find()->countActiveReviewsForPageAndMainLevelForRating($item, $type, $badKey);
+            $coolCount += Reviews::find()->countActiveReviewsForPageAndMainLevelForRating($item, $type, $coolKey);
         }
-        if($tmpR <= 0){
+        if($badCount <= 0 && $coolCount <= 0){
             return [
                 'rating' => 0,
                 'count' => 0
             ];
         }
         return [
-            'rating' => ($tmpR/$count)*100,
+            'rating' => ($coolCount/($coolCount + $badCount))*100,
             'count' => $count
         ];
     }
