@@ -56,30 +56,40 @@ class CustomerRating extends Widget
      *
      * @return string the result of widget execution to be outputted
      */
-    public function run()
+        public function run()
     {
         $class = Yii::$app->getModule('reviews')->modelMap['Reviews'];
         $model = Yii::createObject($class::className());
         $tmp = [];
         foreach ($this->pageIdentifier as $item){
-            $tmpAr = $model->getCustomerRating($model->find()->getActiveReviewsForPageAndMainLevel(
-                    $item,
-                    $this->reviewsIdentifier
-                )
-            );
-            $tmp = ModelReviews::array_custom_merge($tmp, $tmpAr);
+            $t = $model->getCustomerRating($model->find()->getActiveReviewsForPageAndMainLevel($item,$this->reviewsIdentifier));
+            $tmp = array_merge($t, $tmp);
         }
-        $result = $tmp;
+        $tmp = array_count_values($tmp);
         $criterion = [];
-        foreach (Yii::$app->getModule('reviews')->customOptions as $key => $item) {
-            if($key === $this->reviewsIdentifier){
-                foreach ($item as $keyItem => $valueItem) {
-                    $criterion[$keyItem] =$valueItem['label'];
-                }
+        foreach (Yii::$app->getModule('reviews')->customOptions[$this->reviewsIdentifier] as $keyCustomOption => $customOption) {
+            $criterion[$keyCustomOption] = [
+                'label' => $customOption['label'],
+                'bad' => 0,
+                'good' => 0,
+                'count' => 0
+            ];
+        }
+        foreach ($tmp as $key => $item) {
+            $data = Yii::$app->getModule('reviews')->customOptions[$this->reviewsIdentifier];
+            $key = explode('|', $key);
+            if(in_array($key[1], $data[$key[0]]['statistic']['bad'])){
+                $criterion[$key[0]]['bad']++;
             }
+            if(in_array($key[1], $data[$key[0]]['statistic']['good'])){
+                $criterion[$key[0]]['good']++;
+            }
+            $criterion[$key[0]]['count']++;
+        }
+        foreach ($criterion as $key => $item) {
+            $criterion[$key]['statistic'] = ($item['good'] / ($item['good'] + $item['bad'])) * 100;
         }
         return $this->render($this->reviewsView,[
-            'model' => $result,
             'criterion' => $criterion
         ]);
     }
