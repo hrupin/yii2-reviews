@@ -18,11 +18,11 @@
         </thead>
         <tbody>
             <?php
-            foreach ($model['res'] as $key => $value){
+            foreach ($criterion as $key => $value){
                 echo '<tr>';
-                echo '<th class="row">'. $criterion[$key] .'</th>';
-                echo '<td>'.$value.'</td>';
-                echo '<td>'.$model['count'].'</td>';
+                echo '<th class="row">'. $value['label'] .'</th>';
+                echo '<td>'.$value['statistic'].'</td>';
+                echo '<td>'.$count.'</td>';
                 echo '<tr>';
             }
             ?>
