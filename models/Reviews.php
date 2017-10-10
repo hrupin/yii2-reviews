@@ -201,7 +201,8 @@ class Reviews extends \yii\db\ActiveRecord
             'level'     => $this->level,
             'parent'    => $this->reviews_parent,
             'status'    => $this->status,
-            'data'      => $this->dataAr
+            'data'      => $this->dataAr,
+            'type'      => $this->type
         ];
     }
 
@@ -230,11 +231,11 @@ class Reviews extends \yii\db\ActiveRecord
             else{
                 self::$html .= '<'.$tag.' class="clearfix '.$notActive.'">';
             }
-
             $data = '<ul class="dataList">';
             foreach ($value['data'] as $key => $datum) {
-                $data .= "<li class='keyData'>".Yii::$app->getModule('reviews')->customOptions[$value['type']][$key]['label']."</li>";
-                $data .= "<li class='valueData'>".Yii::$app->getModule('reviews')->customOptions[$value['type']][$key]['data'][$datum]."</li>";
+                //$data .= "<li class='keyData'>".Yii::$app->getModule('reviews')->customOptions[$value['type']][$key]['label']."</li>";
+                $answer = Yii::$app->getModule('reviews')->customOptions[$value['type']][$key]['answer'];
+                $data .= "<li class='valueData'>".$answer[$datum]."</li>";
             }
             $data .= '</ul>';
             self::$html .= strtr($template, [
