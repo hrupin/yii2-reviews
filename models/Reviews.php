@@ -278,6 +278,14 @@ class Reviews extends \yii\db\ActiveRecord
         }
         return $res;
     }
+        
+    public static function countAllReviews($id, $type){
+        $count = 0;
+        foreach ($id as $item) {
+            $count += Reviews::find()->getActiveReviewsForPageAndMainLevelCount($item, $type);
+        }
+        return $count;
+    }
 
     public function getCustomerRating($model){
         $res = [];
