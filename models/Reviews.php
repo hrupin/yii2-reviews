@@ -288,24 +288,13 @@ class Reviews extends \yii\db\ActiveRecord
     }
 
     public function getCustomerRating($model){
-        $res = [];
-        $step = 0;
+        $tmp = [];
         foreach ($model as $item) {
-            $step++;
             foreach ($item->dataAr as $k => $i) {
-                if(!array_key_exists($k, $res)){
-                    $res[$k] = [];
-                }
-                $res[$k][] = $i;
+                $tmp[] = $k.'|'.$i;
             }
         }
-        $result = [];
-        foreach ($res as $key => $value){
-            $max = max($value);
-            $tmp = array_count_values($value);
-            $result[$key] = round(($tmp[$max] / $step) * 100);
-        }
-        return ['res' => $result, 'count' => $step];
+        return $tmp;
     }
 
         public static function getSecondaryPositiveNumber($id, $type)
