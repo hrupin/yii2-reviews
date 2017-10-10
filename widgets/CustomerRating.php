@@ -71,8 +71,7 @@ class CustomerRating extends Widget
             $criterion[$keyCustomOption] = [
                 'label' => $customOption['label'],
                 'bad' => 0,
-                'good' => 0,
-                'count' => 0
+                'good' => 0
             ];
         }
         foreach ($tmp as $key => $item) {
@@ -84,7 +83,6 @@ class CustomerRating extends Widget
             if(in_array($key[1], $data[$key[0]]['statistic']['good'])){
                 $criterion[$key[0]]['good']++;
             }
-            $criterion[$key[0]]['count']++;
         }
         foreach ($criterion as $key => $item) {
             $criterion[$key]['statistic'] = ($item['good'] / ($item['good'] + $item['bad'])) * 100;
