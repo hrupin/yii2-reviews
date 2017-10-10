@@ -30,86 +30,115 @@ in **common/config/main.php**
 
 ```
 'modules' => [
-    'reviews' => [
-        'class' => 'hrupin\reviews\Module',
-        'userModel' => 'common\models\User',         
-        'moderateReviews' => false,
-        'ratingStars' => [
-           1 => 'Ужасно',
-           2 => 'Плохо',
-           3 => 'Нормально',
-           4 => 'Хорошо',
-           5 => 'Отлично'
-        ],
-        'customOptions' => [
-            'reviews' => [
-                'listBox'   => [
-                    'type'   => 'listBox',
-                    'data'   => [1 => '1', 2 => '2', 3 => 3, 4 => 4, 5 => 5],
-                    'params' => ['multiple' => true, 'prompt' => 'Выберите один или несколько вариантов','style' => 'background:gray;color:#fff;']
-                ],
-                'radioList' => [
-                    'type'  => 'radioList',
-                    'data'  => ['1' => 'Первый', '2' => 'Второй', '3' => 'Третий'],
-                    'label' => 'radioList'
-                ],
+        'reviews' => [
+            'class' => 'hrupin\reviews\Module',
+            'userModel' => 'common\models\User',
+            'modelMap' => [
+                'Reviews' => 'common\models\Reviews',
             ],
-            'anothePage' => [
-                'textInput' => [
-                    'type' => 'textInput',
-                    'data' => ['placeholder' => '+7 (920) 707 77 20'],
-                    'label'=> 'textInput'
+            'controllerMap' => [
+                'admin' => 'backend\controllers\ReviewsController',
+                'reviews' => 'frontend\controllers\ReviewsController'
+            ],
+            'moderateReviews' => false,
+            'ratingStars' => [
+                1 => 'Ужасно',
+                2 => 'Плохо',
+                3 => 'Нормально',
+                4 => 'Хорошо',
+                5 => 'Отлично'
+            ],
+            'customOptions' => [
+                'Company' => [
+                    [
+                        'type'  => 'radioList',
+                        'statistic' => [
+                            'bad' => ['1'],
+                            'good' => ['3'],
+                        ],
+                        'data'  => ['3' => 'Да', '1' => 'Нет', '2' => 'Не помню'],
+                        'label' => 'Цены и наличие были указаны верно?',
+                        'answer' => [
+                            1 => 'Цена и наличие не соответствовали',
+                            2 => 'Не помню',
+                            3 => 'Цена и наличие были указаны верно'
+                        ]
+                    ],
+                    [
+                        'type'  => 'radioList',
+                        'statistic' => [
+                            'bad' => ['1'],
+                            'good' => ['3'],
+                        ],
+                        'data'  => ['3' => 'Да', '1' => 'Нет', '2' => 'Не помню'],
+                        'label' => 'Заказ был вополнен в оговоренные сроки?',
+                        'answer' => [
+                            1 => 'При выполнении заказа была задержка',
+                            2 => 'Не помню',
+                            3 => 'Заказ был вополнен в оговоренные сроки'
+                        ]
+                    ],
+                    [
+                        'type'   => 'dropDownList',
+                        'statistic' => [
+                            'bad' => ['1','2','3','4','5'],
+                            'good' => ['6'],
+                        ],
+                        'data'   => [
+                            '6'=>'В течение 30 минут',
+                            '5' => 'В течение двух часов',
+                            '4' => 'В течение дня',
+                            '3' => 'На следующий день',
+                            '2' => 'Не связались',
+                            '1' => 'Я звонил сам',
+                        ],
+                        'params' => ['prompt' => 'Как быстро с вами связались после заказа?'],
+                        'label' => 'Как быстро с вами связались после заказа?',
+                        'answer' => [
+                            1 => 'Я звонил сам',
+                            2 => 'Не связались',
+                            3 => 'На следующий день',
+                            4 => 'В течение дня',
+                            5 => 'В течение двух часов',
+                            6 =>'В течение 30 минут',
+                        ]
+                    ]
                 ],
-                'dropDownList'   => [
-                    'type'   => 'dropDownList',
-                    'data'   => ['0' => 'Активный','1' => 'Отключен','2'=>'Удален'],
-                    'params' => ['prompt' => 'Выберите статус...']
+                'User' => [
+                    [
+                        'type'  => 'radioList',
+                        'data'  => ['3' => 'Да', '1' => 'Нет', '2' => 'Не помню'],
+                        'label' => 'Соответствовал ли товар описанию и состоянию указаные в описании продавца?',
+                        'answer' => [
+                            1 => 'Описание товара не соответствовало',
+                            2 => 'Не помню',
+                            3 => 'Описание товара полностью соответствовали'
+                        ]
+                    ],
+                    [
+                        'type'  => 'radioList',
+                        'data'  => ['3' => 'Да', '1' => 'Нет', '2' => 'Не помню'],
+                        'label' => 'Возникали сложности с оплатой и получением?',
+                        'answer' => [
+                            1 => 'Были сложности с оплатой и получением',
+                            2 => 'Не помню',
+                            3 => 'Сложности при оплате и получении не возникли'
+                        ]
+                    ],
+                    [
+                        'type'  => 'radioList',
+                        'data'  => ['3' => 'Да', '1' => 'Нет', '2' => 'Не уверен'],
+                        'label' => 'Рекомендуете ли Вы продавца?',
+                        'answer' => [
+                            1 => 'Рекомендую',
+                            2 => 'Воздержусь',
+                            3 => 'Не рекомендую'
+                        ]
+                    ]
                 ],
-                'radio' => [
-                    'type'  => 'radio',
-                    'data'  => ['label' => 'Радио кнопка','labelOptions' => ['style' => 'padding-left:20px;']],
-                    'label' => 'radio'
-                ],
-                'checkboxList' => [
-                    'type'  => 'checkboxList',
-                    'data'  => ['a' => 'Элемент А', 'б' => 'Элемент Б', 'в' => 'Элемент В'],
-                    'label' => 'checkboxList'
-                ],
-                'checkbox' => [
-                    'type'  => 'checkbox',
-                    'data'  => ['label' => 'Неактивный чекбокс', 'labelOptions' => ['style' => 'padding-left:20px;'], 'disabled' => true],
-                    'params'=> [],
-                    'label' => 'checkbox'
-                ],
-                'fileInput' => [
-                    'type'  => 'fileInput',
-                    'data'  => ['multiple' => 'multiple'],
-                    'params'=> [],
-                    'label' => 'fileInput'
-                ],
-                'input' => [
-                    'type'  => 'input',
-                    'data'  => 'email',
-                    'params'=> [],
-                    'label' => 'input'
-                ],
-                'passwordInput' => [
-                    'type'  => 'passwordInput',
-                    'data'  => 'hint',
-                    'params'=> 'Длинна пароля не меньше 10 символов.',
-                    'label' => 'passwordInput'
-                ],
-                'textarea' => [
-                    'type'  => 'textarea',
-                    'data'  => ['rows' => 2, 'cols' => 5],
-                    'params'=> [],
-                    'label' => 'textarea'
-                ],
-                'empty'
+                'Project' => []
             ]
-        ]
-    ],
-],
+        ],
 ```
 
 in **frontend/config/main.php**
