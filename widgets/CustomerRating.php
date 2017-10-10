@@ -90,7 +90,8 @@ class CustomerRating extends Widget
             $criterion[$key]['statistic'] = ($item['good'] / ($item['good'] + $item['bad'])) * 100;
         }
         return $this->render($this->reviewsView,[
-            'criterion' => $criterion
+            'criterion' => $criterion,
+            'count' => $model->countAllReviews($this->pageIdentifier,$this->reviewsIdentifier)
         ]);
     }
 }
