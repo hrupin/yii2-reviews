@@ -85,7 +85,12 @@ class CustomerRating extends Widget
             }
         }
         foreach ($criterion as $key => $item) {
-            $criterion[$key]['statistic'] = ($item['good'] / ($item['good'] + $item['bad'])) * 100;
+            if($item['good'] > 0){
+                $criterion[$key]['statistic'] = ($item['good'] / ($item['good'] + $item['bad'])) * 100;
+            }
+            else{
+                $criterion[$key]['statistic'] = 0;
+            }
         }
         return $this->render($this->reviewsView,[
             'criterion' => $criterion,
