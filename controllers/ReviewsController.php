@@ -115,7 +115,7 @@ class ReviewsController extends \yii\web\Controller
                         return ['response' => $data, 'edit' => 'response'];
                     }
                     else{
-                        return ['response' => serialize($data), 'edit' => 'review'];
+                        return ['response' => $data->reviews_id, 'edit' => 'review'];
                     }
                 }
             }
@@ -123,8 +123,10 @@ class ReviewsController extends \yii\web\Controller
                 'result' => 'error'
             ]);
         }
+        $class = Yii::$app->getModule('reviews')->modelMap['Reviews'];
+        $model = Yii::createObject($class::className());
         if(Yii::$app->request->post('hiddenData')){
-            $data = unserialize(Yii::$app->request->post('hiddenData'));
+            $data = $model->find()->getReviews(Yii::$app->request->post('hiddenData'));
             $ratingStars = Yii::$app->getModule('reviews')->ratingStars;
             $data->data = unserialize($data->data);
             return $this->render('_form',[
@@ -134,8 +136,6 @@ class ReviewsController extends \yii\web\Controller
                 'url' => Yii::$app->request->post('hiddenURL')
             ]);
         }
-        $class = Yii::$app->getModule('reviews')->modelMap['Reviews'];
-        $model = Yii::createObject($class::className());
         if($model->load(Yii::$app->request->post())){
             $data = $model->find()->getReviews((int)$_POST['Reviews']['reviews_id']);
             $data->load(Yii::$app->request->post());
