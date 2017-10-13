@@ -54,7 +54,7 @@ class Reviews extends Widget
     /**
     * @var string
     */
-    private $pathIMG;
+    public $pathIMG;
 
     /**
      * Initializes the widget params.
