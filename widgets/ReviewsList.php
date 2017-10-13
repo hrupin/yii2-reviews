@@ -44,13 +44,13 @@ class ReviewsList extends Widget
     /**
      * @var string
      */
-    private $pathIMG;
+    public $pathIMG;
     
     
     /**
      * @var string
      */
-    private $allowResponse;
+    public $allowResponse;
 
     /**
      * Initializes the widget params.
