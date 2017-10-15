@@ -9,7 +9,7 @@ use yii\helpers\HtmlPurifier;
  * This is the model class for table "reviews".
  *
  * @property integer $reviews_id
- * @property string $page
+ * @property integer $page
  * @property string $type
  * @property integer $status
  * @property integer $reviews_child
@@ -48,9 +48,9 @@ class Reviews extends \yii\db\ActiveRecord
     {
         return [
             [['page', 'type', 'text', 'rating'], 'required'],
-            [['reviews_child', 'reviews_parent', 'user_id', 'level', 'rating', 'date_create', 'date_update'], 'integer'],
+            [['page', 'reviews_child', 'reviews_parent', 'user_id', 'level', 'rating', 'date_create', 'date_update'], 'integer'],
             [['data', 'text'], 'required', 'message' => Yii::t('reviews', 'Element cannot be blank.')],
-            [['page', 'type'], 'string', 'max' => 60], ['level', 'default', 'value' => 1],
+            [['type'], 'string', 'max' => 60], ['level', 'default', 'value' => 1],
             ['reviews_parent', 'default', 'value' => 0],
             ['reviews_child', 'default', 'value' => false],
             ['date_create', 'default', 'value' => time()],
