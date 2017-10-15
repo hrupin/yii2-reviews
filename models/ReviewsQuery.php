@@ -18,7 +18,7 @@ class ReviewsQuery extends \yii\db\ActiveQuery
 
     public function getActiveReviewsForPage($id, $type)
     {
-        return $this->andWhere("[[page]]='".$id."'")
+        return $this->andWhere("[[page]]=".$id)
             ->andWhere("[[type]]='".$type."'")
             ->andWhere('[[status]]='.Reviews::REVIEWS_ACTIVE)
             ->andWhere('[[level]]=1');
@@ -33,14 +33,14 @@ class ReviewsQuery extends \yii\db\ActiveQuery
     public function getNoActiveReviewsForPageAndType($page, $type)
     {
         return $this->andWhere("[[type]]='".$type."'")
-            ->andWhere("[[page]]='".$page."'")
+            ->andWhere("[[page]]=".$page)
             ->andWhere('[[status]]='.Reviews::REVIEWS_NOT_ACTIVE);
     }
 
     public function getActiveReviewsForPageAndMainLevel($id, $type)
     {
         return $this->andWhere("[[level]]=1")
-            ->andWhere("[[page]]='".$id."'")
+            ->andWhere("[[page]]=".$id)
             ->andWhere("[[type]]='".$type."'")
             ->andWhere('[[status]]='.Reviews::REVIEWS_ACTIVE)
             ->orderBy(['reviews_id' => SORT_DESC])
@@ -50,7 +50,7 @@ class ReviewsQuery extends \yii\db\ActiveQuery
     public function getAllReviewsForPageAndMainLevel($id, $type)
     {
         return $this->andWhere("[[level]]=1")
-            ->andWhere("[[page]]='".$id."'")
+            ->andWhere("[[page]]=".$id)
             ->andWhere("[[type]]='".$type."'")
             ->andWhere('status <> '.Reviews::REVIEWS_DELETE)
             ->orderBy(['reviews_id' => SORT_DESC])
@@ -60,7 +60,7 @@ class ReviewsQuery extends \yii\db\ActiveQuery
     public function getActiveReviewsForPageAndMainLevelCount($id, $type)
     {
         return $this->andWhere("[[level]]=1")
-            ->andWhere("[[page]]='".$id."'")
+            ->andWhere("[[page]]=".$id)
             ->andWhere("[[type]]='".$type."'")
             ->andWhere('[[status]]='.Reviews::REVIEWS_ACTIVE)
             ->orderBy(['reviews_id' => SORT_DESC])
@@ -70,7 +70,7 @@ class ReviewsQuery extends \yii\db\ActiveQuery
     public function getActiveReviewsForPageAndMainLevelForPeriod($id, $type, $period)
     {
         return $this->andWhere("[[level]]=1")
-            ->andWhere("[[page]]='".$id."'")
+            ->andWhere("[[page]]=".$id)
             ->andWhere("[[type]]='".$type."'")
             ->andWhere("date_update > ".$period)
             ->andWhere('[[status]]='.Reviews::REVIEWS_ACTIVE)
@@ -81,9 +81,10 @@ class ReviewsQuery extends \yii\db\ActiveQuery
     public function countActiveReviewsForPageAndMainLevelForRating($id, $type, $rating)
     {
         return $this->andWhere("[[level]]=1")
-            ->andWhere("[[page]]='".$id."'")
+            ->andWhere("[[page]]=".$id)
             ->andWhere("[[type]]='".$type."'")
-            ->andWhere("[[rating]]='".$rating."'")
+            ->andWhere("[[rating]]=".$rating
+            )
             ->andWhere('[[status]]='.Reviews::REVIEWS_ACTIVE)
             ->orderBy(['reviews_id' => SORT_DESC])
             ->count();
