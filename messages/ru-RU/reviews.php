@@ -57,8 +57,8 @@ return [
     'User ID' => 'Идентификатор пользователя',
     'View page' => 'Просмотр страницы',
     'says' => 'написал',
-    'Send new review' => 'Новый отзыв',
-    'Send new review for page {url}' => 'Новый отзыв на странице {url}',
+    'Send new review' => 'Добрый день. К вашему объявлению добавили новый отзыв.<br>',
+    'Send new review for page {url}' => 'Чтобы посмотреть отзыв, оставить свой ответ на него перейдите на страницу объявления: {url}',
     'Send new response' => 'Новый ответ',
     'Was written the answer to your review on the page {url}' => 'Вам ответили на странице {url}',
     'Success review' => 'Одобрить'

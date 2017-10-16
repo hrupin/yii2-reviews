@@ -94,31 +94,64 @@ class ReviewsStatistics extends Widget
             $statistics = [];
             foreach ($this->timePeriod['period'] as $k => $value){
                 $tmp = [];
-                foreach ($this->pageIdentifier as $item) {
-                    $tmpAr = $model->getStatistics(
-                        $model->find()->getActiveReviewsForPageAndMainLevelForPeriod(
-                            $item,
-                            $this->reviewsIdentifier,
-                            (time() - ($step*$value))
-                        ),
-                        $this->statisticsReviews
-                    );
-                    $tmp = ModelReviews::array_custom_merge($tmp, $tmpAr);
+                if(is_array($this->reviewsIdentifier)){
+                    foreach ($this->reviewsIdentifier as $rI) {
+                        foreach ($this->pageIdentifier as $item) {
+                            $tmpAr = $model->getStatistics(
+                                $model->find()->getActiveReviewsForPageAndMainLevelForPeriod(
+                                    $item,
+                                    $rI,
+                                    (time() - ($step*$value))
+                                ),
+                                $this->statisticsReviews
+                            );
+                            $tmp = ModelReviews::array_custom_merge($tmp, $tmpAr);
+                        }
+                    }
+                }
+                else{
+                    foreach ($this->pageIdentifier as $item) {
+                        $tmpAr = $model->getStatistics(
+                            $model->find()->getActiveReviewsForPageAndMainLevelForPeriod(
+                                $item,
+                                $this->reviewsIdentifier,
+                                (time() - ($step*$value))
+                            ),
+                            $this->statisticsReviews
+                        );
+                        $tmp = ModelReviews::array_custom_merge($tmp, $tmpAr);
+                    }
                 }
                 $statistics[$value . ' ' . $this->timePeriod['name'][$k]] = $tmp;
             }
         }
         else{
             $tmp = [];
-            foreach ($this->pageIdentifier as $item) {
-                $tmpAr = $model->getStatistics(
-                    $model->find()->getActiveReviewsForPageAndMainLevel(
-                        $item,
-                        $this->reviewsIdentifier
-                    ),
-                    $this->statisticsReviews
-                );
-                $tmp = ModelReviews::array_custom_merge($tmp, $tmpAr);
+            if(is_array($this->reviewsIdentifier)){
+                foreach ($this->reviewsIdentifier as $rI) {
+                    foreach ($this->pageIdentifier as $item) {
+                        $tmpAr = $model->getStatistics(
+                            $model->find()->getActiveReviewsForPageAndMainLevel(
+                                $item,
+                                $rI
+                            ),
+                            $this->statisticsReviews
+                        );
+                        $tmp = ModelReviews::array_custom_merge($tmp, $tmpAr);
+                    }
+                }
+            }
+            else{
+                foreach ($this->pageIdentifier as $item) {
+                    $tmpAr = $model->getStatistics(
+                        $model->find()->getActiveReviewsForPageAndMainLevel(
+                            $item,
+                            $this->reviewsIdentifier
+                        ),
+                        $this->statisticsReviews
+                    );
+                    $tmp = ModelReviews::array_custom_merge($tmp, $tmpAr);
+                }
             }
             $statistics = $tmp;
         }

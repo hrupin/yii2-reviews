@@ -48,9 +48,10 @@ class Reviews extends \yii\db\ActiveRecord
     {
         return [
             [['page', 'type', 'text', 'rating'], 'required'],
-            [['page', 'reviews_child', 'reviews_parent', 'user_id', 'level', 'rating', 'date_create', 'date_update'], 'integer'],
+            [['page','reviews_child', 'reviews_parent', 'user_id', 'level', 'rating', 'date_create', 'date_update'], 'integer'],
             [['data', 'text'], 'required', 'message' => Yii::t('reviews', 'Element cannot be blank.')],
-            [['type'], 'string', 'max' => 60], ['level', 'default', 'value' => 1],
+            [['type'], 'string', 'max' => 60],
+            ['level', 'default', 'value' => 1],
             ['reviews_parent', 'default', 'value' => 0],
             ['reviews_child', 'default', 'value' => false],
             ['date_create', 'default', 'value' => time()],
@@ -283,7 +284,14 @@ class Reviews extends \yii\db\ActiveRecord
     public static function countAllReviews($id, $type){
         $count = 0;
         foreach ($id as $item) {
-            $count += Reviews::find()->getActiveReviewsForPageAndMainLevelCount($item, $type);
+            if(is_array($type)){
+                foreach ($type as $t){
+                    $count += Reviews::find()->getActiveReviewsForPageAndMainLevelCount($item, $t);
+                }
+            }
+            else{
+                $count += Reviews::find()->getActiveReviewsForPageAndMainLevelCount($item, $type);
+            }
         }
         return $count;
     }
@@ -292,7 +300,7 @@ class Reviews extends \yii\db\ActiveRecord
         $tmp = [];
         foreach ($model as $item) {
             foreach ($item->dataAr as $k => $i) {
-                $tmp[] = $k.'|'.$i;
+                $tmp[] = $item->type.'|'.$k.'|'.$i;
             }
         }
         return $tmp;
@@ -307,11 +315,19 @@ class Reviews extends \yii\db\ActiveRecord
         $count = 0;
         $badCount = 0;
         $coolCount = 0;
-        $tmpR = 0;
         foreach ($id as $item) {
-            $count += Reviews::find()->getActiveReviewsForPageAndMainLevelCount($item, $type);
-            $badCount  += Reviews::find()->countActiveReviewsForPageAndMainLevelForRating($item, $type, $badKey);
-            $coolCount += Reviews::find()->countActiveReviewsForPageAndMainLevelForRating($item, $type, $coolKey);
+            if(is_array($type)){
+                foreach ($type as $t) {
+                    $count += Reviews::find()->getActiveReviewsForPageAndMainLevelCount($item, $t);
+                    $badCount  += Reviews::find()->countActiveReviewsForPageAndMainLevelForRating($item, $t, $badKey);
+                    $coolCount += Reviews::find()->countActiveReviewsForPageAndMainLevelForRating($item, $t, $coolKey);
+                }
+            }
+            else{
+                $count += Reviews::find()->getActiveReviewsForPageAndMainLevelCount($item, $type);
+                $badCount  += Reviews::find()->countActiveReviewsForPageAndMainLevelForRating($item, $type, $badKey);
+                $coolCount += Reviews::find()->countActiveReviewsForPageAndMainLevelForRating($item, $type, $coolKey);
+            }
         }
         if($badCount <= 0 && $coolCount <= 0){
             return [
