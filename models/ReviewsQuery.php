@@ -83,10 +83,20 @@ class ReviewsQuery extends \yii\db\ActiveQuery
         return $this->andWhere("[[level]]=1")
             ->andWhere("[[page]]=".$id)
             ->andWhere("[[type]]='".$type."'")
-            ->andWhere("[[rating]]=".$rating
-            )
+            ->andWhere("[[rating]]=".$rating)
             ->andWhere('[[status]]='.Reviews::REVIEWS_ACTIVE)
             ->orderBy(['reviews_id' => SORT_DESC])
+            ->count();
+    }
+
+    public function countAllReviewsForPageAndMainLevelForRating($id, $type, $rating)
+    {
+        return $this->andWhere("[[level]]=1")
+            ->andWhere("[[page]]=".$id)
+            ->andWhere("[[type]]='".$type."'")
+            ->andWhere("[[rating]]=".$rating)
+            ->orderBy(['reviews_id' => SORT_DESC])
+            ->andWhere('status <> '.Reviews::REVIEWS_DELETE)
             ->count();
     }
 
