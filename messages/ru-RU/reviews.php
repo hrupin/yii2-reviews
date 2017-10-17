@@ -61,5 +61,8 @@ return [
     'Send new review for page {url}' => 'Чтобы посмотреть отзыв, оставить свой ответ на него перейдите на страницу объявления: {url}',
     'Send new response' => 'Новый ответ',
     'Was written the answer to your review on the page {url}' => 'Вам ответили на странице {url}',
-    'Success review' => 'Одобрить'
+    'Success review' => 'Одобрить',
+    '<strong>Error!</strong>' => '<strong>Ошибка!</strong>',
+    '<strong>Success!</strong> Feedback successfully sent to moderation.' => '<strong>Успешно!</strong> Ваш отзыв успешно добавлен и отправлен на модерацию.',
+    '<strong>Success!</strong> Your review add.' => '<strong>Успешно!</strong> Ваш отзыв успешно добавлен.\'',
 ];
