@@ -10,14 +10,6 @@ use hrupin\reviews\ReviewsAsset;
 
 ReviewsAsset::register($this);
 
-$js = '';
-foreach ($model->data as $key => $value){
-    $js .= "$('[name = \"Reviews[data][".$key."]\"').val(".$value.");";
-}
-
-$this->registerJs(
-    $js
-);
 ?>
 
 <div class="reviews-form">
