@@ -16,7 +16,7 @@ switch($result){
         break;
     case 'error':
         foreach ($error as $item) {
-            echo "<div class='alert alert-danger'>".Yii::t('reviews', '<strong>Error!</strong>').$item[0]."</div>";
+            echo "<div class='alert alert-danger'>".Yii::t('reviews', '<strong>Error!</strong>').' '.$item[0]."</div>";
         }
         break;
 }

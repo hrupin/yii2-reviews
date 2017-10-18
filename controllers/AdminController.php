@@ -59,9 +59,12 @@ class AdminController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView()
+    public function actionView($id)
     {
-        $this->redirect('index');
+        $class = Yii::$app->getModule('reviews')->modelMap['Reviews'];
+        $model = Yii::createObject($class::className());
+        $r = $model->find()->where(['reviews_id' => $id])->limit(1)->one();
+        return $this->redirect(['/reviews/admin/view-review', 'page' => $r->page , 'type' => $r->type]);
     }
 
     /**
@@ -154,7 +157,9 @@ class AdminController extends Controller
         $model = $this->findModel($id);
         $class = Yii::$app->getModule('reviews')->modelMap['Reviews'];
         $modelReviews = Yii::createObject($class::className());        
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            $model->data = serialize($model->data);
+            $model->save();
             return $this->redirect(['view', 'id' => $model->reviews_id]);
         } else {
             if($do == 'success'){

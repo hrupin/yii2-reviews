@@ -66,6 +66,8 @@ ReviewsAsset::register($this);
                 echo $form->field($model, 'data['.$key.']')->$type($data, $params)->label($label);
                 break;
             case 'radioList':
+//                echo $form->field($model, 'data['.$key.']')->$type($data, $params)->label($label);
+
                 echo $form->field($model, 'data['.$key.']')->$type($data, $params)->label($label);
                 break;
             case 'listBox':
