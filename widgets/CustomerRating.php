@@ -150,7 +150,7 @@ class CustomerRating extends Widget
                         $check = false;
                         $res[$k]['bad'] += $i['bad'];
                         $res[$k]['good'] += $i['good'];
-                        $res[$k]['statistic'] = ($re['statistic'] + $i['good']) / 2;
+                        $res[$k]['statistic'] = ($res[$k]['statistic'] + $re['statistic']) / 2;
                     }
                 }
                 if($check){
