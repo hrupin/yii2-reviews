@@ -47,7 +47,7 @@ $("#viewCountBlock").click(function(){
                             echo '<td>&nbsp;</td>';
                             echo '</tr>';
                             foreach ($ii['data'] as $kkk => $iii) {
-                                if($ii['count'][$kkk] > 0){
+                                if(isset($ii['count']) && $ii['count'][$kkk] > 0){
                                     echo '<tr>';
                                     echo '<td>&nbsp;</td>';
                                     echo '<td>&nbsp;</td>';
