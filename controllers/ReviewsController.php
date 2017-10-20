@@ -147,9 +147,9 @@ class ReviewsController extends \yii\web\Controller
                 $this->redirect(Yii::$app->request->post('hiddenURL'));
             }
             else{
-                $model->data = $data->dataAr;
+                $data->data = $data->dataAr;
                 return $this->render('_form',[
-                    'model' => $model,
+                    'model' => $data,
                     'options' => Yii::$app->getModule('reviews')->customOptions[$model->type],
                     'stars' => Yii::$app->getModule('reviews')->ratingStars,
                     'url' => Yii::$app->request->post('hiddenURL')
