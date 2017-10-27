@@ -22,7 +22,7 @@ return [
     '<strong>Success!</strong> Feedback successfully sent to moderation.' => '<strong>Успешно!</strong> Отзыв успешно отправлен на модерацию!',
     '<strong>Success!</strong> Opinion deleted successfully.' => '<strong>Успешно!</strong> Отзыв успешно удален',
     '<strong>Success!</strong> Your review add.' => '<strong>Успешно!</strong> Ваш ответ успешно добавлен',
-    'Add a review' => 'Добавить комментарий',
+    'Add a review' => 'Добавить отзыв',
     'Are you sure you want to delete this item?' => 'Вы уверены, что хотите удалить этот элемент?',
     'Create' => 'Создать',
     'Create Reviews' => 'Добавить отзыв',
