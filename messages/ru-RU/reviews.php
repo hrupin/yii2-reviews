@@ -64,5 +64,5 @@ return [
     'Success review' => 'Одобрить',
     '<strong>Error!</strong>' => '<strong>Ошибка!</strong>',
     '<strong>Success!</strong> Feedback successfully sent to moderation.' => '<strong>Успешно!</strong> Ваш отзыв успешно добавлен и отправлен на модерацию.',
-    '<strong>Success!</strong> Your review add.' => '<strong>Успешно!</strong> Ваш отзыв успешно добавлен.\'',
+    '<strong>Success!</strong> Your review add.' => '<strong>Успешно!</strong> Ваш отзыв успешно добавлен.',
 ];
