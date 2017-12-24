@@ -367,6 +367,10 @@ class Reviews extends \yii\db\ActiveRecord
             $result[] = $val;
         }
         return $result;
+    } 
+
+    public static function deleteReviews($page, $type){
+        return self::deleteAll(['page' => $page, 'type' =>$type]);
     }
     
 }
