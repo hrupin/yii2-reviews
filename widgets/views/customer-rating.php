@@ -23,7 +23,7 @@
                 echo '<th class="row">'. $value['label'] .'</th>';
                 echo '<td>'.round($value['statistic']).'</td>';
                 echo '<td>'.$count.'</td>';
-                echo '<tr>';
+                echo '</tr>';
             }
             ?>
         </tbody>
