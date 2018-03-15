@@ -29,7 +29,7 @@ if ($diff) {
                         foreach ($model as $k => $v) {
                             echo '<td>' . $v[$value['name']] . '</td>';
                         }
-                        echo '<tr>';
+                        echo '</tr>';
                     }
                 ?>
             </tbody>
